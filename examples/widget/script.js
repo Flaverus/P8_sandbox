@@ -9,7 +9,7 @@ root.style.setProperty('--prefers-reduced-motion', window.matchMedia("(prefers-r
 root.style.setProperty('--prefers-contrast', window.matchMedia("(prefers-contrast: more)").matches);
 root.style.setProperty('--prefers-dark-theme', window.matchMedia("(prefers-color-scheme: dark)").matches);
 
-// Set initial values based on user settings
+// Set initial values based on user settings (returns strings)
 motion.checked      = getComputedStyle(root).getPropertyValue('--prefers-reduced-motion').trim() === 'true';
 contrast.checked    = getComputedStyle(root).getPropertyValue('--prefers-contrast').trim() === 'true';
 colorscheme.checked = getComputedStyle(root).getPropertyValue('--prefers-dark-theme').trim() === 'true';

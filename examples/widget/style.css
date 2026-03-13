@@ -1,19 +1,98 @@
 .floating-box {
     position: fixed;
-    bottom: 20px;
-    left: 20px;
+    bottom: 1.25rem;
+    left: 1.25rem;
     z-index: var(--z-index-front);
     background: var(--content-bg);
-    padding: 1rem;
+    padding: 1.5rem;
     border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
     box-shadow: var(--shadow);
 }
 
-.floating-box .widget-content {
-    height: 0;
-    overflow: hidden;
+.floating-box:hover .widget-content, .floating-box:focus-within .widget-content {
+    max-height: 50rem;
 }
 
-.floating-box:hover .widget-content, .floating-box:focus-within .widget-content {
-    height: auto;
+.widget-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.75s ease-in-out;
+}
+
+.widget-content .option {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    margin: 6px 6px 6px 0;
+}
+
+.option label, .option input {
+    cursor: pointer;
+    margin: 0;
+}
+
+.spinning-container {
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.square {
+    width: 6.25rem;
+    height: 6.25rem;
+    background: var(--primary-accent);
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Overwrite if motion is active */
+@container style(--prefers-reduced-motion: true) {
+    .widget-content, .square {
+        animation: none !important;
+    }
+
+    .widget-content, .square {
+        transition: none !important;
+        max-height: 800px;
+    }
+}
+
+/* Overwrite if contrast is active */
+@container style(--prefers-contrast: true) {
+    .floating-box {
+        background-color: #000000;
+        color: #FFFFFF;
+    }
+}
+
+:root[style*="--prefers-contrast: true"] {
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    --text-color: black;
+}
+
+/* Overwrite if dark theme is active */
+:root[style*="--prefers-dark-theme: true"] {
+    --text-color: #EDEDED;
+    --bg-color: #212121;
+    --content-bg: #2E2E2E;
+    --border-color: #232323;
+    --primary-accent: #6DB3F4;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Overwrite if dark theme AND contrast is active */
+:root[style*="--prefers-dark-theme: true"][style*="--prefers-contrast: true"] {
+    --text-color: #FFFFFF;
+    --bg-color: #616161;
+    --content-bg: #000000;
+    --border-color: #454545;
+    --shadow: none;
 }
