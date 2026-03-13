@@ -1,0 +1,19 @@
+.floating-box {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: var(--z-index-front);
+    background: var(--content-bg);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.floating-box .widget-content {
+    height: 0;
+    overflow: hidden;
+}
+
+.floating-box:hover .widget-content, .floating-box:focus-within .widget-content {
+    height: auto;
+}
