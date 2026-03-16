@@ -3,6 +3,7 @@
     bottom: 1.25rem;
     left: 1.25rem;
     z-index: var(--z-index-front);
+    color: var(--text-color);
     background: var(--content-bg);
     padding: 1.5rem;
     border-radius: var(--border-radius);
@@ -65,19 +66,6 @@
     }
 }
 
-/* Overwrite if contrast is active */
-@container style(--prefers-contrast: true) {
-    .floating-box {
-        background-color: #000000;
-        color: #FFFFFF;
-    }
-}
-
-:root[style*="--prefers-contrast: true"] {
-    --shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-    --text-color: black;
-}
-
 /* Overwrite if dark theme is active */
 :root[style*="--prefers-dark-theme: true"] {
     --text-color: #EDEDED;
@@ -88,11 +76,32 @@
     --shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
-/* Overwrite if dark theme AND contrast is active */
-:root[style*="--prefers-dark-theme: true"][style*="--prefers-contrast: true"] {
-    --text-color: #FFFFFF;
-    --bg-color: #616161;
-    --content-bg: #000000;
-    --border-color: #454545;
+/* Overwrite if contrast is active */
+:root[style*="--prefers-contrast: true"] {
+    --text-color: #000000;
+    --bg-color: #ffffff;
+    --content-bg: #ffffff;
+    --border-color: #000000;
+    --primary-accent: #00428a;
     --shadow: none;
+}
+
+/* Overwrite if contrast AND dark theme is active */
+:root[style*="--prefers-dark-theme: true"][style*="--prefers-contrast: true"] {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --content-bg: #000000;
+    --border-color: #ffffff;
+    --primary-accent: #80c5ff;
+    --shadow: none;
+}
+
+@container style(--prefers-contrast: true) {
+    .card, .floating-box, header {
+        outline: 2px solid var(--border-color);
+    }
+
+    .card, .floating-box {
+        border: 1px solid var(--content-bg);
+    }
 }
