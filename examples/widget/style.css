@@ -11,6 +11,34 @@
     box-shadow: var(--shadow);
 }
 
+.floating-box h3 {
+    display: block;
+}
+
+.floating-box svg {
+    display: none;
+}
+
+@media(max-width: 800px) {
+    .floating-box h3 {
+        display: none;
+    }
+
+    .floating-box svg {
+        display: block;
+        width: 48px;
+        height: 48px;
+    }
+
+    .floating-box:hover h3, .floating-box:focus-within h3 {
+        display: block;
+    }
+
+    .floating-box:hover svg, .floating-box:focus-within svg {
+        display: none;
+    }
+}
+
 .floating-box:hover .widget-content, .floating-box:focus-within .widget-content {
     max-height: 50rem;
 }
@@ -28,7 +56,7 @@
 }
 
 .widget-content summary {
-    margin: 0 6px;
+    margin: 6px;
 }
 
 .widget-content .option {
@@ -73,7 +101,6 @@
 
     .widget-content, .square {
         transition: none !important;
-        max-height: 800px;
     }
 }
 
