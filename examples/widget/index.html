@@ -15,20 +15,53 @@
 
     <a href="#navigation" class="accessibility-hidden">Skip to Navigation</a>
 
-    <div class="option">
-      <label for="motion">Reduced Motion</label>
-      <input type="checkbox" name="reduced motion" id="motion">
-    </div>
+    <details>
+      <summary>Reduced Motion</summary>
+      <div class="option">
+        <input type="radio" name="motion" id="motionDefault" value="system">
+        <label for="motionDefault">Use system settings</label>
+      </div>
+      <div class="option">
+        <input type="radio" name="motion" id="motionOn" value="true">
+        <label for="motionOn">Reduced motion on</label>
+      </div>
+      <div class="option">
+        <input type="radio" name="motion" id="motionOff" value="false">
+        <label for="motionOff">Reduced motion off</label>
+      </div>
+    </details>
 
-    <div class="option">
-      <label for="contrast">High Contrast</label>
-      <input type="checkbox" name="high contrast" id="contrast">
-    </div>
+    <details>
+      <summary>High Contrast</summary>
+      <div class="option">
+        <input type="radio" name="contrast" id="contrastDefault" value="system">
+        <label for="contrastDefault">Use system settings</label>
+      </div>
+      <div class="option">
+        <input type="radio" name="contrast" id="contrastOn" value="true">
+        <label for="contrastOn">High contrast on</label>
+      </div>
+      <div class="option">
+        <input type="radio" name="contrast" id="contrastOff" value="false">
+        <label for="contrastOff">High contrast off</label>
+      </div>
+    </details>
 
-    <div class="option">
-      <label for="colorscheme">Dark Colorscheme</label>
-      <input type="checkbox" name="dark colorscheme" id="colorscheme">
-    </div>
+    <details>
+      <summary>Colorscheme</summary>
+      <div class="option">
+        <input type="radio" name="colorscheme" id="colorschemeDefault" value="system">
+        <label for="colorschemeDefault">Use system settings</label>
+      </div>
+      <div class="option">
+        <input type="radio" name="colorscheme" id="colorschemeLight" value="false">
+        <label for="colorschemeLight">Light colorscheme</label>
+      </div>
+      <div class="option">
+        <input type="radio" name="colorscheme" id="colorschemeDark" value="true">
+        <label for="colorschemeDark">Dark colorscheme</label>
+      </div>
+    </details>
 
   </div>
 </section>

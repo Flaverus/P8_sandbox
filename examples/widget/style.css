@@ -27,10 +27,15 @@
     margin: 6px;
 }
 
+.widget-content summary {
+    margin: 0 6px;
+}
+
 .widget-content .option {
     display: grid;
-    grid-template-columns: 1fr auto;
-    margin: 6px 6px 6px 0;
+    grid-template-columns: auto 1fr;
+    gap: 8px;
+    margin: 6px 6px 6px 22px;
 }
 
 .option label, .option input {
