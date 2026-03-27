@@ -21,6 +21,12 @@
     transition: max-height 0.75s ease-in-out;
 }
 
+.widget-content .accessibility-hidden {
+    /* Allows to "hide" the skip links height within the widget and to fully show the focus outline */
+    display: block;
+    margin: 6px;
+}
+
 .widget-content .option {
     display: grid;
     grid-template-columns: 1fr auto;
