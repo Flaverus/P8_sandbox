@@ -1,0 +1,22 @@
+:root {
+    --selected-color: #000000;
+}
+
+@function --color-contrast(--color <color>) returns <color> {
+    /* Returns either negative or positive infinite for lightness, depending on if lightness is over or under 50%  */
+    result: lch(from var(--color) calc((50 - l) * infinity) 0 0)
+}
+
+#contrast-color {
+    width: 40px;
+    height: 40px;
+    background-color: --color-contrast(var(--selected-color));
+}
+
+#picked-color {
+    width: 40px;
+    height: 40px;
+    padding: 20px;
+    background-color: var(--selected-color);
+    border: 2px solid #000000;
+}

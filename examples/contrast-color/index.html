@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contrast Color</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <nav><a id="navigation" href="../../index.html">← Back to Overview</a></nav>
+  <h1>Contrast Color CSS Function</h1>
+</header>
+
+<main id="main-content">
+  <section class="card">
+    <h2>Black or white as contrast</h2>
+    <p>Pick a color and get either black or white as contrast color, depending on the color's luminance.</p>
+    <p>This showcases a CSS only solution which is independent of color-contrast() that is not broadly supported yet.</p>
+    <input id="base-color" type="color">
+    <p>Selected color: <span id="picked-color-text"></span></p>
+    <div id="picked-color">
+      <div id="contrast-color"></div>
+    </div>
+    <p id="resulting-color"></p>
+  </section>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
