@@ -4,7 +4,7 @@
 
 @function --color-contrast(--color <color>) returns <color> {
     /* Returns either negative or positive infinite for lightness, depending on if lightness is over or under 50%  */
-    result: lch(from var(--color) calc((50 - l) * infinity) 0 0)
+    result: oklch(from var(--color) calc((0.5 - l) * infinity) 0 0);
 }
 
 #contrast-color {
