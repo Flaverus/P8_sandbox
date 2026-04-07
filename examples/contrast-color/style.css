@@ -7,16 +7,35 @@
     result: oklch(from var(--color) calc((0.5 - l) * infinity) 0 0);
 }
 
-#contrast-color {
-    width: 40px;
-    height: 40px;
-    background-color: --color-contrast(var(--selected-color));
+.canvas {
+    fill: none
 }
 
-#picked-color {
-    width: 40px;
-    height: 40px;
-    padding: 20px;
-    background-color: var(--selected-color);
-    border: 2px solid #000000;
+.background_dark {
+    fill: var(--selected-color);
 }
+
+.background_medium {
+    fill: var(--selected-color);
+    opacity: 0.8;
+}
+
+.background_light {
+    fill: var(--selected-color);
+    opacity: 0.6;
+}
+
+.foreground_dark {
+    fill: --color-contrast(var(--selected-color));
+}
+
+.foreground_medium {
+    fill: --color-contrast(var(--selected-color));
+    opacity: 0.8;
+}
+
+.foreground_light {
+    fill: --color-contrast(var(--selected-color));
+    opacity: 0.6;
+}
+
