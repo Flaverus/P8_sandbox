@@ -9,7 +9,7 @@
   margin: (x: 2.5cm, y: 3cm),
 )
 
-// Cover Page
+// --- Cover Page ---
 #align(center)[
   #grid(
     columns: (1fr),
@@ -45,14 +45,42 @@
     columns: (150pt, 1fr),
     row-gutter: 1.5em,
     align: (left, left),
-    [**Author:**], [#text(weight: "bold")[Florian Schnidrig]],
-    [**Advisor:**], [Prof. Dierk König],
-    [**Profile:**], [Computer Science],
-    [**Date:**], [Summer 2026 (TBD)]
+    [*Author:*], [#text(weight: "bold")[Florian Schnidrig]],
+    [*Advisor:*], [Prof. Dierk König],
+    [*Profile:*], [Computer Science],
+    [*Date:*], [Summer 2026 (TBD)]
   )
 ]
 #pagebreak()
 
-// Start Page Numbering after Coverpage and start with 1
+// Start Page Numbering after Coverpage (Roman numbering for Table of Contents)
+#set page(numbering: "i")
+#counter(page).update(1)
+
+// --- Table of Contents ---
+#outline(indent: auto)
+
+// Regular arabic Numbering for the main contents
+#pagebreak()
 #set page(numbering: "1")
 #counter(page).update(1)
+
+// --- Chapters ---
+#include "chapters/01_abstract.typ"
+#include "chapters/02_introduction.typ"
+#include "chapters/03_theory.typ"
+#include "chapters/04_results.typ"
+#include "chapters/05_discussion.typ"
+#include "chapters/06_conclusion.typ"
+
+
+// --- Appendix ---
+// Bibliography usually isn't numbered
+#set heading(numbering: none)
+#bibliography("references.bib", style: "ieee", title: "Bibliography")
+
+#pagebreak()
+#outline(
+  title: "List of Figures",
+  target: figure.where(kind: image),
+)
