@@ -56,6 +56,31 @@ By responding to this preference, you can "re-invert" specific elements—like i
 === prefers-reduced-transparency
 [TBD]
 
+==  Evolving Standards in Media Queries
+
+The landscape of CSS media queries is far from static. As our understanding of accessibility deepens, new standards emerge while older, less effective ones are retired. One significant area currently under development addresses a long-standing gap: color vision deficiencies.
+
+=== color-vision-adjustment
+
+While tools for general color schemes currently exist, there is an active proposal within the W3C's ``` csswg-drafts``` repository to introduce a more granular media query. This proposed feature, ``` color-vision-adjustment```, aims to function similarly to ``` prefers-color-scheme``` but with a much sharper focus on specific visual impairments.
+
+If adopted, developers could tailor their UI specifically for:
+
+- *Protanopia*, *Deuteranopia*, and *Tritanopia* (various forms of color blindness)
+- *Achromatopsia* (total color blindness)
+
+This would allow for more sophisticated adjustments than simple contrast shifts—such as automatically swapping problematic color pairings for a specific user, moving beyond the simulated bookmarklets used in earlier research from the P7 project to a native, browser-level solution. @color_blindness_media_qiery
+
+=== Retired and Deprecated Queries
+
+As the web matures, some media queries have gracefully bowed out. Not every tool from the early days of CSS has stood the test of time, often because more robust alternatives have emerged. @media_queries
+
+*Legacy Types*: Queries like ``` embossed```, ``` aural```, and ``` braille``` were once intended to help style content for tactile and speech devices. However, these have been deprecated in favor of ARIA attributes, which provide a more flexible and reliable way to communicate semantically with assistive technologies.
+
+*The Privacy Trade-off*: The absence of even more specific queries to assist every possible user profile is often a result of privacy considerations. Detailed device data can be exploited for fingerprinting, a technique used to uniquely identify and track a device across the web. To combat this, browsers like Firefox offer "Resist Fingerprinting" modes that return generic or "fudged" values for certain media queries.
+
+In the delicate balance between personalization and data protection, modern web standards have determined that while tailored experiences are important, the right to privacy must remain a central priority.
+
 == CSS Custom Properties
 
 == CSS Functions
