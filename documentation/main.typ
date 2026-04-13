@@ -9,12 +9,39 @@
   margin: (x: 2.5cm, y: 3cm),
 )
 
+#show link: underline
+
+// Code Styling
+#show raw: set text(font: "Roboto Mono", size: 10pt)
+
+// Inline Code (using box instead of highlight for better padding control)
+#show raw.where(block: false): it => box(
+  fill: rgb("#f8fafc"),
+  stroke: 0.5pt + rgb("#cbd5e1"),
+  radius: 2pt,
+  inset: (x: 2pt),
+  outset: (y: 2pt),
+  text(size: 10pt, weight: "medium", font: "Roboto Mono", it)
+)
+
+// Block Code
+#show raw.where(block: true): it => {
+  block(
+    fill: rgb("#f8fafc"),
+    inset: 12pt,
+    radius: 6pt,
+    width: 100%,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+    it,
+  )
+}
+
 // --- Cover Page ---
 #align(center)[
   #grid(
     columns: (1fr),
     gutter: 1em,
-    [#text(size: 14pt, weight: "bold")[University of Applied Sciences and Arts Northwestern Switzerland]],
+    [#text(size: 14pt, weight: "bold")[University of Applied Sciences and Arts \ Northwestern Switzerland]],
     [#text(size: 12pt)[School of Computer Science]],
     [#text(size: 12pt)[Institute for Mobile and Distributed Systems (IMVS)]]
   )
