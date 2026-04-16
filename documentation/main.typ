@@ -107,7 +107,8 @@
 #bibliography("references.bib", style: "ieee", title: "Bibliography")
 
 #pagebreak()
+= List of Figures
 #outline(
-  title: "List of Figures",
+  title: none,
   target: figure.where(kind: image),
 )
