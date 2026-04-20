@@ -36,6 +36,9 @@
   )
 }
 
+// Figure caption styling
+#show figure.caption: emph
+
 // --- Cover Page ---
 #align(center)[
   #grid(

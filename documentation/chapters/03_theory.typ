@@ -6,17 +6,37 @@
 
 CSS Media Queries allow developer to apply different styles based on characteristics of a device or environment displaying a web page. This is often used to create a responsive web page that uses different stylings, based on screen width.
 
-The structure of such a media query looks like the following:
+@media-synthax-example below describes the media query synthax according to W3C.
 
-```css
-@media [not] media-type and (media-feature: value) and (media-feature: value) {
-  /* CSS rules to apply */
-}
-```
+#figure(
+  align(left,
+    ```css
+    @media <media-query-list> {
+      <rule-list>
+    }
+    ```
+  ),
+  caption: [Synthax of the media query where ``` <media-query-list>``` contains ``` <media-type>```s, ``` <media-feature>```s as well as logical operators.],
+) <media-synthax-example>
+
+
 
 For web development the ``` screen``` media-type is mainly of interest, but it is also possible to set it to ``` print``` for targeting printers. The default value is ``` all```, representing both independent options and is suitable for all devices.
 
-Media-feature is where it gets interesting as there are currently over 40 options available to listen and react to. For example, both max-width and max-height, as well as their opposites min-width and min-height, are widely used to create responsive web sites with different appearances optimized for different devices. Some of these features consider aspects of accessibility and user preferences which make them essential to create an accessible web page considering individual needs of different users, but they are not as widely used yet as they should. The following media-feature values should be considered when building web applications that should include everyone. @media_queries
+Media-feature is where it gets interesting as there are currently over 40 options available to listen and react to. For example, both ``` max-width``` and ``` max-height```, as well as their opposites ``` min-width``` and ``` min-height```, are widely used to create responsive web sites with different appearances optimized for different devices. @screen-width-example showcases an example using ``` screen``` and ``` max-width```. Some of these features consider aspects of accessibility and user preferences which make them essential to create an accessible web page considering individual needs of different users, but they are not as widely used yet as they should. The following media-feature values should be considered when building web applications that should include everyone. @media_queries
+
+#figure(
+  align(left,
+    ```css
+    @media screen and (max-width: 768px) {
+      body {
+        background-color: lightskyblue;
+      }
+    }
+    ```
+  ),
+  caption: [An example styling the background color for mobile devices with media-type ``` screen``` and media-feature ``` max-width``` ],
+) <screen-width-example>
 
 === Reduced Motion
 
@@ -56,12 +76,20 @@ Using inverted colors can have unpleasant side effects such as shadows turning i
 
 === Accessing Media Features through JavaScript
 
-The ``` window``` interface provides the ``` matchMedia()``` method, returning a ``` MediaQueryList``` object to check if the ``` document``` matches a media query string.
+The ``` window``` interface provides the ``` matchMedia()``` method, returning a ``` MediaQueryList``` object to check if the ``` document``` matches a media query string as seen below in @dark-color-scheme-example for the ``` prefers-color-scheme``` query.
 
-```js
-// Checks if the system settings prefere a dark color scheme
-const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
-```
+
+#figure(
+  align(left,
+    ```js
+    const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    ```
+  ),
+  caption: [Checking if the user's system settings prefere a dark color scheme],
+) <dark-color-scheme-example>
+
+
+
 
 This enables developers to not only react to preferences within CSS but also consider the users wishes within business logic and web page specific features. @match-media
 
@@ -84,6 +112,12 @@ Data accessible with media queries can be abused to construct a fingerprint, hel
 == CSS Custom Properties
 
 == CSS Functions
+
+== Contrast perception
+
+=== Relative Luminance
+
+=== Perceptual Color Models
 
 == Ishihara
 
