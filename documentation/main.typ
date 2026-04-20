@@ -115,3 +115,14 @@
   title: none,
   target: figure.where(kind: image),
 )
+
+#pagebreak()
+= List of Aids
+
+== Artificial Intelligence and Language Models
+
+*Tool: Gemini (Google), Version 3 Flash.*
+
+*Type of Usage*: Used for linguistic refinement of drafts and formating mathematical formulas (Relative Luminance).
+
+*Extent*: Specific paragraphs regarding WCAG luminance calculations were refined using the tool. All technical facts and code were manually verified for accuracy.

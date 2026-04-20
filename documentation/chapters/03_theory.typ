@@ -1,7 +1,5 @@
 = Theory
 
-== Testing Accessibility
-
 == CSS Media Queries
 
 CSS Media Queries allow developer to apply different styles based on characteristics of a device or environment displaying a web page. This is often used to create a responsive web page that uses different stylings, based on screen width.
@@ -117,7 +115,70 @@ Data accessible with media queries can be abused to construct a fingerprint, hel
 
 === Relative Luminance
 
+The current WCAG 2.x standard bases contrast requirements on relative luminance between text and its background, independent of hue. This assumes that for individuals with color vision deficiencies, hue and saturation have minimal or no effect regarding legibility as assessed by reading performance. Since the inability to distinguish specific colors does not typically impair light-dark perception, color itself is not considered a primary factor in these calculations. Far more important is that smaller and thinner fonts may be rendered by user agents with a much fainter appearance than the color defined in the CSS, leading to a perceived contrast that is notably lower than the theoretical ratio.
+
+The WCAG guideline requires at least a contrast ratio of 3:1 to satisfy the corelating requirement for level AA. This is based in the recommendation from ISO-9241-3. To achieve level AAA certification the minimum ratio is set to 7:1. This ratio was chosen because it compensated for the loss in contrast sensitivity experienced by users with approximately 20/80 vision (This means that someone needs to be 20 feet away to see what a person with normal vision can see from 80 feet away). People with more than this degree of vision loss usually use assistive technologies.
+
+Color deficiencies are so diverse that it is impossible to generalize effective color pairs for contrast based on quantitative data. This is why contrast independent of color perception is so important.
+
+A notable exception is protanopia where red color tones are perceived as dark grey, resulting in a bad contrast on darker colors and black. This is why it is recommended to generally not use red on black. @WCAG-1.4.3
+
+The formula depicted in @relative-luminanc-formula is used in the WCAG 2.x specification to calculate the relative luminance used for further calculations such as color contrast.
+
+#figure(
+  box(
+    inset: 12pt,
+    fill: rgb("#f8fafc"),
+    radius: 6pt,
+    width: 100%,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+  {
+    [
+      $ L = 0.2126 dot R + 0.7152 dot G + 0.0722 dot B $
+      #v(5pt)
+      $ "Where " C = cases(
+        C_("sRGB") / 12.92 & "if" C_("sRGB") <= 0.03928,
+        ((C_("sRGB") + 0.055) / 1.055)^2.4 & "otherwise"
+      ) $
+    ]
+
+    line(length: 100%, stroke: 0.5pt + gray)
+
+    set align(left)
+    [*Example:* Dodger Blue `rgb(30, 144, 255)`]
+
+    grid(
+      columns: (1fr, 1fr),
+      gutter: 15pt,
+      [
+        *1. Normalize ($\/255$)* \
+        $R_("sRGB") = 30/255 = 0.1176$ \
+        $G_("sRGB") = 144/255 = 0.5647$ \
+        $B_("sRGB") = 255/255 = 1.0000$
+      ],
+      [
+        *2. Linearize* \
+        $R = 0.0123$ \
+        $G = 0.2747$ \
+        $B = 1.0000$
+      ]
+    )
+
+    v(5pt)
+    [*3. Calculate Luminance ($L$)*]
+    $ L = (0.2126 dot 0.0123) + (0.7152 dot 0.2747) + (0.0722 dot 1.0000) = bold(0.2712) $
+
+    line(length: 100%, stroke: 0.5pt + gray)
+
+    [*Calculate Contrast Ratio*]
+    $ "Ratio" = ("L1" + 0.05)/("L2" + 0.05) $
+  }),
+  caption: [Step-by-step calculation of relative luminance based on the W3C sRGB formula. @relative_luminanc],
+) <relative-luminanc-formula>
+
 === Perceptual Color Models
+
+WCAG 3.0, which is currently still in development, replaces the WCAG 2.x contrast methods with Advanced Perceptual Contrast Algorithm (APCA). @APCA
 
 == Ishihara
 
