@@ -97,7 +97,7 @@ Continuous development and improvement take place in the world of CSS media quer
 
 This proposal intends to cover various specific types of colorblindness such as ``` protanopia``` (red deficiency), ``` deuteranopia``` (red-green deficiency), ``` tritanopia``` (blue-yellow deficiency) or ``` achromatopsia``` (near total color blindness - grayscale) that were covered in the previous P7 project with bookmarklets simulating these visual impairments.
 
-Having such a ``` media-feature``` would increase the awareness as well as the possibilities to directly react to the needs of users affected which such impairments.
+Having such a ``` media-feature``` would increase the awareness as well as the possibilities to directly react to the needs of users affected which such impairments. @color_blindness_media_qiery
 
 === Deprecated Features
 
@@ -107,11 +107,80 @@ There were media types considering accessibility needs like ``` embossed```, ```
 
 Data accessible with media queries can be abused to construct a fingerprint, helping to identify and track a device. To prevent this, browsers may fudge returned values in some manners. Some Browsers also provide the possibility to prevent this abuse in the browser settings, such as "Resist Fingerprinting" in Firefox resulting in many media queries only reporting default values rather than device specific settings. @at_media
 
+#pagebreak()
 == CSS Custom Properties
 
+CSS custom properties, also referred to as CSS variables, are entities representing values. These properties can be used throughout the document, evaluating into the same values, depending on the scope it is defined, everywhere they are used. This helps developers to keep an overview and reduces complexity. Such a property is typically set by the custom property syntax, being two dashes ``` --```, followed by a name, joined with single dashes. To access a custom property the CSS ``` var()``` function must be used. @primary-color-custom-property shows an example of custom properties being used to define a ``` --primary-color``` that then can be used on the whole website and is easy exchangeable in one central part to implement different color palates such as a light and dark theme, based on the users preference. @custom-properties
+
+#figure(
+  align(left,
+    ```css
+    :root {
+      --primary-color: #204CCF;
+      --primary-color-contrast: #FFFFFF;
+    }
+
+    button.primary {
+      background-color: var(--primary-color);
+      color: var(--primary-color-contrast);
+    }
+
+    h1, h2, h3 {
+      color: var(--primary-color);
+    }
+
+    ```
+  ),
+  caption: [Defining a primary color custom propperty that can be used throughout the website],
+) <primary-color-custom-property>
+
+It is possible to be more precise when defining a custom property by using the ``` @property``` at-rule, allowing to define the value type with ``` syntax```, if the property inherits by default with ``` inherits``` and an initial value with ``` initial-value```. There is a wide range of values possible for ``` syntax``` such as ``` <color>```, ``` <number>``` and ``` <url>``` to name a few. @primary-color-custom-property-at-rule shows how the ``` ---primary-color``` example from before is achieved with this at-rule. @at-property @at-property-syntax
+
+#figure(
+  align(left,
+    ```css
+    @property --primary-color {
+      syntax: "<color>";
+      inherits: false;
+      initial-value: #204CCF;
+    }
+    ```
+  ),
+  caption: [Defining a primary color custom propperty using the ``` @property``` rule to be more precise],
+) <primary-color-custom-property-at-rule>
+
+As displayed in @primary-color-custom-property-js below, both variations are also definable with JavaScript using ``` registerPropperty()``` or ``` setProperty()```. @register-property @set-property
+
+#figure(
+  align(left,
+    ```js
+    window.CSS.registerProperty({
+      name: '--primary-color',
+      syntax: '<color>',
+      inherits: false,
+      initialValue: '#204CCF ',
+    });
+
+    const root = document.documentElement;
+    root.style.setProperty('--primary-color-contrast', '#FFFFFF');
+
+    ```
+  ),
+  caption: [Using both ``` registerProperty()``` and ``` setProperty()``` in JavaScript to create CSS custom properties],
+) <primary-color-custom-property-js>
+
+=== Global State Management
+
+[TODO Add ``` @container``` and ``` [style*="--custom-property: value"]``` to dive into State management.]
+
+#pagebreak()
 == CSS Functions
 
+
+#pagebreak()
 == Contrast perception
+
+[TODO] Some introducing summary on contrast.
 
 === Relative Luminance
 
@@ -180,6 +249,7 @@ The formula depicted in @relative-luminanc-formula is used in the WCAG 2.x speci
 
 WCAG 3.0, which is currently still in development, replaces the WCAG 2.x contrast methods with Advanced Perceptual Contrast Algorithm (APCA). @APCA
 
+#pagebreak()
 == Ishihara
 
 #pagebreak()
