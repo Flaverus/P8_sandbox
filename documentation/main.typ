@@ -36,8 +36,9 @@
   )
 }
 
-// Figure caption styling
+// Figure
 #show figure.caption: emph
+#show figure: set block(above: 32pt, below: 32pt)
 
 // --- Cover Page ---
 #align(center)[

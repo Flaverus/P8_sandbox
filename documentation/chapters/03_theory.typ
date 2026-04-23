@@ -171,7 +171,52 @@ As displayed in @primary-color-custom-property-js below, both variations are als
 
 === Global State Management
 
-[TODO Add ``` @container``` and ``` [style*="--custom-property: value"]``` to dive into State management.]
+The CSS custom property can not only be used to store values such as colors to be applied to properties but also for state management. As the values can be altered and accessed both within CSS, as well as in JavaScript, it lends itself to store configuration data, based on which the user interface adapts.
+
+When a user has not enabled a reduced motion setting in his OS or browser yet deactivates it with some website specific settings, it is possible to store that preference within a custom property, such as ``` --prefers-reduced-motion: true``` and act on that with the ``` @container``` at-rule to apply different styling at runtime similar to @at-container-reduced-motion. @at-container
+
+#figure(
+  align(left,
+    ```css
+    :root {
+      --prefers-reduced-motion: false;
+    }
+
+    @container style(--prefers-reduced-motion: true) {
+        .animated-content {
+            animation: none !important;
+        }
+    }
+    ```
+  ),
+  caption: [CSS ``` @container``` at-rule used to react to custom properties turning off animations based on user preferences],
+) <at-container-reduced-motion>
+
+Another possibility would be to use the CSS attribute selector to overwrite other custom properties if another color theme is needed. When the users OS and browser settings suggest he wants a light color theme but he configures it differently on the website itself a custom property such as ``` --prefers-dark-theme: true``` could be set to change the applications color palette as shown in @attribute-selector-dark-color-theme. @attribute-selector
+
+#figure(
+  align(left,
+    ```css
+    :root {
+      --prefers-dark-theme: false;
+
+        --text-color: #222222;
+        --bg-color: #FCFCFC;
+        --border-color: #EEEEEE;
+        --primary-accent: #0056B3;
+    }
+
+    :root[style*="--prefers-dark-theme: true"] {
+        --text-color: #EDEDED;
+        --bg-color: #212121;
+        --border-color: #232323;
+        --primary-accent: #6DB3F4;
+    }
+
+    ```
+  ),
+  caption: [CSS attribute selector used to react to custom properties switching to a dark color theme based on user preferences],
+) <attribute-selector-dark-color-theme>
 
 #pagebreak()
 == CSS Functions
