@@ -62,7 +62,7 @@ Developers are not encouraged to use this media query to create a separate desig
 
 When a user has enabled a setting to reduce the transparent or translucent layer effects the ``` prefers-reduced-transparency``` media-feature will be set to ``` reduced``` while a value of ``` no-preference``` indicates default behavior is expected by the user. This can help improve contrast and readability for some users.
 
-This feature is restricted available and not yet fully supported by Firefox and Safari.
+This feature is restricted available and not yet fully supported by Firefox and Safari. @reduced-transparency
 
 === Color Scheme
 
@@ -192,7 +192,7 @@ Color deficiencies are so diverse that it is impossible to generalize effective 
 
 A notable exception is protanopia where red color tones are perceived as dark grey, resulting in a bad contrast on darker colors and black. This is why it is recommended to generally not use red on black. @WCAG-1.4.3
 
-The formula depicted in @relative-luminanc-formula is used in the WCAG 2.x specification to calculate the relative luminance used for further calculations such as color contrast.
+The formula depicted in @relative-luminanc-formula is used in the WCAG 2.x specification to calculate the relative luminance used for further calculations such as color contrast. @relative_luminanc
 
 #figure(
   box(
