@@ -222,6 +222,66 @@ Another possibility would be to use the CSS attribute selector to overwrite othe
 == CSS Functions
 
 
+
+#pagebreak()
+== Color Spaces
+
+=== RGB
+
+Red, green and blue (and alpha chanel)
+
+#figure(
+  align(left,
+    ```css
+    rgb(252 186 3 / 0.5);
+    ```
+  ),
+  caption: [TODO],
+) <rgb-color-example>
+
+=== HSL
+
+Hue, saturation and light (Also in RGB color space)
+
+#figure(
+  align(left,
+    ```css
+    hsl(120 75 25 / 0.6);
+    ```
+  ),
+  caption: [TODO],
+) <hsl-color-example>
+
+
+=== Oklab
+
+oklab() (lightness, red/green-ness, yellow/blue-ness) and oklch() (lightness, chroma, hue)
+
+#figure(
+  align(left,
+    ```css
+    oklab(0.63 0.22 0.13 / 0.7);
+    oklch(0.93 0.39 28 / 0.3);
+    ```
+  ),
+  caption: [TODO],
+) <ok-color-example>
+
+=== HWB
+
+Hue, whiteness and blackness
+
+#figure(
+  align(left,
+    ```css
+    hwb(240 0 0 / 0.12);
+    ```
+  ),
+  caption: [TODO],
+) <hwb-color-example>
+
+@CSS-colors
+
 #pagebreak()
 == Contrast perception
 
