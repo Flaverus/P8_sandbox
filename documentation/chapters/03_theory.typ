@@ -33,7 +33,7 @@ Media-feature is where it gets interesting as there are currently over 40 option
     }
     ```
   ),
-  caption: [An example styling the background color for mobile devices with media-type ``` screen``` and media-feature ``` max-width``` ],
+  caption: [An example styling the background color for mobile devices with media-type ``` screen``` and media-feature ``` max-width```.],
 ) <screen-width-example>
 
 === Reduced Motion
@@ -83,7 +83,7 @@ The ``` window``` interface provides the ``` matchMedia()``` method, returning a
     const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
     ```
   ),
-  caption: [Checking if the user's system settings prefere a dark color scheme],
+  caption: [Checking if the user's system settings prefere a dark color scheme.],
 ) <dark-color-scheme-example>
 
 
@@ -131,7 +131,7 @@ CSS custom properties, also referred to as CSS variables, are entities represent
 
     ```
   ),
-  caption: [Defining a primary color custom propperty that can be used throughout the website],
+  caption: [Defining a primary color custom propperty that can be used throughout the website.],
 ) <primary-color-custom-property>
 
 It is possible to be more precise when defining a custom property by using the ``` @property``` at-rule, allowing to define the value type with ``` syntax```, if the property inherits by default with ``` inherits``` and an initial value with ``` initial-value```. There is a wide range of values possible for ``` syntax``` such as ``` <color>```, ``` <number>``` and ``` <url>``` to name a few. @primary-color-custom-property-at-rule shows how the ``` ---primary-color``` example from before is achieved with this at-rule. @at-property @at-property-syntax
@@ -146,7 +146,7 @@ It is possible to be more precise when defining a custom property by using the `
     }
     ```
   ),
-  caption: [Defining a primary color custom propperty using the ``` @property``` rule to be more precise],
+  caption: [Defining a primary color custom propperty using the ``` @property``` rule to be more precise.],
 ) <primary-color-custom-property-at-rule>
 
 As displayed in @primary-color-custom-property-js below, both variations are also definable with JavaScript using ``` registerPropperty()``` or ``` setProperty()```. @register-property @set-property
@@ -166,7 +166,7 @@ As displayed in @primary-color-custom-property-js below, both variations are als
 
     ```
   ),
-  caption: [Using both ``` registerProperty()``` and ``` setProperty()``` in JavaScript to create CSS custom properties],
+  caption: [Using both ``` registerProperty()``` and ``` setProperty()``` in JavaScript to create CSS custom properties.],
 ) <primary-color-custom-property-js>
 
 === Global State Management
@@ -189,7 +189,7 @@ When a user has not enabled a reduced motion setting in his OS or browser yet de
     }
     ```
   ),
-  caption: [CSS ``` @container``` at-rule used to react to custom properties turning off animations based on user preferences],
+  caption: [CSS ``` @container``` at-rule used to react to custom properties turning off animations based on user preferences.],
 ) <at-container-reduced-motion>
 
 Another possibility would be to use the CSS attribute selector to overwrite other custom properties if another color theme is needed. When the users OS and browser settings suggest he wants a light color theme but he configures it differently on the website itself a custom property such as ``` --prefers-dark-theme: true``` could be set to change the applications color palette as shown in @attribute-selector-dark-color-theme. @attribute-selector
@@ -215,7 +215,7 @@ Another possibility would be to use the CSS attribute selector to overwrite othe
 
     ```
   ),
-  caption: [CSS attribute selector used to react to custom properties switching to a dark color theme based on user preferences],
+  caption: [CSS attribute selector used to react to custom properties switching to a dark color theme based on user preferences.],
 ) <attribute-selector-dark-color-theme>
 
 #pagebreak()
@@ -292,9 +292,53 @@ The formula depicted in @relative-luminanc-formula is used in the WCAG 2.x speci
 
 === Perceptual Color Models
 
-WCAG 3.0, which is currently still in development, replaces the WCAG 2.x contrast methods with Advanced Perceptual Contrast Algorithm (APCA). @APCA
+The WCAG 2.x contrast guidelines that are based on relative luminance are being replaced in the future with the WCAG 3.0 guidelines that use the Accessible Perceptual Contrast Algorithm (APCA). Massive changes in display technology, web content and CSS functionality led to the approach that was defined nearly 2 decades ago for WCAG 2.x to be outdated and in need for replacement based on advances in vision science since 2005.
+
+The current approach follows a binary nature where the criteria either passes or fails as a whole. It is important to understand the non-linear aspects of perception and using a model that takes these aspects in account.
+
+All perception is context sensitive and when it comes to readability contrast font weight and line thickness are principal factors that must be taken into account when looking at luminance contrast.
+
+The color contrast regarding hue, chroma or saturation is less relevant for readability, but high light/dark contrast ensures the best readability. Smaller and thinner visual characteristics lower the perceived contrast, requiring for the light/darkness difference to increase as showcased in @apca-curve.
+
+#figure(
+  box(
+    inset: 12pt,
+    radius: 6pt,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+  {
+    image("../ressources/apca_curve.png", width: 80%)
+  }),
+  caption: [This chart demonstrates with the usage of text samples the spatial dependance of human contrast sensitivity.],
+) <apca-curve>
+
+Nontextual objects like an icon require a lower lightness contrast compared to text and the contrast requirement of two colors is dependent of the use case, size, thickness and so on. The math behind WCAG 2.x contrast for accessibility has problems that have been known for a long time and are criticized widely. Case studies that compare contrast between white and black text on a colored background found that the variant that was deemed as inaccessible by the guidelines were perceived as more readable by the majority of contestants with color vision deficiencies. @white-on-orange-case-study
+
+APCA is a new approach for calculating and predicting readability contrast related to color appearance on self-illuminated RGB computer displays introducing the lightness contrast ($L^c$) value. This new approach considers the context in which two colors are used rather than passing or failing regardless of the use case. @APCA
 
 #pagebreak()
 == Ishihara
+
+The Ishihara color test, named after Japanese ophthalmologist Shinobu Ishihara, was originally designed in 1917 to identify red-green color vision deficiencies. The test utilizes a series of circular plates covered in pseudo-isochromatic dots, randomly sized circles of varying colors that appear identical to those with color blindness but distinct to those with standard vision. @ishihara
+
+An example of such a plate can be seen in @ishihara-example01 that uses a orange and teal color plate which should be visible independent of the viewers vision types. This color combination was typically used as demonstratin plate at the beginning of a ishihara test.
+
+=== Functional Application in Contrast Testing
+
+While traditionally a diagnostic tool for the human eye, the mechanics of these plates offer a rigorous framework for testing visual hierarchy and contrast in design.
+
+By packing dots of different colors together, the Ishihara method forces the eye to rely on "chromatic contrast" to find a pattern. In a custom application, if a design’s foreground and background colors "bleed" together on a dotted plate, it proves the colors lack the necessary luminance contrast to be accessible.
+
+Custom plates can be generated using specific color palettes to ensure that a brand's primary colors are distinguishable not just to standard viewers, but across the spectrum of for example Protanopia or Deuteranopia.
+
+#figure(
+  box(
+    inset: 12pt,
+    radius: 6pt,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+  {
+    image("../ressources/Ishihara-example01.png", width: 50%)
+  }),
+  caption: [This plate displays a high-contrast figure designed to remain legible across all vision types, serving as the universal baseline for the Ishihara color test.],
+) <ishihara-example01>
 
 #pagebreak()
