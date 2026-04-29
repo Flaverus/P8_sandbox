@@ -218,6 +218,65 @@ Another possibility would be to use the CSS attribute selector to overwrite othe
   caption: [CSS attribute selector used to react to custom properties switching to a dark color theme based on user preferences.],
 ) <attribute-selector-dark-color-theme>
 
+=== Custom Propperty Toggle
+
+In the landscape of modern CSS, developers often face the challenge of managing repetitive declarations, particularly when implementing light and dark themes. Whether using traditional class-based switching or standard ``` @media (prefers-color-scheme: dark)``` blocks, the logic frequently requires duplicating property keys to override their values. A tiny footnote in the CSS specifications allows for a more elegant approach to state management using custom property to toggle values.
+
+According to CSS specifications, a custom property must represent at least one token to be valid. This token can be a simple whitespace, allowing for exploitation to create ``` boolean``` values as shown in @whitespace-property-value. @custom-propperty-declaration-value
+
+#figure(
+  align(left,
+    ```css
+    :root {
+    	--true: ;
+    	--false: initial;
+    }
+    ```
+  ),
+  caption: [Both ``` ' '``` and ``` initial``` are valid values for custom properties.],
+) <whitespace-property-value>
+
+Traditional theming setups require to define variables twice for both the light- as well as the dark-theme. Taking advantage of the pseudo ``` boolean``` values from @whitespace-property-value the toggle logic can be put into a single custom property, demonstrated in @toggle-custom-property.
+
+#figure(
+  align(left,
+    ```css
+    :root {
+      --is-light-theme: var(--true);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --is-light-theme: var(--false);
+      }
+    }
+    ```
+  ),
+  caption: [Assigning either ``` ' '``` or ``` initial``` debending on the chosen theme allows to create the base for the toggle logic.],
+) <toggle-custom-property>
+
+Setting the ``` --is-light-theme``` property as prefix when declairing a custom property results either in a valid declaration, if a whitespace is set as prefix, or an invalid declaration, if ``` initial``` is set as the prefix value. Using ``` var()``` with a fallback value is now automatically assigning either the light-theme or dark-theme color, depending on the validity of the light-theme custom properties displayed in @var-fallback-property.
+
+#figure(
+  align(left,
+    ```css
+    :root {
+      --color-text--light: var(--is-light-theme) black;
+      --color-text--dark: white;
+
+      --color-background--light: var(--is-light-theme) white;
+      --color-background--dark: black;
+
+      --color-text: var(--color-text--light, var(--color-text--dark));
+      --color-background: var(--color-background--light, var(--color-background--dark));
+    }
+    ```
+  ),
+  caption: [Prepending ``` initial``` when setting the value of a custom property results in ``` var()``` taking the fallback argument.],
+) <var-fallback-property>
+
+Multiple fallback values, based on different toggle properties, representing different stylings, could be chained with the ``` var()``` CSS function. This allows for a central state management, assigning custom properties used throughout the whole setup in one single place. @custom-propperty-theme-switch @var-function
+
 #pagebreak()
 == CSS Functions
 
@@ -368,7 +427,7 @@ The color contrast regarding hue, chroma or saturation is less relevant for read
   {
     image("../ressources/apca_curve.png", width: 80%)
   }),
-  caption: [This chart demonstrates with the usage of text samples the spatial dependance of human contrast sensitivity.],
+  caption: [This chart demonstrates with the usage of text samples the spatial dependance of human contrast sensitivity. @APCA],
 ) <apca-curve>
 
 Nontextual objects like an icon require a lower lightness contrast compared to text and the contrast requirement of two colors is dependent of the use case, size, thickness and so on. The math behind WCAG 2.x contrast for accessibility has problems that have been known for a long time and are criticized widely. Case studies that compare contrast between white and black text on a colored background found that the variant that was deemed as inaccessible by the guidelines were perceived as more readable by the majority of contestants with color vision deficiencies. @white-on-orange-case-study
