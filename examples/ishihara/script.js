@@ -36,3 +36,23 @@ document.getElementById('daltonism').addEventListener('click', () => {
     root.style.setProperty('--foreground-medium', '#fa7347');
     root.style.setProperty('--foreground-light', '#fca15f');
 });
+
+const setVision = (type) => {
+    document.body.dataset.vision = type;
+};
+
+document.getElementById('protanopia-vision').addEventListener('click', () => {
+    setVision('protanopia');
+});
+
+document.getElementById('deuteranopia-vision').addEventListener('click', () => {
+    setVision('deuteranopia');
+});
+
+document.getElementById('tritanopia-vision').addEventListener('click', () => {
+    setVision('tritanopia');
+});
+
+document.getElementById('regular-vision').addEventListener('click', () => {
+    setVision('regular');
+});

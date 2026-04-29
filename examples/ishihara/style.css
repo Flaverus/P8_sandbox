@@ -36,3 +36,15 @@
     fill: var(--foreground-light);
 }
 
+body[data-vision="protanopia"] {
+    filter: url(#protanopia-filter);
+}
+body[data-vision="deuteranopia"] {
+    filter: url(#deuteranopia-filter);
+}
+body[data-vision="tritanopia"] {
+    filter: url(#tritanopia-filter);
+}
+body[data-vision="regular"] {
+    filter: none;
+}
