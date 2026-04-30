@@ -1,11 +1,12 @@
 /* Base Variables for Consistency */
 :root {
-    --bg-color: #fcfcfc;
-    --text-color: #222222;
-    --content-bg: #ffffff;
-    --border-color: #eeeeee;
+    --bg-color:       #fcfcfc;
+    --text-color:     #222222;
+    --content-bg:     #ffffff;
+    --border-color:   #eeeeee;
     --primary-accent: #0056b3;
-    --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow:         0 2px 8px rgba(0, 0, 0, 0.1);
+
     --border-radius: 0.375rem;
     --z-index-elevated: 1;
     --z-index-more-important: 10;
@@ -112,4 +113,11 @@ nav ul {
 :focus-visible {
     outline: 0.1875rem solid var(--primary-accent);
     outline-offset: 0.1875rem;
+}
+
+/* Helper class for centering contents in div */
+div.center {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
 }

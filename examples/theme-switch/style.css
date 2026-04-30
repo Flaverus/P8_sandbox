@@ -1,0 +1,40 @@
+:root {
+    --true: ;
+    --false: initial;
+
+    --prefers-dark-theme: false;
+    --is-light-theme: var(--true);
+    color-scheme: light dark;
+
+    /*
+     * Defining colors for both themes
+     */
+    --color-background--light:         var(--is-light-theme) #fcfcfc;
+    --color-background--dark:                                #212121;
+    --color-text--light:               var(--is-light-theme) #222222;
+    --color-text--dark:                                      #EDEDED;
+    --color-content-background--light: var(--is-light-theme) #ffffff;
+    --color-content-background--dark:                        #2E2E2E;
+    --color-border--light:             var(--is-light-theme) #eeeeee;
+    --color-border--dark:                                    #232323;
+    --color-primary-accent--light:     var(--is-light-theme) #0056b3;
+    --color-primary-accent--dark:                            #6DB3F4;
+    --shaddow--light:                  var(--is-light-theme) 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shaddow--dark:                                         0 2px 8px rgba(0, 0, 0, 0.5);
+
+
+    /*
+     * Setting colors with the toggle trick
+     */
+    --bg-color:       var(--color-background--light,         var(--color-background--dark));
+    --text-color:     var(--color-text--light,               var(--color-text--dark));
+    --content-bg:     var(--color-content-background--light, var(--color-content-background--dark));
+    --border-color:   var(--color-border--light,             var(--color-border--dark));
+    --primary-accent: var(--color-primary-accent--light,     var(--color-primary-accent--dark));
+    --shadow:         var(--shaddow--light,                  var(--shaddow--dark));
+}
+
+:root[style*="--prefers-dark-theme: true"] {
+    --is-light-theme: var(--false);
+    color-scheme: dark;
+}
