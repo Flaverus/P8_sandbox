@@ -7,6 +7,13 @@
     result: oklch(from var(--color) calc((0.5 - l) * infinity) 0 0);
 }
 
+@function --color-contrast-soft(--color <color>) returns <color> {
+    /* Getting black or white but adding some color back into the mix */
+    --black-or-white: oklch(from var(--color) calc((0.5 - l) * infinity) 0 0);
+
+    result: color-mix(in oklab, oklch(from var(--black-or-white) calc(l + 0.2) c h), var(--color) 20%);
+}
+
 .canvas {
     fill: none
 }
@@ -17,12 +24,10 @@
 
 .background_medium {
     fill: var(--selected-color);
-    opacity: 0.8;
 }
 
 .background_light {
     fill: var(--selected-color);
-    opacity: 0.6;
 }
 
 .foreground_dark {
@@ -30,12 +35,14 @@
 }
 
 .foreground_medium {
+    fill: --color-contrast-soft(var(--selected-color));
+}
+
+/*
+.foreground_light {
     fill: --color-contrast(var(--selected-color));
     opacity: 0.8;
 }
 
-.foreground_light {
-    fill: --color-contrast(var(--selected-color));
-    opacity: 0.6;
-}
+ */
 

@@ -280,7 +280,48 @@ Multiple fallback values, based on different toggle properties, representing dif
 #pagebreak()
 == CSS Functions
 
+There are many native CSS functions available that make a developer's life easier. Some of these functions might be useful when it comes to accessibility such as the ``` contrast-color()``` function that became newly available during the implementation of this project in April 2026 and works across the latest devices and browser versions. This function returns either white or black, depending on which of these two colors has a higher contrast to the color passed to the function as parameter. An example with a ``` button``` styling can be seen in @contrast-color-example. @contrast-color
 
+#figure(
+  align(left,
+    ```css
+    button {
+      background-color: var(--button-color);
+      color: contrast-color(var(--button-color));
+    }
+    ```
+  ),
+  caption: [Setting the text color of a button black or white, depending on the background color],
+) <contrast-color-example>
+
+Having either black or white as font color on a background is a very safe approach but might, depending on the background, feel too harsh, making the reading experience less pleasant. Another relatively fresh available CSS function is the ``` light-dark()```, allowing developers to provide two colors or images. Depending on the active color scheme the first value is returned for the light theme and the second value for the dark theme. In @light-dark-example this approach ids shown using custom properties. @light-dark
+
+#figure(
+  align(left,
+    ```css
+    body {
+      color: light-dark(var(--color-text--light), var(--color-text--dark));
+      background-color: light-dark(var(--color-background--light), var(--color-background--dark));
+    }
+    ```
+  ),
+  caption: [Defining the text and background color depending on the selected theme with custom properties.],
+) <light-dark-example>
+
+=== CSS Custom Functions
+
+Whilst the wide range of available functions in CSS covers a lot of use cases there might be scenarios that do not fit these provided possibilities and need combination of functions or even completely different functionalities. This is where the currently still as experimental flagged ``` @function``` at-rule comes into play. This feature has a similar look and feel to the CSS custom properties, also starting with a leading ``` --``` in their name. To declare such a function the ``` @function```keyword is needed, followed by a custom name and some optional parameters. Both parameters and function name start with ``` ---```, followed by a case-sensitive identifier defined by the user. Finaly a value defined with ``` result:``` is evaluated and the result returned as seen in @at-function-example. @at-function
+
+#figure(
+  align(left,
+    ```css
+    @function --color-contrast(--color <color>) returns <color> {
+        result: oklch(from var(--color) calc((0.5 - l) * infinity) 0 0);
+    }
+    ```
+  ),
+  caption: [A custom function that serves the same purpose as ``` contrast-color()``` but was creates before this feature was widely available.],
+) <at-function-example>
 
 #pagebreak()
 == Color Spaces
