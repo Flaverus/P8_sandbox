@@ -345,9 +345,11 @@ Whilst the wide range of available functions in CSS covers a lot of use cases th
 #pagebreak()
 == Color Spaces
 
+There are many different models to describe colors the human eye can perceive. Each of these models has different strong suits and weaknesses and is used for different applications throughout different areas not only limited to displays on digital devices. For a long time, colors in CSS were defined in the RGB color space and therefore limited to a certain degree. The CSS Colors Module Level 4 specification provided additional support to manipulate colors in CSS in other ways with other color models. Currently there is even a CSS color module level 5 draft in the works at the W3 consortium. @CSS-colors
+
 === RGB
 
-Red, green and blue (and alpha chanel)
+RGB mixes the primary colors ``` red```, ``` green``` and ``` blue``` in different saturations. Additionally, to the colors an alpha channel can optionally be added to define the opacity of a color. This way of describing colors has been used in CSS for ages and can be written both with the ``` rgb()``` function or with the hex annotation which would look like ``` #2d1fb180``` to achive the same color as shown in @rgb-color-example. @CSS-colors
 
 #figure(
   align(left,
@@ -358,12 +360,12 @@ Red, green and blue (and alpha chanel)
       rgb(45, 31, 177, 50%)
     ),
   ),
-  caption: [An example showing how to use ``` rgb()``` with a color from the Kolibri palette],
+  caption: [An example showing how to use ``` rgb()``` with a color from the Kolibri palette with a 50% oppacity],
 ) <rgb-color-example>
 
 === HSL
 
-Hue, saturation and light (Also in RGB color space)
+With the addition of CSS Color Module Level 3 HSL was introduced to CSS where the colors hue is picked based on a color wheel within the RGB color space. The color is described by the ``` hue``` angle on the color wheel, the ``` saturation``` and ``` lightness``` as presented in @hsl-color-example. Additionally, an alpha channel can be added, analogue to RGB. This allows to pick a color and manipulate its saturation or lightness, without having to re-calculate RBG values, allowing the creation of different shades of the same color way easier. @CSS-colors
 
 #figure(
   align(left,
@@ -374,13 +376,13 @@ Hue, saturation and light (Also in RGB color space)
       rgb(95, 46, 234, 60%)
     ),
   ),
-  caption: [How to use ``` hsl()``` to configure another color from the Kolibri palette],
+  caption: [How to use ``` hsl()``` to configure another color from the Kolibri palette with a 60% oppacity],
 ) <hsl-color-example>
 
 
-=== Oklab
+=== CIELAB Colors
 
-oklab() (lightness, red/green-ness, yellow/blue-ness) and oklch() (lightness, chroma, hue)
+This color space allows to use additional and more vibrant colors outside of the RGB limitation. It is a uniform color space that defines colors based on how they are perceived by the human eye. The ``` oklab()``` function describes colors in that space with ``` red/green-ness```, ``` yellow/blueness``` along the a and b axis in the Oklab color space. Alternatively ``` oklch()``` uses ``` lightness```,  ``` chroma``` and ``` hue``` to describe colors. These ways of describing colors are consideret the current state of the art and an example can be seen in @ok-color-example. Both functions accept an optional alpha channel for opacity. @CSS-colors
 
 #figure(
   align(left,
@@ -391,12 +393,12 @@ oklab() (lightness, red/green-ness, yellow/blue-ness) and oklch() (lightness, ch
       rgb(190, 88, 253, 70%)
     ),
   ),
-  caption: [Showcasing ``` oklab()``` and ``` oklch()``` with yet another color from the Kolibri palette],
+  caption: [Showcasing ``` oklab()``` and ``` oklch()``` with yet another color from the Kolibri palette with a 70% oppacity],
 ) <ok-color-example>
 
 === HWB
 
-Hue, whiteness and blackness
+Independent from the new color space ``` hwb()```was added, which considers the ``` hue```, ``` whiteness``` as well as ``` blackness``` within the RGB color space and is similar to ``` hsl()```. An example is seen in @hwb-color-example. @CSS-colors
 
 #figure(
   align(left,
@@ -406,10 +408,8 @@ Hue, whiteness and blackness
       rgb(254, 46, 168, 30%)
     ),
   ),
-  caption: [Using ``` hwb()``` to recreate a different color shade from the Kolibri palette],
+  caption: [Using ``` hwb()``` to recreate a different color shade from the Kolibri palette with a 30% oppacity],
 ) <hwb-color-example>
-
-@CSS-colors
 
 #pagebreak()
 == Contrast perception
