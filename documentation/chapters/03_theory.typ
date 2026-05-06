@@ -1,3 +1,20 @@
+// Special code snippet including a colored square to the right
+#let color-snippet(code-block, preview-color) = {
+  block(
+    fill: rgb("#f8fafc"),
+    inset: 12pt,
+    radius: 6pt,
+    width: 100%,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+    grid(
+      columns: (1fr, auto),
+      align: horizon,
+      text(font: "Roboto Mono", size: 10pt, code-block.text),
+      square(size: 1.25cm, fill: preview-color, radius: 2pt, stroke: 0.5pt + rgb("#cbd5e1"))
+    )
+  )
+}
+
 = Theory
 
 == CSS Media Queries
@@ -323,6 +340,8 @@ Whilst the wide range of available functions in CSS covers a lot of use cases th
   caption: [A custom function that serves the same purpose as ``` contrast-color()``` but was creates before this feature was widely available.],
 ) <at-function-example>
 
+[[ADDING IF, ELSE, types (synthax in properties)]]
+
 #pagebreak()
 == Color Spaces
 
@@ -332,11 +351,14 @@ Red, green and blue (and alpha chanel)
 
 #figure(
   align(left,
-    ```css
-    rgb(252 186 3 / 0.5);
-    ```
+    color-snippet(
+      ```css
+      rgb(45 31 177 / 0.5);
+      ```,
+      rgb(45, 31, 177, 50%)
+    ),
   ),
-  caption: [TODO],
+  caption: [An example showing how to use ``` rgb()``` with a color from the Kolibri palette],
 ) <rgb-color-example>
 
 === HSL
@@ -345,11 +367,14 @@ Hue, saturation and light (Also in RGB color space)
 
 #figure(
   align(left,
-    ```css
-    hsl(120 75 25 / 0.6);
-    ```
+    color-snippet(
+      ```css
+      hsl(256 82 55 / 0.6);
+      ```,
+      rgb(95, 46, 234, 60%)
+    ),
   ),
-  caption: [TODO],
+  caption: [How to use ``` hsl()``` to configure another color from the Kolibri palette],
 ) <hsl-color-example>
 
 
@@ -359,12 +384,14 @@ oklab() (lightness, red/green-ness, yellow/blue-ness) and oklch() (lightness, ch
 
 #figure(
   align(left,
-    ```css
-    oklab(0.63 0.22 0.13 / 0.7);
-    oklch(0.93 0.39 28 / 0.3);
-    ```
+    color-snippet(```css
+      oklab(0.638, 0.176, -0.279 / 0.7);
+      oklch(0.718 0.255 301.5 / 0.7);
+      ```,
+      rgb(190, 88, 253, 70%)
+    ),
   ),
-  caption: [TODO],
+  caption: [Showcasing ``` oklab()``` and ``` oklch()``` with yet another color from the Kolibri palette],
 ) <ok-color-example>
 
 === HWB
@@ -373,11 +400,13 @@ Hue, whiteness and blackness
 
 #figure(
   align(left,
-    ```css
-    hwb(240 0 0 / 0.12);
-    ```
+    color-snippet(```css
+      hwb(325 18 0 / 0.3);
+      ```,
+      rgb(254, 46, 168, 30%)
+    ),
   ),
-  caption: [TODO],
+  caption: [Using ``` hwb()``` to recreate a different color shade from the Kolibri palette],
 ) <hwb-color-example>
 
 @CSS-colors
