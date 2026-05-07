@@ -57,6 +57,7 @@
 
 .widget-content summary {
     margin: 6px;
+    cursor: pointer;
 }
 
 .widget-content .option {
@@ -104,6 +105,21 @@
     }
 }
 
+/* Overwrite if Protanopia is active */
+:root[style*="--prefers-colorblind-mode: protanopia;"] {
+    --primary-accent: #1656B1;
+}
+
+/* Overwrite if Deuteranopia is active */
+:root[style*="--prefers-colorblind-mode: deuteranopia;"] {
+    --primary-accent: #005b9c;
+}
+
+/* Overwrite if Tritanopia is active */
+:root[style*="--prefers-colorblind-mode: tritanopia;"] {
+    --primary-accent: #006369;
+}
+
 /* Overwrite if dark theme is active */
 :root[style*="--prefers-dark-theme: true"] {
     --bg-color:       #212121;
@@ -112,6 +128,21 @@
     --border-color:   #232323;
     --primary-accent: #6DB3F4;
     --shadow:         0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Overwrite if dark theme AND Protanopia is active */
+:root[style*="--prefers-dark-theme: true"][style*="--prefers-colorblind-mode: protanopia;"] {
+    --primary-accent: #96AAEE;
+}
+
+/* Overwrite if dark theme AND Deuteranopia is active */
+:root[style*="--prefers-dark-theme: true"][style*="--prefers-colorblind-mode: deuteranopia;"] {
+    --primary-accent: #8dabf6;
+}
+
+/* Overwrite if dark theme AND Tritanopia is active */
+:root[style*="--prefers-dark-theme: true"][style*="--prefers-colorblind-mode: tritanopia;"] {
+    --primary-accent: #5abac9;
 }
 
 /* Overwrite if contrast is active */
