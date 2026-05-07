@@ -9,6 +9,7 @@
     border-radius: var(--border-radius);
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow);
+    max-height: 80vh;
 }
 
 .floating-box h3 {
@@ -40,13 +41,15 @@
 }
 
 .floating-box:hover .widget-content, .floating-box:focus-within .widget-content {
-    max-height: 50rem;
+    max-height: 50vh;
+    max-width: 80vw;
+    overflow: auto;
 }
 
 .widget-content {
     max-height: 0;
+    max-width: 0;
     overflow: hidden;
-    transition: max-height 0.75s ease-in-out;
 }
 
 .widget-content .accessibility-hidden {
@@ -96,11 +99,11 @@
 
 /* Overwrite if motion is active */
 @container style(--prefers-reduced-motion: true) {
-    .widget-content, .square {
+    .square {
         animation: none !important;
     }
 
-    .widget-content, .square {
+    .square {
         transition: none !important;
     }
 }
