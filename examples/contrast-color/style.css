@@ -1,48 +1,37 @@
 :root {
     --selected-color: #000000;
+    --selected-percentage: 0%;
+
+    --contrast-color: --color-contrast-soft(var(--selected-color), var(--selected-percentage));
 }
 
-@function --color-contrast(--color <color>) returns <color> {
-    /* Returns either negative or positive infinite for lightness, depending on if lightness is over or under 50%  */
-    result: oklch(from var(--color) calc((0.5 - l) * infinity) 0 0);
-}
-
-@function --color-contrast-soft(--color <color>) returns <color> {
+@function --color-contrast-soft(--color <color>, --intensity <percentage>: 0%) returns <color> {
     /* Getting black or white but adding some color back into the mix */
     --black-or-white: oklch(from var(--color) calc((0.5 - l) * infinity) 0 0);
 
-    result: color-mix(in oklab, oklch(from var(--black-or-white) calc(l + 0.2) c h), var(--color) 20%);
+    result: color-mix(in oklab, oklch(from var(--black-or-white) calc(l + 0.2) c h), var(--color) var(--intensity));
 }
 
-.canvas {
-    fill: none
+.contrast-container {
+    display: flex;
+    gap: 16px;
 }
 
-.background_dark {
-    fill: var(--selected-color);
+.contrast-background {
+    width: 100px;
+    height: 100px;
+    background-color: var(--selected-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.background_medium {
-    fill: var(--selected-color);
+.contrast-foreground {
+    color: var(--contrast-color);
 }
 
-.background_light {
-    fill: var(--selected-color);
+div.contrast-foreground {
+    width: 60px;
+    height: 60px;
+    background-color: var(--contrast-color);
 }
-
-.foreground_dark {
-    fill: --color-contrast(var(--selected-color));
-}
-
-.foreground_medium {
-    fill: --color-contrast-soft(var(--selected-color));
-}
-
-/*
-.foreground_light {
-    fill: --color-contrast(var(--selected-color));
-    opacity: 0.8;
-}
-
- */
-
