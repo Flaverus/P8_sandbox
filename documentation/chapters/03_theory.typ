@@ -186,6 +186,8 @@ As displayed in @primary-color-custom-property-js below, both variations are als
   caption: [Using both ``` registerProperty()``` and ``` setProperty()``` in JavaScript to create CSS custom properties.],
 ) <primary-color-custom-property-js>
 
+[[Add part how to read propperties?]]
+
 === Global State Management
 
 The CSS custom property can not only be used to store values such as colors to be applied to properties but also for state management. As the values can be altered and accessed both within CSS, as well as in JavaScript, it lends itself to store configuration data, based on which the user interface adapts.

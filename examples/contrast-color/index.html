@@ -16,18 +16,17 @@
 
 <main id="main-content">
   <section class="card">
-    <h2>Black or white as contrast</h2>
-    <p>Pick a color and get either black or white as contrast color, depending on the color's luminance.</p>
-    <p>This showcases a CSS only solution which is independent of color-contrast() that is not broadly supported yet.</p>
+    <h2>Black or White as Contrast with Optional Color Saturation</h2>
+    <p>Pick a color and get either black or white as contrast color, depending on the color's luminance. Additionally, a saturation percentage can be defined to move from a sharp contrast to a more pleasant one with color added.</p>
     <input id="base-color" type="color">
     <label for="intensity-percentage">Added color saturation percentage:</label>
-    <input id="intensity-percentage" min="0" max="100" type="number">
+    <input id="intensity-percentage" min="0" max="100" type="number" value="0">
     <p>Selected color: <span id="picked-color-text"></span></p>
     <p>Resulting color: <span id="resulting-color-text"></span></p>
 
     <div class="contrast-container">
       <div class="contrast-background">
-        <div class="contrast-foreground" id="foreground-color"></div>
+        <div class="contrast-foreground"></div>
       </div>
       <div class="contrast-background">
         <p class="contrast-foreground">TEXT</p>
