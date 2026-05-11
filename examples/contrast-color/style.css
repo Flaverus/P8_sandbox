@@ -2,10 +2,10 @@
     --selected-color: #000000;
     --selected-percentage: 0%;
 
-    --contrast-color: --color-contrast-soft(var(--selected-color), var(--selected-percentage));
+    --contrast-color: --color-contrast(var(--selected-color), var(--selected-percentage));
 }
 
-@function --color-contrast-soft(--color <color>, --intensity <percentage>: 0%) returns <color> {
+@function --color-contrast(--color <color>, --intensity <percentage>: 0%) returns <color> {
     /* Getting black or white and adding some color back into the mix */
     --black-or-white: oklch(from var(--color) calc((0.5 - l) * infinity) 0 0);
 

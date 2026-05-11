@@ -389,7 +389,7 @@ This color space allows to use additional and more vibrant colors outside of the
 #figure(
   align(left,
     color-snippet(```css
-      oklab(0.638, 0.176, -0.279 / 0.7);
+      oklab(0.638 0.176 -0.279 / 0.7);
       oklch(0.718 0.255 301.5 / 0.7);
       ```,
       rgb(190, 88, 253, 70%)
@@ -505,6 +505,11 @@ The color contrast regarding hue, chroma or saturation is less relevant for read
 Nontextual objects like an icon require a lower lightness contrast compared to text and the contrast requirement of two colors is dependent of the use case, size, thickness and so on. The math behind WCAG 2.x contrast for accessibility has problems that have been known for a long time and are criticized widely. Case studies that compare contrast between white and black text on a colored background found that the variant that was deemed as inaccessible by the guidelines were perceived as more readable by the majority of contestants with color vision deficiencies. @white-on-orange-case-study
 
 APCA is a new approach for calculating and predicting readability contrast related to color appearance on self-illuminated RGB computer displays introducing the lightness contrast ($L^c$) value. This new approach considers the context in which two colors are used rather than passing or failing regardless of the use case. @APCA
+
+#pagebreak()
+== Canvas
+
+[[Adding chapter on how to extract RGB from canvas element in JS]]
 
 #pagebreak()
 == Ishihara
