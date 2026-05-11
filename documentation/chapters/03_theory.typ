@@ -151,7 +151,7 @@ CSS custom properties, also referred to as CSS variables, are entities represent
   caption: [Defining a primary color custom propperty that can be used throughout the website.],
 ) <primary-color-custom-property>
 
-It is possible to be more precise when defining a custom property by using the ``` @property``` at-rule, allowing to define the value type with ``` syntax```, if the property inherits by default with ``` inherits``` and an initial value with ``` initial-value```. There is a wide range of values possible for ``` syntax``` such as ``` <color>```, ``` <number>``` and ``` <url>``` to name a few. @primary-color-custom-property-at-rule shows how the ``` ---primary-color``` example from before is achieved with this at-rule. @at-property @at-property-syntax
+It is possible to be more precise when defining a custom property by using the ``` @property``` at-rule, allowing to define the value type with ``` syntax```, if the property inherits by default with ``` inherits``` and an initial value with ``` initial-value```. There is a wide range of values possible for ``` syntax``` such as ``` <color>```, ``` <number>``` and ``` <url>``` to name a few. @primary-color-custom-property-at-rule shows how the ``` --primary-color``` example from before is achieved with this at-rule. @at-property @at-property-syntax
 
 #figure(
   align(left,
@@ -180,13 +180,22 @@ As displayed in @primary-color-custom-property-js below, both variations are als
 
     const root = document.documentElement;
     root.style.setProperty('--primary-color-contrast', '#FFFFFF');
-
     ```
   ),
   caption: [Using both ``` registerProperty()``` and ``` setProperty()``` in JavaScript to create CSS custom properties.],
 ) <primary-color-custom-property-js>
 
-[[Add part how to read propperties?]]
+Of course it is not only possible to write, but also read custom properties with the function ``` getPropertyValue()``` shown in @primary-color-custom-property-js-read to be able to react to changed values and further work with the latest value.
+
+#figure(
+  align(left,
+    ```js
+    const root          = document.documentElement;
+    const contrastColor = getComputedStyle(root).getPropertyValue('--contrast-color');
+    ```
+  ),
+  caption: [With ``` getPropertyValue()``` the previously set CSS custom property can be read in JavaScript again.],
+) <primary-color-custom-property-js-read>
 
 === Global State Management
 
@@ -286,8 +295,10 @@ Setting the ``` --is-light-theme``` property as prefix when declairing a custom 
       --color-background--light: var(--is-light-theme) white;
       --color-background--dark: black;
 
-      --color-text: var(--color-text--light, var(--color-text--dark));
-      --color-background: var(--color-background--light, var(--color-background--dark));
+      --color-text: var(--color-text--light,
+                    var(--color-text--dark));
+      --color-background: var(--color-background--light,
+                          var(--color-background--dark));
     }
     ```
   ),
@@ -319,8 +330,10 @@ Having either black or white as font color on a background is a very safe approa
   align(left,
     ```css
     body {
-      color: light-dark(var(--color-text--light), var(--color-text--dark));
-      background-color: light-dark(var(--color-background--light), var(--color-background--dark));
+      color: light-dark(var(--color-text--light),
+                        var(--color-text--dark));
+      background-color: light-dark(var(--color-background--light),
+                                   var(--color-background--dark));
     }
     ```
   ),
@@ -329,7 +342,7 @@ Having either black or white as font color on a background is a very safe approa
 
 === CSS Custom Functions
 
-Whilst the wide range of available functions in CSS covers a lot of use cases there might be scenarios that do not fit these provided possibilities and need combination of functions or even completely different functionalities. This is where the currently still as experimental flagged ``` @function``` at-rule comes into play. This feature has a similar look and feel to the CSS custom properties, also starting with a leading ``` --``` in their name. To declare such a function the ``` @function```keyword is needed, followed by a custom name and some optional parameters. Both parameters and function name start with ``` ---```, followed by a case-sensitive identifier defined by the user. Finaly a value defined with ``` result:``` is evaluated and the result returned as seen in @at-function-example. @at-function
+Whilst the wide range of available functions in CSS covers a lot of use cases there might be scenarios that do not fit these provided possibilities and need combination of functions or even completely different functionalities. This is where the currently still as experimental flagged ``` @function``` at-rule comes into play. This feature has a similar look and feel to the CSS custom properties, also starting with a leading ``` --``` in their name. To declare such a function the ``` @function```keyword is needed, followed by a custom name and some optional parameters. Both parameters and function name start with ``` --```, followed by a case-sensitive identifier defined by the user. Finaly a value defined with ``` result:``` is evaluated and the result returned as seen in @at-function-example. @at-function
 
 #figure(
   align(left,
@@ -342,7 +355,7 @@ Whilst the wide range of available functions in CSS covers a lot of use cases th
   caption: [A custom function that serves the same purpose as ``` contrast-color()``` but was creates before this feature was widely available.],
 ) <at-function-example>
 
-[[ADDING IF, ELSE, types (synthax in properties)]]
+Similar to the CSS custom properties, a CSS data types, such as ``` <color>```, ``` <number>```, ``` <string>``` and many more, can be declared for both parameter value types and the return value type on a function.
 
 #pagebreak()
 == Color Spaces
@@ -509,7 +522,26 @@ APCA is a new approach for calculating and predicting readability contrast relat
 #pagebreak()
 == Canvas
 
-[[Adding chapter on how to extract RGB from canvas element in JS]]
+The HTML ``` <canvas>``` element is intended to draw graphics and animations on a website. The element itself does not have a default visual styling and is intended to be manipulated via JavaScript with either the ``` Canvas API``` or the ``` WebGL API```. With the ``` Canvas API``` it is possible to create game graphics, data visualization, photo manipulations, real-time video processing among other things. ``` Canvas API``` focuses mainly on 2D graphics while ``` WebGL API``` draws hardware-accelerated 2D and 3D graphics. Along manipulation possibilities, it is also possible to extract ``` ImageData``` from a graphic. @canvas-rgba-extraction shows an example how ``` RGBA``` values from an area on a canvas can be extracted in JavaScript. @canvas-element @canvas-api @image-data
+
+#figure(
+  align(left,
+    ```js
+    const canvas = document.createElement('canvas');
+    const ctx    = canvas.getContext('2d');
+
+    ctx.fillStyle = 'oklab(0.638 0.176 -0.279)';
+    ctx.fillRect(0, 0, 100, 100);
+
+    const red   = ctx.getImageData(10, 10, 10, 10).data[0];
+    const green = ctx.getImageData(10, 10, 10, 10).data[1];
+    const blue  = ctx.getImageData(10, 10, 10, 10).data[2];
+    const alpha = ctx.getImageData(10, 10, 10, 10).data[3];
+
+    ```
+  ),
+  caption: [Creating a purple 100 x 100 pixels square add extracting the RGBA data from a 10 x 10 pixels part at the coordinates x=10 and y=10 from that square.],
+) <canvas-rgba-extraction>
 
 #pagebreak()
 == Ishihara
