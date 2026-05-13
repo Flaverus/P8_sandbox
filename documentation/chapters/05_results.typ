@@ -1,6 +1,146 @@
 = Implementation
 
+This chapter contains suggestions that extend browser standards regarding improved accessibility. The *preferences widget* allows user-specific configuration of an individual website, the *contrast color function* is a function that extends the new ``` contrast-color()``` CSS function by adding a color component, and the *interactive ishihara plate* allows users to manually check color contrasts, as well as test color values and their contrasts using different color filters that simulate various forms of color blindness.
+
 == Preferences Weidget
+
+CSS media queries already allow to address certain user needs. However, this requires that the user has configured specific needs in their operating system or browser settings. If no settings have been configured, there is no way to take the necessary precautions to offer the user a tailored accessibility experience. If incorrect settings exist, or if certain measures are not desired by the user in specific scenarios, these would have to be adjusted globally, even if the circumstances differ only for a single website. Furthermore, there are accessibility aspects that are not yet covered by CSS media queries and therefore cannot be directly considered.
+
+To prevent these limitations and give the user complete freedom, this preferences widget, shown in @preference-widget, was created. It refers to existing system settings but allows users to customize them and offers the possibility to extend the limited scope of CSS media queries to suit specific websites.
+
+#figure(
+  box(
+    inset: 0pt,
+    radius: 6pt,
+    clip: true,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+  {
+    image("../ressources/preference-widget.png", width: 25%)
+  }),
+  caption: [A screenshot of the preferences widget where custom settings for reduced motion and colorblindness on a pagespecifiv level were configured.],
+) <preference-widget>
+
+Existing media queries are used as a basis, provided the relevant setting is included in the scope of CSS media queries. It is possible to configure settings specifically based on the operating system or browser settings. The system settings are used as the initial value when a page is visited for the first time. All values are stored in the browsers ``` localStorage```, ensuring that settings are not lost on page refreshes and are consistently available across a web application. The values are set as CSS custom properties on the pseudo-class ``` :root```, from where they can then be used, as shown in @set-accessibility-property.
+
+#figure(
+  align(left,
+    ```js
+    const setAccessibilityProperty = (property,
+                                      value,
+                                      mediaQueryString) => {
+
+      localStorage.setItem(property, value);
+
+      if(value === 'system' && mediaQueryString !== '') {
+        const systemSetting = window.matchMedia(mediaQueryString).matches;
+        root.style.setProperty(property, systemSetting);
+      } else {
+        root.style.setProperty(property, value);
+      }
+    }
+    ```
+  ),
+  caption: [The ``` setAccessibilityProperty()``` saves a propperty value to the ``` localStorage``` and creates a custom property on ``` :root```.],
+) <set-accessibility-property>
+
+With the function ``` getAccessibilityProperty()``` shown in @get-accessibility-property previously saved configurations are read from the ``` localStorage``` or set to the system default if they have not been defined yet.
+
+#figure(
+  align(left,
+    ```js
+    const getAccessibilityProperty = (property) => {
+        const savedProperty = localStorage.getItem(property);
+
+        if(savedProperty) {
+            return savedProperty;
+        } else  {
+            return 'system';
+        }
+    }
+    ```
+  ),
+  caption: [With the usage of ``` getAccessibilityProperty()``` previously saved values are returned or the systems default value will be used.],
+) <get-accessibility-property>
+
+The widget makes use of both the ``` setAccessibilityProperty()```and ``` getAccessibilityProperty()``` functions to set the custom properties on page load as it can be seen in @handle-accessibility-property. The first parameter in ``` setAccessibilityProperty()``` is the custom property name that will be set to the ``` :root```, the second parameter contains the return value of the ``` getAccessibilityProperty()``` function which is either the previously saved value from the ``` localStorage``` or the string 'system' as default value if no saved data exists so far, as well as the CSS media query string as the third and last parameter if only a ``` true``` or ``` false``` value is considered for this property.
+
+#figure(
+  align(left,
+    ```js
+    setAccessibilityProperty('--prefers-reduced-motion',
+                             getAccessibilityProperty(
+                                 '--prefers-reduced-motion'),
+                             '(prefers-reduced-motion: reduce)');
+    setAccessibilityProperty('--prefers-contrast',
+                             getAccessibilityProperty(
+                                 '--prefers-contrast'),
+                             '(prefers-contrast: more)');
+    setAccessibilityProperty('--prefers-dark-theme',
+                             getAccessibilityProperty(
+                                 '--prefers-dark-theme'),
+                             '(prefers-color-scheme: dark)');
+    setAccessibilityProperty('--prefers-colorblind-mode',
+                             getAccessibilityProperty(
+                                 '--prefers-colorblind-mode'),
+                             '');
+    ```
+  ),
+  caption: [Setting the global custom propperties on page load with the properties custom name, the return value of ``` getAccessibilityProperty()``` to consider already set values and system settings, as well as the media query in question.],
+) <handle-accessibility-property>
+
+As a next step the function ``` syncWidgetOption()``` seen in @sync-accessibility-option synchronizes the values from the CSS custom properties to the radio buttons representing the setings in the UI. This makes use of the custom properties on the ``` :root``` as single source of truth to not having to propagates data change to different areas of the code as it is accessible both from CSS and JavaScript.
+
+#figure(
+  align(left,
+    ```js
+    const syncWidgetOption = (option, property) => {
+      const value = root.style.getPropertyValue(property);
+
+      option.forEach(radio => {
+        radio.checked = radio.value === value;
+      });
+    }
+
+    syncWidgetOption(motion,         '--prefers-reduced-motion');
+    syncWidgetOption(contrast,       '--prefers-contrast');
+    syncWidgetOption(colorscheme,    '--prefers-dark-theme');
+    syncWidgetOption(colorblindness, '--prefers-colorblind-mode');
+    ```
+  ),
+  caption: [Setting the global custom propperties on page load with the properties custom name, the return value of ``` getAccessibilityProperty()``` to consider already set values and system settings, as well as the media query in question.],
+) <sync-accessibility-option>
+
+Lastly each setting needs to be updated in both the ``` localStorage``` as well as the property value in the document if the selection in the radio button group changes which is shown in @on-change-accessibility-option.
+
+
+#figure(
+  align(left,
+    ```js
+    addOptionEventListener(motion,
+                           '--prefers-reduced-motion',
+                           '(prefers-reduced-motion: reduce)');
+    addOptionEventListener(contrast,
+                           '--prefers-contrast',
+                           '(prefers-contrast: more)');
+    addOptionEventListener(colorscheme,
+                           '--prefers-dark-theme',
+                           '(prefers-color-scheme: dark)');
+    addOptionEventListener(colorblindness, '--prefers-colorblind-mode', '');
+
+    const addOptionEventListener = (option, property, mediaQueryString) => {
+      option.forEach(radio => {
+        radio.addEventListener('change', () => {
+          if(radio.checked) {
+            setAccessibilityProperty(property, radio.value, mediaQueryString);
+          }
+        });
+      });
+    }
+    ```
+  ),
+  caption: [Reacting to changes in the radio button group to update the users preference setting.],
+) <on-change-accessibility-option>
+
 
 
 #pagebreak()

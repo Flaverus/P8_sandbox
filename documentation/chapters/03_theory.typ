@@ -17,6 +17,8 @@
 
 = Theory
 
+The following chapter deals with various features included in CSS and JavaScript, as well as patterns and standards that can be used as a basis for enhanced visual accessibility to further improve the user experience for users with visual impairments.
+
 == CSS Media Queries
 
 CSS Media Queries allow developer to apply different styles based on characteristics of a device or environment displaying a web page. This is often used to create a responsive web page that uses different stylings, based on screen width.
@@ -429,7 +431,7 @@ Independent from the new color space ``` hwb()```was added, which considers the 
 #pagebreak()
 == Contrast perception
 
-[TODO] Some introducing summary on contrast.
+Contrast is essential for distinguishing and differentiating elements. Such contrasts can be achieved through brightness, size, texture, or shape. On the web, lightness is predominantly used to ensure readability and to emphasize the boundaries between elements. The following section deals with the current contrast standard of WCAG 2.x and provides an overview of the upcoming working draft standard for WCAG 3.0.
 
 === Relative Luminance
 
