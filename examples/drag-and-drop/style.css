@@ -1,0 +1,32 @@
+.kanban {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+}
+
+section {
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+ul {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 4px;
+    list-style-type: none;
+}
+
+li {
+    background-color: var(--content-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin: 4px;
+    padding: 8px;
+}
+
+.tile-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+}

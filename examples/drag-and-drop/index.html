@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drag and Drop</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <nav><a id="navigation" href="../../index.html">← Back to Overview</a></nav>
+  <h1>Accessible Drag and Drop Proposal</h1>
+</header>
+
+<main id="main-content">
+  <section class="card">
+    <h2>Kanban Board</h2>
+    <p>List that can be altered with dragging and dropping but is also operable with keyboard only</p>
+    <div class="kanban">
+      <section>
+        <h3>BACKLOG</h3>
+        <ul id="area-one" data-identifier="Backlog" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">
+          <li draggable="true" id="one" ondragstart="dragstartHandler(event)">
+            <div class="tile-header">
+              <a href="#">TICKET-123</a>
+              <select onchange="selectHandler(event)"></select>
+            </div>
+            <p>one</p>
+          </li>
+          <li draggable="true" id="two" ondragstart="dragstartHandler(event)">
+            <div class="tile-header">
+              <a href="#">TICKET-321</a>
+              <select onchange="selectHandler(event)"></select>
+            </div>
+            <p>two</p>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h3>IN DEVELOPMENT</h3>
+        <ul id="area-two" data-identifier="In Development" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)"></ul>
+      </section>
+      <section>
+        <h3>DONE</h3>
+        <ul id="area-three" data-identifier="Done" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)"></ul>
+      </section>
+    </div>
+  </section>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
