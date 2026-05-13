@@ -4,7 +4,7 @@
 
     --prefers-dark-theme: false;
     --is-light-theme: var(--true);
-    color-scheme: light dark;
+    color-scheme: light;
 
     /*
      * Defining colors for both themes
@@ -37,4 +37,9 @@
 :root[style*="--prefers-dark-theme: true"] {
     --is-light-theme: var(--false);
     color-scheme: dark;
+}
+
+:root[style*="--prefers-dark-theme: false"] {
+    --is-light-theme: var(--true);
+    color-scheme: light;
 }

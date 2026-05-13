@@ -7,39 +7,39 @@ document.querySelectorAll('.color-picker').forEach(picker => {
 });
 
 document.getElementById('protanopia').addEventListener('click', () => {
-    root.style.setProperty('--background-dark', '#2f2c2f');
+    root.style.setProperty('--background-dark',   '#2f2c2f');
     root.style.setProperty('--background-medium', '#544841');
-    root.style.setProperty('--background-light', '#847358');
-    root.style.setProperty('--foreground-dark', '#a61b21');
+    root.style.setProperty('--background-light',  '#847358');
+    root.style.setProperty('--foreground-dark',   '#a61b21');
     root.style.setProperty('--foreground-medium', '#cf4342');
-    root.style.setProperty('--foreground-light', '#fa665a');
+    root.style.setProperty('--foreground-light',  '#fa665a');
 });
 
 document.getElementById('deuteranopia').addEventListener('click', () => {
-    root.style.setProperty('--background-dark', '#2f2c2f');
+    root.style.setProperty('--background-dark',   '#2f2c2f');
     root.style.setProperty('--background-medium', '#544841');
-    root.style.setProperty('--background-light', '#847358');
-    root.style.setProperty('--foreground-dark', '#943a47');
+    root.style.setProperty('--background-light',  '#847358');
+    root.style.setProperty('--foreground-dark',   '#943a47');
     root.style.setProperty('--foreground-medium', '#ab334b');
-    root.style.setProperty('--foreground-light', '#f46959');
+    root.style.setProperty('--foreground-light',  '#f46959');
 });
 
 document.getElementById('tritanopia').addEventListener('click', () => {
-        root.style.setProperty('--background-dark', '#ae0a69');
+        root.style.setProperty('--background-dark',   '#ae0a69');
         root.style.setProperty('--background-medium', '#d11180');
-        root.style.setProperty('--background-light', '#e71092');
-        root.style.setProperty('--foreground-dark', '#a62810');
+        root.style.setProperty('--background-light',  '#e71092');
+        root.style.setProperty('--foreground-dark',   '#a62810');
         root.style.setProperty('--foreground-medium', '#cc3214');
-        root.style.setProperty('--foreground-light', '#de3519');
+        root.style.setProperty('--foreground-light',  '#de3519');
 });
 
 document.getElementById('daltonism').addEventListener('click', () => {
-    root.style.setProperty('--background-dark', '#607478');
+    root.style.setProperty('--background-dark',   '#607478');
     root.style.setProperty('--background-medium', '#756e40');
-    root.style.setProperty('--background-light', '#eed16c');
-    root.style.setProperty('--foreground-dark', '#ca5433');
+    root.style.setProperty('--background-light',  '#eed16c');
+    root.style.setProperty('--foreground-dark',   '#ca5433');
     root.style.setProperty('--foreground-medium', '#fa7347');
-    root.style.setProperty('--foreground-light', '#fca15f');
+    root.style.setProperty('--foreground-light',  '#fca15f');
 });
 
 const setVision = (type) => {

@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="This page holds an accessibility widget example to be able to fully customize the experience on a website." />
   <title>Preferences Widget</title>
   <link rel="stylesheet" href="../../style.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<section id="preferences-widget" class="floating-box" aria-labelledby="widget-heading">
+<aside id="preferences-widget" class="floating-box">
   <h3 id="widget-heading">Site Preferences</h3>
   <svg id="accessibilityIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 122.88">
     <title>site preferences</title>
@@ -21,74 +24,86 @@
 
     <details>
       <summary>Reduced Motion</summary>
-      <div class="option">
-        <input type="radio" name="motion" id="motionDefault" value="system">
-        <label for="motionDefault">Use system settings</label>
-      </div>
-      <div class="option">
-        <input type="radio" name="motion" id="motionOn" value="true">
-        <label for="motionOn">Reduced motion on</label>
-      </div>
-      <div class="option">
-        <input type="radio" name="motion" id="motionOff" value="false">
-        <label for="motionOff">Reduced motion off</label>
-      </div>
+      <fieldset>
+        <legend class="visually-hidden">Reduced Motion Settings</legend>
+        <div class="option">
+          <input type="radio" name="motion" id="motionDefault" value="system">
+          <label for="motionDefault">Use system settings</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="motion" id="motionOn" value="true">
+          <label for="motionOn">Reduced motion on</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="motion" id="motionOff" value="false">
+          <label for="motionOff">Reduced motion off</label>
+        </div>
+      </fieldset>
     </details>
 
     <details>
       <summary>High Contrast</summary>
-      <div class="option">
-        <input type="radio" name="contrast" id="contrastDefault" value="system">
-        <label for="contrastDefault">Use system settings</label>
-      </div>
-      <div class="option">
-        <input type="radio" name="contrast" id="contrastOn" value="true">
-        <label for="contrastOn">High contrast on</label>
-      </div>
-      <div class="option">
-        <input type="radio" name="contrast" id="contrastOff" value="false">
-        <label for="contrastOff">High contrast off</label>
-      </div>
+      <fieldset>
+        <legend class="visually-hidden">High Contrast Settings</legend>
+        <div class="option">
+          <input type="radio" name="contrast" id="contrastDefault" value="system">
+          <label for="contrastDefault">Use system settings</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="contrast" id="contrastOn" value="true">
+          <label for="contrastOn">High contrast on</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="contrast" id="contrastOff" value="false">
+          <label for="contrastOff">High contrast off</label>
+        </div>
+      </fieldset>
     </details>
 
     <details>
       <summary>Colorscheme</summary>
-      <div class="option">
-        <input type="radio" name="colorscheme" id="colorschemeDefault" value="system">
-        <label for="colorschemeDefault">Use system settings</label>
-      </div>
-      <div class="option">
-        <input type="radio" name="colorscheme" id="colorschemeLight" value="false">
-        <label for="colorschemeLight">Light colorscheme</label>
-      </div>
-      <div class="option">
-        <input type="radio" name="colorscheme" id="colorschemeDark" value="true">
-        <label for="colorschemeDark">Dark colorscheme</label>
-      </div>
+      <fieldset>
+        <legend class="visually-hidden">Colorscheme Settings</legend>
+        <div class="option">
+          <input type="radio" name="colorscheme" id="colorschemeDefault" value="system">
+          <label for="colorschemeDefault">Use system settings</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="colorscheme" id="colorschemeLight" value="false">
+          <label for="colorschemeLight">Light colorscheme</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="colorscheme" id="colorschemeDark" value="true">
+          <label for="colorschemeDark">Dark colorscheme</label>
+        </div>
+      </fieldset>
     </details>
 
     <details>
       <summary>Colorblindness</summary>
-      <div class="option">
-        <input type="radio" name="colorblindness" id="colorblindnessDefault" value="none">
-        <label for="colorblindnessDefault">No colorblindness</label>
-      </div>
-      <div class="option">
-        <input type="radio" name="colorblindness" id="colorblindnessProtanopia" value="protanopia">
-        <label for="colorblindnessProtanopia">Protanopia</label>
-      </div>
-      <div class="option">
-        <input type="radio" name="colorblindness" id="colorblindnessDeuteranopia" value="deuteranopia">
-        <label for="colorblindnessDeuteranopia">Deuteranopia</label>
-      </div>
-      <div class="option">
-        <input type="radio" name="colorblindness" id="colorblindnessTritanopia" value="tritanopia">
-        <label for="colorblindnessTritanopia">Tritanopia</label>
-      </div>
+      <fieldset>
+        <legend class="visually-hidden">Colorblindness Settings</legend>
+        <div class="option">
+          <input type="radio" name="colorblindness" id="colorblindnessDefault" value="none">
+          <label for="colorblindnessDefault">No colorblindness</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="colorblindness" id="colorblindnessProtanopia" value="protanopia">
+          <label for="colorblindnessProtanopia">Protanopia</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="colorblindness" id="colorblindnessDeuteranopia" value="deuteranopia">
+          <label for="colorblindnessDeuteranopia">Deuteranopia</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="colorblindness" id="colorblindnessTritanopia" value="tritanopia">
+          <label for="colorblindnessTritanopia">Tritanopia</label>
+        </div>
+      </fieldset>
     </details>
 
   </div>
-</section>
+</aside>
 
 <header>
   <nav><a id="navigation" href="../../index.html">← Back to Overview</a></nav>

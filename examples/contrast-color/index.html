@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="This page holds options to configure parameters for a CSS custom function to find an optimal contrast color with optional color saturation percentage." />
   <title>Contrast Color</title>
   <link rel="stylesheet" href="../../style.css">
   <link rel="stylesheet" href="style.css">
@@ -30,11 +33,11 @@
       </label>
     </div>
 
-    <canvas id="testflo">test Flo</canvas>
-
     <div class="flex-container">
       <p>Selected color (Background): <b id="picked-color-text"></b></p>
-      <p>Resulting color (Foreground): <b id="resulting-color-text"></b></p>
+      <p>Resulting color (Foreground): <b id="resulting-color-text"></b> <button type="button" id="copy-button">
+        Copy Resulting Color
+      </button></p>
     </div>
     <div class="flex-container">
       <p>WCAG 2.x Contrast Ratio: <b id="contrast-ratio-text"></b></p>
