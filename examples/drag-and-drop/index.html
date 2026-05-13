@@ -17,34 +17,47 @@
 <main id="main-content">
   <section class="card">
     <h2>Kanban Board</h2>
-    <p>List that can be altered with dragging and dropping but is also operable with keyboard only</p>
+    <p>Use the dropdown menus or drag and drop to move tickets between columns.</p>
+
     <div class="kanban">
       <section>
         <h3>BACKLOG</h3>
-        <ul id="area-one" data-identifier="Backlog" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)">
-          <li draggable="true" id="one" ondragstart="dragstartHandler(event)">
-            <div class="tile-header">
-              <a href="#">TICKET-123</a>
-              <select onchange="selectHandler(event)"></select>
-            </div>
-            <p>one</p>
+        <ol id="area-one" data-identifier="Backlog">
+          <li draggable="true" id="one">
+            <article>
+              <div class="tile-header">
+                <a href="#">TICKET-123</a>
+                <label>
+                  <span class="visually-hidden">Move TICKET-123 to:</span>
+                  <select></select>
+                </label>
+              </div>
+              <p>Task description one</p>
+            </article>
           </li>
-          <li draggable="true" id="two" ondragstart="dragstartHandler(event)">
-            <div class="tile-header">
-              <a href="#">TICKET-321</a>
-              <select onchange="selectHandler(event)"></select>
-            </div>
-            <p>two</p>
+          <li draggable="true" id="two">
+            <article>
+              <div class="tile-header">
+                <a href="#">TICKET-321</a>
+                <label>
+                  <span class="visually-hidden">Move TICKET-321 to:</span>
+                  <select></select>
+                </label>
+              </div>
+              <p>Task description two</p>
+            </article>
           </li>
-        </ul>
+        </ol>
       </section>
+
       <section>
         <h3>IN DEVELOPMENT</h3>
-        <ul id="area-two" data-identifier="In Development" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)"></ul>
+        <ol id="area-two" data-identifier="In Development"></ol>
       </section>
+
       <section>
         <h3>DONE</h3>
-        <ul id="area-three" data-identifier="Done" ondrop="dropHandler(event)" ondragover="dragoverHandler(event)"></ul>
+        <ol id="area-three" data-identifier="Done"></ol>
       </section>
     </div>
   </section>

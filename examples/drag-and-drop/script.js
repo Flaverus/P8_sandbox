@@ -9,7 +9,7 @@ const dragoverHandler = ev => {
 const dropHandler = ev => {
   ev.preventDefault();
   const data   = ev.dataTransfer.getData("text");
-  const target = ev.target.closest('ul');
+  const target = ev.target.closest('ol');
   if(target) {
     target.appendChild(document.getElementById(data));
     updateSelectMenus();
@@ -18,19 +18,19 @@ const dropHandler = ev => {
 
 const selectHandler = ev => {
   const targetColumnId = ev.target.value;
-  const targetColumn = document.getElementById(targetColumnId);
-  const listItem = ev.target.closest('li');
+  const listItem       = ev.target.closest('li');
+  const targetColumn   = document.getElementById(targetColumnId);
   targetColumn.appendChild(listItem);
   updateSelectMenus();
 }
 
 
 const updateSelectMenus = () => {
-  const columns = document.querySelectorAll('.kanban ul');
+  const columns = document.querySelectorAll('.kanban ol');
   const selects = document.querySelectorAll('.kanban li select');
 
   selects.forEach(select => {
-    const parentUl        = select.closest('ul');
+    const parentUl        = select.closest('ol');
     const currentColumnId = parentUl.id;
     select.innerHTML      = '';
 
@@ -45,6 +45,24 @@ const updateSelectMenus = () => {
 
       select.appendChild(option);
     });
+
+    select.removeEventListener('change', selectHandler);
+    select.addEventListener('change', selectHandler);
   });
 };
+
+const initBoardEvents = () => {
+  const allOLs = document.querySelectorAll('.kanban ol');
+  allOLs.forEach(ol => {
+    ol.addEventListener('drop', dropHandler);
+    ol.addEventListener('dragover', dragoverHandler);
+  });
+
+  const allLIs = document.querySelectorAll('.kanban li');
+  allLIs.forEach(li => {
+    li.addEventListener('dragstart', dragstartHandler);
+  });
+};
+
 updateSelectMenus();
+initBoardEvents();
