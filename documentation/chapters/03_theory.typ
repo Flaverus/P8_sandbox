@@ -369,6 +369,7 @@ There are many different models to describe colors the human eye can perceive. E
 RGB mixes the primary colors ``` red```, ``` green``` and ``` blue``` in different saturations. Additionally, to the colors an alpha channel can optionally be added to define the opacity of a color. This way of describing colors has been used in CSS for ages and can be written both with the ``` rgb()``` function or with the hex annotation which would look like ``` #2d1fb180``` to achive the same color as shown in @rgb-color-example. @CSS-colors
 
 #figure(
+  kind: raw,
   align(left,
     color-snippet(
       ```css
@@ -385,6 +386,7 @@ RGB mixes the primary colors ``` red```, ``` green``` and ``` blue``` in differe
 With the addition of CSS Color Module Level 3 HSL was introduced to CSS where the colors hue is picked based on a color wheel within the RGB color space. The color is described by the ``` hue``` angle on the color wheel, the ``` saturation``` and ``` lightness``` as presented in @hsl-color-example. Additionally, an alpha channel can be added, analogue to RGB. This allows to pick a color and manipulate its saturation or lightness, without having to re-calculate RBG values, allowing the creation of different shades of the same color way easier. @CSS-colors
 
 #figure(
+  kind: raw,
   align(left,
     color-snippet(
       ```css
@@ -402,6 +404,7 @@ With the addition of CSS Color Module Level 3 HSL was introduced to CSS where th
 This color space allows to use additional and more vibrant colors outside of the RGB limitation. It is a uniform color space that defines colors based on how they are perceived by the human eye. The ``` oklab()``` function describes colors in that space with ``` red/green-ness```, ``` yellow/blueness``` along the a and b axis in the Oklab color space. Alternatively ``` oklch()``` uses ``` lightness```,  ``` chroma``` and ``` hue``` to describe colors. These ways of describing colors are consideret the current state of the art and an example can be seen in @ok-color-example. Both functions accept an optional alpha channel for opacity. @CSS-colors
 
 #figure(
+  kind: raw,
   align(left,
     color-snippet(```css
       oklab(0.638 0.176 -0.279 / 0.7);
@@ -418,6 +421,7 @@ This color space allows to use additional and more vibrant colors outside of the
 Independent from the new color space ``` hwb()```was added, which considers the ``` hue```, ``` whiteness``` as well as ``` blackness``` within the RGB color space and is similar to ``` hsl()```. An example is seen in @hwb-color-example. @CSS-colors
 
 #figure(
+  kind: raw,
   align(left,
     color-snippet(```css
       hwb(325 18 0 / 0.3);

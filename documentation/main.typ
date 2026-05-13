@@ -119,6 +119,13 @@
 )
 
 #pagebreak()
+= List of Listings
+#outline(
+  title: none,
+  target: figure.where(kind: raw),
+)
+
+#pagebreak()
 = List of Aids
 
 == Artificial Intelligence and Language Models
