@@ -131,6 +131,8 @@
     --border-color:   #232323;
     --primary-accent: #6DB3F4;
     --shadow:         0 2px 8px rgba(0, 0, 0, 0.5);
+
+    color-scheme: dark;
 }
 
 /* Overwrite if dark theme AND Protanopia is active */

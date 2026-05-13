@@ -11,6 +11,8 @@
     --z-index-elevated: 1;
     --z-index-more-important: 10;
     --z-index-front: 100;
+
+    color-scheme: light;
 }
 
 /* Base Styles */
