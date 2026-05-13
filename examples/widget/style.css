@@ -158,6 +158,21 @@
     --shadow:         none;
 }
 
+/* Overwrite if contrast AND Protanopia is active */
+:root[style*="--prefers-contrast: true"][style*="--prefers-colorblind-mode: protanopia;"] {
+    --primary-accent: #193788;
+}
+
+/* Overwrite if contrast AND Deuteranopia is active */
+:root[style*="--prefers-contrast: true"][style*="--prefers-colorblind-mode: deuteranopia;"] {
+    --primary-accent: #27438e;
+}
+
+/* Overwrite if contrast AND Tritanopia is active */
+:root[style*="--prefers-contrast: true"][style*="--prefers-colorblind-mode: tritanopia;"] {
+    --primary-accent: #005158;
+}
+
 /* Overwrite if contrast AND dark theme is active */
 :root[style*="--prefers-dark-theme: true"][style*="--prefers-contrast: true"] {
     --bg-color:       #000000;
@@ -166,6 +181,21 @@
     --border-color:   #ffffff;
     --primary-accent: #80c5ff;
     --shadow:         none;
+}
+
+/* Overwrite if dark theme AND contrast AND Protanopia is active */
+:root[style*="--prefers-dark-theme: true"][style*="--prefers-contrast: true"][style*="--prefers-colorblind-mode: protanopia;"] {
+    --primary-accent: #9eb6fd;
+}
+
+/* Overwrite if dark theme AND contrast AND Deuteranopia is active */
+:root[style*="--prefers-dark-theme: true"][style*="--prefers-contrast: true"][style*="--prefers-colorblind-mode: deuteranopia;"] {
+    --primary-accent: #adc3fe;
+}
+
+/* Overwrite if dark theme AND contrast AND Tritanopia is active */
+:root[style*="--prefers-dark-theme: true"][style*="--prefers-contrast: true"][style*="--prefers-colorblind-mode: tritanopia;"] {
+    --primary-accent: #61d4d6;
 }
 
 @container style(--prefers-contrast: true) {
