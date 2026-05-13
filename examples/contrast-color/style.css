@@ -12,11 +12,13 @@
     result: color-mix(in oklab, oklch(from var(--black-or-white) calc(l + 0.2) c h), var(--color) var(--intensity));
 }
 
-.flex-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
+.visualization-container {
+    gap: 2rem;
+}
+
+.full-width {
+    width: 100%;
+    margin-top: 0.5rem;
 }
 
 .contrast-background {

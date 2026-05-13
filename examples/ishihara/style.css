@@ -49,28 +49,8 @@ body[data-vision="regular"] {
     filter: none;
 }
 
-.controls-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(375px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-}
-
-.control {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.75rem;
-}
-
 fieldset:has(button) {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-}
-
-.visualization-container {
-    display: flex;
-    justify-content: center;
-    margin: 2rem 0;
 }

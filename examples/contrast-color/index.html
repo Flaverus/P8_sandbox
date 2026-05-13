@@ -22,34 +22,47 @@
     <h2>Black or White as Contrast with Optional Color Saturation</h2>
     <p>Pick a color and get either black or white as contrast color, depending on the color's luminance. Additionally, a saturation percentage can be defined to move from a sharp contrast to a more pleasant one with color added.</p>
 
-    <div class="flex-container">
-      <label for="base-color">
-        Background color:
-        <input id="base-color" type="color">
-      </label>
-      <label for="intensity-percentage">
-        Added color saturation percentage:
-        <input id="intensity-percentage" min="0" max="100" type="number" value="0">
-      </label>
+    <div class="controls-grid">
+      <fieldset>
+        <legend>Configuration</legend>
+        <div class="control">
+          <label for="base-color">Background color</label>
+          <input id="base-color" type="color" value="#000000">
+        </div>
+        <div class="control">
+          <label for="intensity-percentage">Saturation percentage</label>
+          <input id="intensity-percentage" min="0" max="100" type="number" value="0">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Results</legend>
+        <div class="control">
+          <span>Background:</span>
+          <b id="picked-color-text">#000000</b>
+        </div>
+        <div class="control">
+          <span>Foreground:</span>
+          <b id="resulting-color-text"></b>
+        </div>
+        <div class="control">
+          <span>Contrast Ratio:</span>
+          <b id="contrast-ratio-text"></b>
+        </div>
+        <button type="button" id="copy-button" class="full-width">
+          Copy Resulting Color
+        </button>
+      </fieldset>
     </div>
 
-    <div class="flex-container">
-      <p>Selected color (Background): <b id="picked-color-text"></b></p>
-      <p>Resulting color (Foreground): <b id="resulting-color-text"></b> <button type="button" id="copy-button">
-        Copy Resulting Color
-      </button></p>
-    </div>
-    <div class="flex-container">
-      <p>WCAG 2.x Contrast Ratio: <b id="contrast-ratio-text"></b></p>
-    </div>
-    <div class="flex-container">
-      <div class="contrast-background">
-        <div class="contrast-foreground"></div>
+      <div class="visualization-container">
+        <div class="contrast-background">
+          <div class="contrast-foreground"></div>
+        </div>
+        <div class="contrast-background">
+          <p class="contrast-foreground">TEXT</p>
+        </div>
       </div>
-      <div class="contrast-background">
-        <p class="contrast-foreground">TEXT</p>
-      </div>
-    </div>
 
   </section>
 </main>
