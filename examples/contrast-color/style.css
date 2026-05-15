@@ -9,7 +9,7 @@
     /* Getting black or white and adding some color back into the mix */
     --black-or-white: oklch(from var(--color) calc((0.5 - l) * infinity) 0 0);
 
-    result: color-mix(in oklab, oklch(from var(--black-or-white) calc(l + 0.2) c h), var(--color) var(--intensity));
+    result: color-mix(in oklab, oklch(from var(--black-or-white) clamp(0.15, l, 0.975) c h), var(--color) var(--intensity));
 }
 
 .visualization-container {

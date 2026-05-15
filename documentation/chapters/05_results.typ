@@ -20,6 +20,8 @@ To prevent these limitations and give the user complete freedom, this preference
   caption: [A screenshot of the preferences widget where custom settings for reduced motion and colorblindness on a pagespecifiv level were configured.],
 ) <preference-widget>
 
+=== JavaScript Part
+
 Existing media queries are used as a basis, provided the relevant setting is included in the scope of CSS media queries. It is possible to configure settings specifically based on the operating system or browser settings. The system settings are used as the initial value when a page is visited for the first time. All values are stored in the browsers ``` localStorage```, ensuring that settings are not lost on page refreshes and are consistently available across a web application. The values are set as CSS custom properties on the pseudo-class ``` :root```, from where they can then be used, as shown in @set-accessibility-property.
 
 #figure(
@@ -141,7 +143,9 @@ Lastly each setting needs to be updated in both the ``` localStorage``` as well 
   caption: [Reacting to changes in the radio button group to update the users preference setting.],
 ) <on-change-accessibility-option>
 
+=== CSS Part
 
+[[ADD CSS BACKBONE SECTION!!]]
 
 #pagebreak()
 == Contrast Color Functions
