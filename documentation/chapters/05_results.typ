@@ -42,7 +42,7 @@ Existing media queries are used as a basis, provided the relevant setting is inc
     }
     ```
   ),
-  caption: [The ``` setAccessibilityProperty()``` saves a propperty value to the ``` localStorage``` and creates a custom property on ``` :root```.],
+  caption: [The ``` setAccessibilityProperty()``` saves a property value to the ``` localStorage``` and creates a custom property on ``` :root```.],
 ) <set-accessibility-property>
 
 With the function ``` getAccessibilityProperty()``` shown in @get-accessibility-property previously saved configurations are read from the ``` localStorage``` or set to the system default if they have not been defined yet.
@@ -127,7 +127,9 @@ Lastly each setting needs to be updated in both the ``` localStorage``` as well 
     addOptionEventListener(colorscheme,
                            '--prefers-dark-theme',
                            '(prefers-color-scheme: dark)');
-    addOptionEventListener(colorblindness, '--prefers-colorblind-mode', '');
+    addOptionEventListener(colorblindness,
+                           '--prefers-colorblind-mode',
+                           '');
 
     const addOptionEventListener = (option, property, mediaQueryString) => {
       option.forEach(radio => {
@@ -145,7 +147,74 @@ Lastly each setting needs to be updated in both the ``` localStorage``` as well 
 
 === CSS Part
 
-[[ADD CSS BACKBONE SECTION!!]]
+With the CSS custom properties that represent the users preferences in place the next step is to make use of these properties and build different representations of a website for the possible combinations of these configurations. In @change-css-base-properties-attribute-selector custom CSS properties are defined, holding the base style for a website and with the CSS attribute selector ``` []``` these base styles are overwritten for the dark color theme if the user prefers that one.
+
+#figure(
+  align(left,
+    ```css
+    :root {
+      --bg-color:       #fcfcfc;
+      --text-color:     #222222;
+      --content-bg:     #ffffff;
+      --border-color:   #eeeeee;
+      --primary-accent: #0056b3;
+      --shadow:         0 2px 8px rgba(0, 0, 0, 0.1);
+
+      color-scheme: light;
+    }
+
+    :root[style*="--prefers-dark-theme: true"] {
+      --bg-color:       #212121;
+      --text-color:     #EDEDED;
+      --content-bg:     #2E2E2E;
+      --border-color:   #232323;
+      --primary-accent: #6DB3F4;
+      --shadow:         0 2px 8px rgba(0, 0, 0, 0.5);
+
+      color-scheme: dark;
+    }
+    ```
+  ),
+  caption: [Overwriting the base styling CSS custom properties with the CSS attribute selector on ``` :root``` for a dark color scheme styling.],
+) <change-css-base-properties-attribute-selector>
+
+The more configuration properties available the more combinations of different settings must me considered. @change-css-base-multiple-properties shows how the base styling properties are set to yet other values if both the color scheme is set to dark as well as the high contrast styling is enabled, resulting in another visual representation of the website.
+
+#figure(
+  align(left,
+    ```css
+    :root[style*="--prefers-dark-theme: true"]
+    [style*="--prefers-contrast: true"] {
+      --bg-color:       #000000;
+      --text-color:     #ffffff;
+      --content-bg:     #000000;
+      --border-color:   #ffffff;
+      --primary-accent: #80c5ff;
+      --shadow:         none;
+    }
+    ```
+  ),
+  caption: [Considering both the color scheme as well as the high contrast setting leads to another styling.],
+) <change-css-base-multiple-properties>
+
+If not only the base styles change based on the widget configuration but also additional rules must be applies the ``` @container``` CSS rule with the ``` style()``` query provide the needed functionality. This allows to select the root level for styling as the properties are defined on ``` :root``` and therfore can be applies throughout the whole application. @additonal-rules-custom-properties considers disabling animations and transitions when the user prefers reduced motion.
+
+#figure(
+  align(left,
+    ```css
+    @container style(--prefers-reduced-motion: true) {
+      .animated-contents {
+        animation: none !important;
+      }
+
+      .transitional-contents {
+        transition: none !important;
+      }
+    }
+    ```
+  ),
+  caption: [Additional styling based on the custom propperties can be added with the ``` @container``` rule in combination with the ``` style()``` query.],
+) <additonal-rules-custom-properties>
 
 #pagebreak()
 == Contrast Color Functions

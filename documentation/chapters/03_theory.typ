@@ -150,7 +150,7 @@ CSS custom properties, also referred to as CSS variables, are entities represent
 
     ```
   ),
-  caption: [Defining a primary color custom propperty that can be used throughout the website.],
+  caption: [Defining a primary color custom property that can be used throughout the website.],
 ) <primary-color-custom-property>
 
 It is possible to be more precise when defining a custom property by using the ``` @property``` at-rule, allowing to define the value type with ``` syntax```, if the property inherits by default with ``` inherits``` and an initial value with ``` initial-value```. There is a wide range of values possible for ``` syntax``` such as ``` <color>```, ``` <number>``` and ``` <url>``` to name a few. @primary-color-custom-property-at-rule shows how the ``` --primary-color``` example from before is achieved with this at-rule. @at-property @at-property-syntax
@@ -165,10 +165,10 @@ It is possible to be more precise when defining a custom property by using the `
     }
     ```
   ),
-  caption: [Defining a primary color custom propperty using the ``` @property``` rule to be more precise.],
+  caption: [Defining a primary color custom property using the ``` @property``` rule to be more precise.],
 ) <primary-color-custom-property-at-rule>
 
-As displayed in @primary-color-custom-property-js below, both variations are also definable with JavaScript using ``` registerPropperty()``` or ``` setProperty()```. @register-property @set-property
+As displayed in @primary-color-custom-property-js below, both variations are also definable with JavaScript using ``` registerProperty()``` or ``` setProperty()```. @register-property @set-property
 
 #figure(
   align(left,
@@ -248,11 +248,11 @@ Another possibility would be to use the CSS attribute selector to overwrite othe
   caption: [CSS attribute selector used to react to custom properties switching to a dark color theme based on user preferences.],
 ) <attribute-selector-dark-color-theme>
 
-=== Custom Propperty Toggle
+=== Custom Property Toggle
 
 In the landscape of modern CSS, developers often face the challenge of managing repetitive declarations, particularly when implementing light and dark themes. Whether using traditional class-based switching or standard ``` @media (prefers-color-scheme: dark)``` blocks, the logic frequently requires duplicating property keys to override their values. A tiny footnote in the CSS specifications allows for a more elegant approach to state management using custom property to toggle values.
 
-According to CSS specifications, a custom property must represent at least one token to be valid. This token can be a simple whitespace, allowing for exploitation to create ``` boolean``` values as shown in @whitespace-property-value. @custom-propperty-declaration-value
+According to CSS specifications, a custom property must represent at least one token to be valid. This token can be a simple whitespace, allowing for exploitation to create ``` boolean``` values as shown in @whitespace-property-value. @custom-property-declaration-value
 
 #figure(
   align(left,
@@ -307,7 +307,7 @@ Setting the ``` --is-light-theme``` property as prefix when declairing a custom 
   caption: [Prepending ``` initial``` when setting the value of a custom property results in ``` var()``` taking the fallback argument.],
 ) <var-fallback-property>
 
-Multiple fallback values, based on different toggle properties, representing different stylings, could be chained with the ``` var()``` CSS function. This allows for a central state management, assigning custom properties used throughout the whole setup in one single place. @custom-propperty-theme-switch @var-function
+Multiple fallback values, based on different toggle properties, representing different stylings, could be chained with the ``` var()``` CSS function. This allows for a central state management, assigning custom properties used throughout the whole setup in one single place. @custom-property-theme-switch @var-function
 
 #pagebreak()
 == CSS Functions
