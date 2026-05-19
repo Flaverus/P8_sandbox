@@ -219,6 +219,58 @@ If not only the base styles change based on the widget configuration but also ad
 #pagebreak()
 == Contrast Color Functions
 
+In the theory chapter the ``` contrast-color()``` CSS function was used as an example and how such a function could be built with CSS custom functions. As mentioned before, this CSS function returns for a given color either white or black, depending on which of those two have a higher lightness contrast to the given color. It was also mentioned that having pure black or white can feel harsh to read.
+
+To solve this problem an improved version of the ``` contrast-color()``` that can be inspected in @custom-color-contrast-function has been created during this project. This custom function takes a parameter from type ``` <color>``` as well as an optional ``` <percentage>``` parameter. In a first step it is calculated weather black or white has a better contrast to the given color with the help of  ``` oklch()```. If a color has a lightness value of 50% or above the resulting color for ``` --black-or-white``` is black and otherwise white. In a second step the resulting black or white is put into the ``` color-mix()```function that allows to mix two colors together. Here the ``` --intensity``` parameter comes into play, as the defined percentage defines, how much from the given color should be mixed back into the resulting contrast color to smoothen it out further.
+
+To not have the problem of a contrast that hurts your eyes when reading in the first place, the lightness of ``` --black-or-white``` is reduced with the usage of the ``` clamp()``` function. This part ensures that the lightness for a light contrast color is at least 15% and a dark contrast color will not exceed 97.5%, smoothening the resulting color even if there is no color from the selected color mixed back in.
+
+#figure(
+  align(left,
+    ```css
+    @function --color-contrast(--color <color>, --intensity <percentage>: 0%) returns <color> {
+      --black-or-white: oklch(from var(--color) calc((0.5 - l) * infinity) 0 0);
+
+      result: color-mix(in oklch, oklch(from var(--black-or-white) clamp(0.15, l, 0.975) c h), var(--color) var(--intensity));
+    }
+    ```
+  ),
+  caption: [A custom color contrast function that adjusts the lightness of the resulting black or white and allows to mix back in some parts of the original color.],
+) <custom-color-contrast-function>
+
+The example page from the examples collection for this custom contrast color function also calculates the resulting contrast ratio as defined for WCAG 2.x as it can be seen in @custom-contrast-color-example-screenshot below.
+
+#figure(
+  box(
+    inset: 0pt,
+    radius: 6pt,
+    clip: true,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+  {
+    image("../ressources/custom-contrast-color-example.png")
+  }),
+  caption: [A screenshot of the configuration UI for the custom contrast color function.],
+) <custom-contrast-color-example-screenshot>
+
+To be able to calculate the relative contrast ratio of two colors the ``` RGB``` values of each color are needed. When working with e.g. ``` oklch()``` these values are not directly accessible within the browser as the computed styles are in the ``` oklch()``` format too. A workaround to extract the needed values that was used for this example is to use the HTML ``` <canvas>``` element. This element allows styling with the common CSS color functions and allows to extract ``` RGBA``` values through the ``` getImageData()``` function. With this little trick shown in @canvas-for-color-extraction it is possible to extract these values from every color, no matter the original format.
+
+#figure(
+  align(left,
+    ```js
+    const parseColorToRGBA = (colorString) => {
+      const canvas = document.createElement('canvas');
+      const ctx    = canvas.getContext('2d');
+
+      ctx.fillStyle = colorString;
+      ctx.fillRect(0, 0, 1, 1);
+
+      // Returning data array contining RGBA values as follows: r, g, b, a
+      return ctx.getImageData(0, 0, 1, 1).data;
+    };
+    ```
+  ),
+  caption: [Extracting the ``` RGBA``` values from any color in any format through the ``` <canvas>``` element.],
+) <canvas-for-color-extraction>
 
 #pagebreak()
 == Interactive Ishihara Plate
