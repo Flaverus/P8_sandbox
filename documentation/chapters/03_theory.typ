@@ -17,13 +17,13 @@
 
 = Theory
 
-The following chapter deals with various features included in CSS and JavaScript, as well as patterns and standards that can be used as a basis for enhanced visual accessibility to further improve the user experience for users with visual impairments.
+The following chapter introduces CSS and JavaScript features, along with patterns and standards that can serve as a foundation for improving visual accessibility. These techniques help create a better user experience, particularly for people with visual impairments.
 
 == CSS Media Queries
 
-CSS Media Queries allow developer to apply different styles based on characteristics of a device or environment displaying a web page. This is often used to create a responsive web page that uses different stylings, based on screen width.
+CSS Media Queries allow developers to apply different styles based on the characteristics of the device or environment used to display a web page. This mechanism is commonly used to create responsive layouts that adapt their appearance according to the available screen width.
 
-@media-synthax-example below describes the media query synthax according to W3C.
+@media-synthax-example below illustrates the syntax of a media query as defined by the W3C.
 
 #figure(
   align(left,
@@ -33,14 +33,16 @@ CSS Media Queries allow developer to apply different styles based on characteris
     }
     ```
   ),
-  caption: [Synthax of the media query where ``` <media-query-list>``` contains ``` <media-type>```s, ``` <media-feature>```s as well as logical operators.],
+  caption: [Syntax of a media query, where ``` <media-query-list>``` contains ``` <media-type>``` values, ``` <media-feature>``` values, and logical operators.],
 ) <media-synthax-example>
 
+In web development, the ``` screen``` media type is the most commonly used, but media queries can also target printers by using ``` print```. If no media type is specified, the default value is ``` all```, which applies the styles to all devices.
 
+Media features are where media queries become particularly powerful, as more than 40 features are currently available. They allow styles to respond to specific characteristics of the user's environment. Common examples include ``` max-width``` and ``` max-height```, as well as their counterparts ``` min-width``` and ``` min-height```. These features are widely used to create responsive websites with layouts optimized for different screen sizes.
 
-For web development the ``` screen``` media-type is mainly of interest, but it is also possible to set it to ``` print``` for targeting printers. The default value is ``` all```, representing both independent options and is suitable for all devices.
+@screen-width-example demonstrates a media query that uses the ``` screen``` media type together with the ``` max-width``` media feature.
 
-Media-feature is where it gets interesting as there are currently over 40 options available to listen and react to. For example, both ``` max-width``` and ``` max-height```, as well as their opposites ``` min-width``` and ``` min-height```, are widely used to create responsive web sites with different appearances optimized for different devices. @screen-width-example showcases an example using ``` screen``` and ``` max-width```. Some of these features consider aspects of accessibility and user preferences which make them essential to create an accessible web page considering individual needs of different users, but they are not as widely used yet as they should. The following media-feature values should be considered when building web applications that should include everyone. @media_queries
+Some media features take accessibility needs and user preferences into account. They make it possible to adapt the presentation of a website to individual requirements. Despite their importance, they are still used less frequently than they should be. The following media features are particularly relevant when building web applications that aim to be accessible to all users. @media_queries
 
 #figure(
   align(left,
@@ -52,49 +54,52 @@ Media-feature is where it gets interesting as there are currently over 40 option
     }
     ```
   ),
-  caption: [An example styling the background color for mobile devices with media-type ``` screen``` and media-feature ``` max-width```.],
+  caption: [Example of a media query that changes the background color on smaller screens using the ``` screen``` media type and the ``` max-width``` media feature.],
 ) <screen-width-example>
 
 === Reduced Motion
 
-The ``` prefers-reduced-motion``` media-feature indicated if a user has enabled a setting on their device to minimize the amount of non-essential motion shown to them. If the value is set to ``` reduced``` animations and transitions should be reduced to the bare minimum.
+The ``` prefers-reduced-motion``` media feature indicates whether a user has enabled a system setting that reduces non-essential motion. If the value is set to ``` reduce```, animations and transitions should be limited to the bare minimum.
 
-A value set to ``` no-preference``` indicated that the user has no preference on reduced motions, allowing all kinds of animations and movement. @reduced-motion
+A value of ``` no-preference``` indicates that the user has not expressed a preference for reduced motion, allowing animations and transitions to be displayed without restriction. @reduced-motion
 
 === Contrast
 
-With ``` prefers-contrast``` the user can specify if he requests content to be presented with a lower or higher contrast. The value ``` no-preference``` indicates that no setting regarding contrast preference was configured by the user.
+The ``` prefers-contrast``` media feature allows users to indicate whether they prefer content to be presented with higher or lower contrast. A value of ``` no-preference``` indicates that the user has not configured a contrast preference.
 
-If the value is set to ``` more``` a higher level of contrast is requested by the user whilst a value of ``` less``` indicated that the opposite, so a lower contrast, is preferred by the user.
+If the value is set to ``` more```, the user requests a higher level of contrast. Conversely, a value of ``` less``` indicates that a lower contrast is preferred.
 
-Additionally, ``` custom``` can be set as a value as well, meaning the user prefers a specific set of colors. The color palette is typically specified within the media feature ``` forced-colors``` explained in the following section. @contrast
+The value ``` custom``` indicates that the user prefers a specific set of colors. This color palette is typically defined through the ``` forced-colors``` media feature, which is explained in the following section. @contrast
 
 === Forced Colors
 
-``` forced-colors``` detects, if a user agent has a forced colors mode enabled such as Windows High Contrast. This media-feature has either the value ``` active``` if such a mode is enabled or ``` none``` if not.
+The ``` forced-colors``` media feature detects whether the user agent has enabled a forced color mode, such as Windows High Contrast. This media feature has the value ``` active``` when such a mode is enabled and ``` none``` when it is not.
 
-When activated, this overwrites and restricts colors defined in the style sheet. Color values are not affected by styles defined in CSS but instead forced by the browser at paint time. The colors enforced depend on the context of an element. Additionally, backplates are drawn behind text to ensure legibility to preserve contrast for text placed on top of images.
+When forced colors mode is active, many color values defined in the style sheet are overridden by the browser during the painting process. The exact colors applied depend on the semantic role of each element. In addition, browsers may draw backplates behind text to preserve legibility and maintain sufficient contrast when text appears on top of images or patterned backgrounds.
 
-Developers are not encouraged to use this media query to create a separate design for users with this feature enabled but to make small tweaks to improve usability if a certain part of a page would not work well in the forced colors context such as replacing box-shadow stylings with a border to not lose the contrast of a button that is only elevated from the background with a box-shadow. @forced-colors
+Developers are generally not encouraged to create a separate design specifically for users who enable forced colors mode. Instead, this media query should be used to make targeted adjustments when certain components do not work well in this context. For example, a button that relies solely on ``` box-shadow``` to stand out from the background may lose its visual distinction. In such cases, replacing the shadow with a visible border can provide a more robust solution. @forced-colors
 
 === Reduced Transparency
 
-When a user has enabled a setting to reduce the transparent or translucent layer effects the ``` prefers-reduced-transparency``` media-feature will be set to ``` reduced``` while a value of ``` no-preference``` indicates default behavior is expected by the user. This can help improve contrast and readability for some users.
+The ``` prefers-reduced-transparency``` media feature indicates whether a user has enabled a system setting to reduce transparent or translucent visual effects. If the value is set to ``` reduce```, transparency effects such as blurred overlays or frosted glass backgrounds should be minimized or removed. A value of ``` no-preference``` indicates that the user has not expressed a preference and that the default design can be used.
 
-This feature is restricted available and not yet fully supported by Firefox and Safari. @reduced-transparency
+Reducing transparency can improve contrast and readability, particularly for users who find translucent interface elements distracting or difficult to perceive.
+
+Support for this media feature is currently limited and it is not yet fully supported by Firefox and Safari. @reduced-transparency
 
 === Color Scheme
 
-A feature more broadly used compared to the others introduced in this chapter is the ``` prefers-color-scheme```. It indicates if the user requests a light or dark color theme set through the operating system or a user agent setting. Possible values are ``` light``` for a light color theme and ``` dark``` for a dark color theme. @color-scheme
+A more widely adopted media feature is ``` prefers-color-scheme```. It indicates whether the user prefers a light or dark color theme configured through the operating system or the user agent. The value ``` light``` represents a light color theme, while ``` dark``` represents a dark color theme. @color-scheme
 
 === Inverted Colors
 
-Using inverted colors can have unpleasant side effects such as shadows turning into highlights, reducing the readability of the content. Developers can react to this preference and ensure the pages integrity with this media-feature. This feature is only supported by Safari so far. @inverted-colors
+The ``` inverted-colors``` media feature detects whether the user agent is displaying content with inverted colors. Color inversion can introduce visual side effects, such as shadows appearing as highlights, which may reduce the readability of the content. By responding to this media feature, developers can make targeted adjustments to preserve the visual integrity of the page.
+
+Support for this media feature is currently limited and, at the time of writing, it is only supported by Safari. @inverted-colors
 
 === Accessing Media Features through JavaScript
 
-The ``` window``` interface provides the ``` matchMedia()``` method, returning a ``` MediaQueryList``` object to check if the ``` document``` matches a media query string as seen below in @dark-color-scheme-example for the ``` prefers-color-scheme``` query.
-
+The ``` window``` interface provides the ``` matchMedia()``` method, which returns a ``` MediaQueryList``` object. This object can be used to determine whether the current ``` document``` matches a given media query string. @dark-color-scheme-example demonstrates this approach using the ``` prefers-color-scheme``` media feature.
 
 #figure(
   align(left,
@@ -102,29 +107,30 @@ The ``` window``` interface provides the ``` matchMedia()``` method, returning a
     const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
     ```
   ),
-  caption: [Checking if the user's system settings prefere a dark color scheme.],
+  caption: [Checking whether the user's system settings prefer a dark color scheme.],
 ) <dark-color-scheme-example>
 
-
-
-
-This enables developers to not only react to preferences within CSS but also consider the users wishes within business logic and web page specific features. @match-media
+This allows developers to respond to user preferences not only in CSS, but also within JavaScript logic and application-specific features. @match-media
 
 === Changes in the World of Media Queries
 
-Continuous development and improvement take place in the world of CSS media queries but there is currently one big visual accessibility concern that is not considered yet. Different types of colorblindness and other visual impairments in regards of color perception fall short. There is an open issue in the W3Cs csswg-drafts repository proposing an additional ``` media-feature``` called ``` color-vision-adjustment``` that intends to cover that area to enhance web accessibility for users with color vision deficiencies.
+CSS media queries continue to evolve, but one important aspect of visual accessibility is still not addressed. Different forms of color blindness and other impairments that affect color perception are not yet covered by an official media feature.
 
-This proposal intends to cover various specific types of colorblindness such as ``` protanopia``` (red deficiency), ``` deuteranopia``` (red-green deficiency), ``` tritanopia``` (blue-yellow deficiency) or ``` achromatopsia``` (near total color blindness - grayscale) that were covered in the previous P7 project with bookmarklets simulating these visual impairments.
+An open issue in the W3C's ``` csswg-drafts``` repository proposes a new media feature called ``` color-vision-adjustment```. Its goal is to improve web accessibility by allowing developers to respond directly to the needs of users with color vision deficiencies.
 
-Having such a ``` media-feature``` would increase the awareness as well as the possibilities to directly react to the needs of users affected which such impairments. @color_blindness_media_qiery
+The proposal includes support for several specific conditions, including ``` protanopia``` (red deficiency), ``` deuteranopia``` (red-green deficiency), ``` tritanopia``` (blue-yellow deficiency), and ``` achromatopsia``` (near-total color blindness, resulting in grayscale vision). These impairments were introduced in the previous P7 project through bookmarklets that simulated their visual effects.
+
+A media feature of this kind would increase awareness of color vision deficiencies and provide developers with a standardized way to adapt interfaces to the needs of affected users. @color_blindness_media_qiery
 
 === Deprecated Features
 
-There were media types considering accessibility needs like ``` embossed```, ``` aural``` and ``` braille```, but they got deprecated, assuming distinctions between device types will become more blurred in the future and due to media-type referring to device categories rather than the media they support. @css3_qa @at_media
+Earlier versions of CSS included media types such as ``` embossed```, ``` aural```, and ``` braille```, which were intended to address specific accessibility needs. These media types were later deprecated because the distinction between device categories was expected to become less meaningful over time. In addition, media types describe classes of devices rather than the actual capabilities they support. @css3_qa @at_media
 
 === Security Concerns
 
-Data accessible with media queries can be abused to construct a fingerprint, helping to identify and track a device. To prevent this, browsers may fudge returned values in some manners. Some Browsers also provide the possibility to prevent this abuse in the browser settings, such as "Resist Fingerprinting" in Firefox resulting in many media queries only reporting default values rather than device specific settings. @at_media
+Information exposed through media queries can be used to build a browser fingerprint, which may allow a device to be identified and tracked across websites. To reduce this risk, browsers may deliberately modify or generalize certain reported values.
+
+Some browsers also provide settings that further limit this information. For example, Firefox offers the "Resist Fingerprinting" option, which causes many media queries to return standardized values instead of device-specific settings. @at_media
 
 #pagebreak()
 == CSS Custom Properties
