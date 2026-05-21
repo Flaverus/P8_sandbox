@@ -288,4 +288,40 @@ The implementation of the custom contrast color function is available in the pro
 #pagebreak()
 == Interactive Ishihara Plate
 
+The interactive Ishihara plate is not intended to directly enhance a website through integration into a production environment. Instead, it serves as a developer tool for visually evaluating color contrast in situations where shape, placement, or additional visual cues do not influence recognition. The focus lies entirely on the perception of color itself.
+
+The application allows three separate colors to be defined for the background circles and three additional colors for the foreground circles. Through their arrangement, the foreground circles form the number 42. This setup makes it possible to evaluate how different shades of the same color, for example variations in saturation or lightness, interact with one another and whether sufficient visual contrast remains between foreground and background elements. An example configuration using colors from the Kolibri palette is shown in @interactive-ishihara-plate.
+
+#figure(
+  box(
+    inset: 0pt,
+    radius: 6pt,
+    clip: true,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+  {
+    image("../ressources/ishihara-plate-with-controls.png")
+  }),
+  caption: [A screenshot of the interactive Ishihara plate configured with colors from the Kolibri palette.],
+) <interactive-ishihara-plate>
+
+In addition to freely configurable colors, the application also includes predefined color combinations designed to simulate scenarios that are difficult or impossible to distinguish for people with specific forms of color vision deficiency such as ``` Protanopia```, ``` Deuteranopia```, and ``` Tritanopia```. These presets make it possible to evaluate whether certain color combinations remain distinguishable under different forms of impaired color perception.
+
+Although these configurations are inspired by the original Ishihara test plates, the application is not intended to serve as a medically accurate diagnostic tool. Instead, it should be considered a visual indicator that may suggest the need for further professional examination.
+
+An example of these comparison modes can be seen in @ishihara-plate-comparisement. The left side displays a plate configured with colors that are difficult to distinguish for users with ``` Deuteranopia```. The right side shows the same plate with a ``` Deuteranopia``` simulation filter applied, illustrating how the color combination may appear to affected users. The simulation filters are based on the bookmarklet filters developed during the previous P7 project.
+
+#figure(
+  box(
+    inset: 0pt,
+    radius: 6pt,
+    clip: true,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+  {
+    image("../ressources/ishihara-comparisement.png", width: 80%)
+  }),
+  caption: [A comparison between a plate configured for ``` Deuteranopia``` on the left and the same plate viewed through a ``` Deuteranopia``` simulation filter on the right.],
+) <ishihara-plate-comparisement>
+
+The implementation of the interactive Ishihara plate is available in the project's repository: #link("https://github.com/Flaverus/P8_sandbox/tree/main/examples/widget")
+
 #pagebreak()

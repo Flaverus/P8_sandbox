@@ -537,6 +537,7 @@ Readability depends on more than the luminance difference between two colors. Fo
   box(
     inset: 12pt,
     radius: 6pt,
+    clip: true,
     stroke: 0.5pt + rgb("#cbd5e1"),
   {
     image("../ressources/apca_curve.png", width: 80%)
