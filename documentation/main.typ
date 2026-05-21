@@ -135,3 +135,52 @@
 *Type of Usage*: Used for linguistic refinement of drafts and formating mathematical formulas (Relative Luminance).
 
 *Extent*: Specific paragraphs regarding WCAG luminance calculations were refined using the tool. All technical facts and code were manually verified for accuracy.
+
+#v(2em)
+
+*Tool: ChatGPT (OpenAI), Version GPT-5.5.*
+
+*Type of Usage*: Used for linguistic refinement of drafts and improvement of readability and text flow.
+
+*Extent*: Specific sections of the documentation were refined using the tool to improve wording, transitions, and overall readability. The original content, technical facts, code, and project structure remained author-created and were manually verified for accuracy.
+
+#pagebreak()
+= MSE-Declaration of Originality
+
+The project reports (P7 and P8) and the master's thesis (P9) must be accompanied by the following declaration of originality and signed:
+
+I hereby declare that any individual work submitted for assessment is entirely the product of my own effort:
+
+- That I have correctly cited all text passages that do not originate from me, in accordance with standard academic citation rules (e.g., APA or IEEE), and that I have clearly mentioned all sources used;
+- That I have declared in footnotes or in an "List of Aids" all aids used (AI assistance systems such as chatbots [e.g., ChatGPT], translation [e.g., DeepL], paraphrasing [e.g., QuillBot]) or programming applications [e.g., GitHub Copilot] and indicated their use at the corresponding text passages;
+- That I have acquired all intangible rights to any materials I may have used, such as images or graphics, or that these materials were created by me;
+- That the topic, the thesis, or parts of it have not been used in an assessment of another module, unless this has been expressly agreed with the lecturer in advance and is stated as such;
+- That I am aware that my work may be checked for plagiarism and for third-party authorship of human or technical origin (artificial intelligence);
+- That I am aware that the University of Applied Sciences and Arts Northwestern Switzerland FHNW will pursue a violation of this declaration of authenticity and that disciplinary consequences (reprimand or expulsion from the study program) may result from this.
+
+#v(2cm)
+
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 2cm,
+  [
+    Windisch, #box(width: 60%, line(length: 100%, stroke: 0.5pt + gray)) \
+    #text(size: 9pt, fill: gray)[Location / Date]
+  ],
+  [
+    Florian Schnidrig \
+    #text(size: 9pt, fill: gray)[First Name / Surname]
+  ]
+)
+
+#v(1.5cm)
+
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 2cm,
+  [],
+  [
+    #line(length: 100%, stroke: 0.5pt + gray)
+    #text(size: 9pt, fill: gray)[Signature]
+  ]
+)
