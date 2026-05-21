@@ -17,13 +17,13 @@
 
 = Theory
 
-The following chapter deals with various features included in CSS and JavaScript, as well as patterns and standards that can be used as a basis for enhanced visual accessibility to further improve the user experience for users with visual impairments.
+The following chapter introduces CSS and JavaScript features, along with patterns and standards that can serve as a foundation for improving visual accessibility. These techniques help create a better user experience, particularly for people with visual impairments.
 
 == CSS Media Queries
 
-CSS Media Queries allow developer to apply different styles based on characteristics of a device or environment displaying a web page. This is often used to create a responsive web page that uses different stylings, based on screen width.
+CSS Media Queries allow developers to apply different styles based on the characteristics of the device or environment used to display a web page. This mechanism is commonly used to create responsive layouts that adapt their appearance according to the available screen width.
 
-@media-synthax-example below describes the media query synthax according to W3C.
+@media-synthax-example below illustrates the syntax of a media query as defined by the W3C.
 
 #figure(
   align(left,
@@ -33,14 +33,16 @@ CSS Media Queries allow developer to apply different styles based on characteris
     }
     ```
   ),
-  caption: [Synthax of the media query where ``` <media-query-list>``` contains ``` <media-type>```s, ``` <media-feature>```s as well as logical operators.],
+  caption: [Syntax of a media query, where ``` <media-query-list>``` contains ``` <media-type>``` values, ``` <media-feature>``` values, and logical operators.],
 ) <media-synthax-example>
 
+In web development, the ``` screen``` media type is the most commonly used, but media queries can also target printers by using ``` print```. If no media type is specified, the default value is ``` all```, which applies the styles to all devices.
 
+Media features are where media queries become particularly powerful, as more than 40 features are currently available. They allow styles to respond to specific characteristics of the user's environment. Common examples include ``` max-width``` and ``` max-height```, as well as their counterparts ``` min-width``` and ``` min-height```. These features are widely used to create responsive websites with layouts optimized for different screen sizes.
 
-For web development the ``` screen``` media-type is mainly of interest, but it is also possible to set it to ``` print``` for targeting printers. The default value is ``` all```, representing both independent options and is suitable for all devices.
+@screen-width-example demonstrates a media query that uses the ``` screen``` media type together with the ``` max-width``` media feature.
 
-Media-feature is where it gets interesting as there are currently over 40 options available to listen and react to. For example, both ``` max-width``` and ``` max-height```, as well as their opposites ``` min-width``` and ``` min-height```, are widely used to create responsive web sites with different appearances optimized for different devices. @screen-width-example showcases an example using ``` screen``` and ``` max-width```. Some of these features consider aspects of accessibility and user preferences which make them essential to create an accessible web page considering individual needs of different users, but they are not as widely used yet as they should. The following media-feature values should be considered when building web applications that should include everyone. @media_queries
+Some media features take accessibility needs and user preferences into account. They make it possible to adapt the presentation of a website to individual requirements. Despite their importance, they are still used less frequently than they should be. The following media features are particularly relevant when building web applications that aim to be accessible to all users. @media_queries
 
 #figure(
   align(left,
@@ -52,49 +54,52 @@ Media-feature is where it gets interesting as there are currently over 40 option
     }
     ```
   ),
-  caption: [An example styling the background color for mobile devices with media-type ``` screen``` and media-feature ``` max-width```.],
+  caption: [Example of a media query that changes the background color on smaller screens using the ``` screen``` media type and the ``` max-width``` media feature.],
 ) <screen-width-example>
 
 === Reduced Motion
 
-The ``` prefers-reduced-motion``` media-feature indicated if a user has enabled a setting on their device to minimize the amount of non-essential motion shown to them. If the value is set to ``` reduced``` animations and transitions should be reduced to the bare minimum.
+The ``` prefers-reduced-motion``` media feature indicates whether a user has enabled a system setting that reduces non-essential motion. If the value is set to ``` reduce```, animations and transitions should be limited to the bare minimum.
 
-A value set to ``` no-preference``` indicated that the user has no preference on reduced motions, allowing all kinds of animations and movement. @reduced-motion
+A value of ``` no-preference``` indicates that the user has not expressed a preference for reduced motion, allowing animations and transitions to be displayed without restriction. @reduced-motion
 
 === Contrast
 
-With ``` prefers-contrast``` the user can specify if he requests content to be presented with a lower or higher contrast. The value ``` no-preference``` indicates that no setting regarding contrast preference was configured by the user.
+The ``` prefers-contrast``` media feature allows users to indicate whether they prefer content to be presented with higher or lower contrast. A value of ``` no-preference``` indicates that the user has not configured a contrast preference.
 
-If the value is set to ``` more``` a higher level of contrast is requested by the user whilst a value of ``` less``` indicated that the opposite, so a lower contrast, is preferred by the user.
+If the value is set to ``` more```, the user requests a higher level of contrast. Conversely, a value of ``` less``` indicates that a lower contrast is preferred.
 
-Additionally, ``` custom``` can be set as a value as well, meaning the user prefers a specific set of colors. The color palette is typically specified within the media feature ``` forced-colors``` explained in the following section. @contrast
+The value ``` custom``` indicates that the user prefers a specific set of colors. This color palette is typically defined through the ``` forced-colors``` media feature, which is explained in the following section. @contrast
 
 === Forced Colors
 
-``` forced-colors``` detects, if a user agent has a forced colors mode enabled such as Windows High Contrast. This media-feature has either the value ``` active``` if such a mode is enabled or ``` none``` if not.
+The ``` forced-colors``` media feature detects whether the user agent has enabled a forced color mode, such as Windows High Contrast. This media feature has the value ``` active``` when such a mode is enabled and ``` none``` when it is not.
 
-When activated, this overwrites and restricts colors defined in the style sheet. Color values are not affected by styles defined in CSS but instead forced by the browser at paint time. The colors enforced depend on the context of an element. Additionally, backplates are drawn behind text to ensure legibility to preserve contrast for text placed on top of images.
+When forced colors mode is active, many color values defined in the style sheet are overridden by the browser during the painting process. The exact colors applied depend on the semantic role of each element. In addition, browsers may draw backplates behind text to preserve legibility and maintain sufficient contrast when text appears on top of images or patterned backgrounds.
 
-Developers are not encouraged to use this media query to create a separate design for users with this feature enabled but to make small tweaks to improve usability if a certain part of a page would not work well in the forced colors context such as replacing box-shadow stylings with a border to not lose the contrast of a button that is only elevated from the background with a box-shadow. @forced-colors
+Developers are generally not encouraged to create a separate design specifically for users who enable forced colors mode. Instead, this media query should be used to make targeted adjustments when certain components do not work well in this context. For example, a button that relies solely on ``` box-shadow``` to stand out from the background may lose its visual distinction. In such cases, replacing the shadow with a visible border can provide a more robust solution. @forced-colors
 
 === Reduced Transparency
 
-When a user has enabled a setting to reduce the transparent or translucent layer effects the ``` prefers-reduced-transparency``` media-feature will be set to ``` reduced``` while a value of ``` no-preference``` indicates default behavior is expected by the user. This can help improve contrast and readability for some users.
+The ``` prefers-reduced-transparency``` media feature indicates whether a user has enabled a system setting to reduce transparent or translucent visual effects. If the value is set to ``` reduce```, transparency effects such as blurred overlays or frosted glass backgrounds should be minimized or removed. A value of ``` no-preference``` indicates that the user has not expressed a preference and that the default design can be used.
 
-This feature is restricted available and not yet fully supported by Firefox and Safari. @reduced-transparency
+Reducing transparency can improve contrast and readability, particularly for users who find translucent interface elements distracting or difficult to perceive.
+
+Support for this media feature is currently limited and it is not yet fully supported by Firefox and Safari. @reduced-transparency
 
 === Color Scheme
 
-A feature more broadly used compared to the others introduced in this chapter is the ``` prefers-color-scheme```. It indicates if the user requests a light or dark color theme set through the operating system or a user agent setting. Possible values are ``` light``` for a light color theme and ``` dark``` for a dark color theme. @color-scheme
+A more widely adopted media feature is ``` prefers-color-scheme```. It indicates whether the user prefers a light or dark color theme configured through the operating system or the user agent. The value ``` light``` represents a light color theme, while ``` dark``` represents a dark color theme. @color-scheme
 
 === Inverted Colors
 
-Using inverted colors can have unpleasant side effects such as shadows turning into highlights, reducing the readability of the content. Developers can react to this preference and ensure the pages integrity with this media-feature. This feature is only supported by Safari so far. @inverted-colors
+The ``` inverted-colors``` media feature detects whether the user agent is displaying content with inverted colors. Color inversion can introduce visual side effects, such as shadows appearing as highlights, which may reduce the readability of the content. By responding to this media feature, developers can make targeted adjustments to preserve the visual integrity of the page.
+
+Support for this media feature is currently limited and, at the time of writing, it is only supported by Safari. @inverted-colors
 
 === Accessing Media Features through JavaScript
 
-The ``` window``` interface provides the ``` matchMedia()``` method, returning a ``` MediaQueryList``` object to check if the ``` document``` matches a media query string as seen below in @dark-color-scheme-example for the ``` prefers-color-scheme``` query.
-
+The ``` window``` interface provides the ``` matchMedia()``` method, which returns a ``` MediaQueryList``` object. This object can be used to determine whether the current ``` document``` matches a given media query string. @dark-color-scheme-example demonstrates this approach using the ``` prefers-color-scheme``` media feature.
 
 #figure(
   align(left,
@@ -102,40 +107,43 @@ The ``` window``` interface provides the ``` matchMedia()``` method, returning a
     const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
     ```
   ),
-  caption: [Checking if the user's system settings prefere a dark color scheme.],
+  caption: [Checking whether the user's system settings prefer a dark color scheme.],
 ) <dark-color-scheme-example>
 
-
-
-
-This enables developers to not only react to preferences within CSS but also consider the users wishes within business logic and web page specific features. @match-media
+This allows developers to respond to user preferences not only in CSS, but also within JavaScript logic and application-specific features. @match-media
 
 === Changes in the World of Media Queries
 
-Continuous development and improvement take place in the world of CSS media queries but there is currently one big visual accessibility concern that is not considered yet. Different types of colorblindness and other visual impairments in regards of color perception fall short. There is an open issue in the W3Cs csswg-drafts repository proposing an additional ``` media-feature``` called ``` color-vision-adjustment``` that intends to cover that area to enhance web accessibility for users with color vision deficiencies.
+CSS media queries continue to evolve, but one important aspect of visual accessibility is still not addressed. Different forms of color blindness and other impairments that affect color perception are not yet covered by an official media feature.
 
-This proposal intends to cover various specific types of colorblindness such as ``` protanopia``` (red deficiency), ``` deuteranopia``` (red-green deficiency), ``` tritanopia``` (blue-yellow deficiency) or ``` achromatopsia``` (near total color blindness - grayscale) that were covered in the previous P7 project with bookmarklets simulating these visual impairments.
+An open issue in the W3C's ``` csswg-drafts``` repository proposes a new media feature called ``` color-vision-adjustment```. Its goal is to improve web accessibility by allowing developers to respond directly to the needs of users with color vision deficiencies.
 
-Having such a ``` media-feature``` would increase the awareness as well as the possibilities to directly react to the needs of users affected which such impairments. @color_blindness_media_qiery
+The proposal includes support for several specific conditions, including ``` protanopia``` (red deficiency), ``` deuteranopia``` (red-green deficiency), ``` tritanopia``` (blue-yellow deficiency), and ``` achromatopsia``` (near-total color blindness, resulting in grayscale vision). These impairments were introduced in the previous P7 project through bookmarklets that simulated their visual effects.
+
+A media feature of this kind would increase awareness of color vision deficiencies and provide developers with a standardized way to adapt interfaces to the needs of affected users. @color_blindness_media_qiery
 
 === Deprecated Features
 
-There were media types considering accessibility needs like ``` embossed```, ``` aural``` and ``` braille```, but they got deprecated, assuming distinctions between device types will become more blurred in the future and due to media-type referring to device categories rather than the media they support. @css3_qa @at_media
+Earlier versions of CSS included media types such as ``` embossed```, ``` aural```, and ``` braille```, which were intended to address specific accessibility needs. These media types were later deprecated because the distinction between device categories was expected to become less meaningful over time. In addition, media types describe classes of devices rather than the actual capabilities they support. @css3_qa @at_media
 
 === Security Concerns
 
-Data accessible with media queries can be abused to construct a fingerprint, helping to identify and track a device. To prevent this, browsers may fudge returned values in some manners. Some Browsers also provide the possibility to prevent this abuse in the browser settings, such as "Resist Fingerprinting" in Firefox resulting in many media queries only reporting default values rather than device specific settings. @at_media
+Information exposed through media queries can be used to build a browser fingerprint, which may allow a device to be identified and tracked across websites. To reduce this risk, browsers may deliberately modify or generalize certain reported values.
+
+Some browsers also provide settings that further limit this information. For example, Firefox offers the "Resist Fingerprinting" option, which causes many media queries to return standardized values instead of device-specific settings. @at_media
 
 #pagebreak()
 == CSS Custom Properties
 
-CSS custom properties, also referred to as CSS variables, are entities representing values. These properties can be used throughout the document, evaluating into the same values, depending on the scope it is defined, everywhere they are used. This helps developers to keep an overview and reduces complexity. Such a property is typically set by the custom property syntax, being two dashes ``` --```, followed by a name, joined with single dashes. To access a custom property the CSS ``` var()``` function must be used. @primary-color-custom-property shows an example of custom properties being used to define a ``` --primary-color``` that then can be used on the whole website and is easy exchangeable in one central part to implement different color palates such as a light and dark theme, based on the users preference. @custom-properties
+CSS custom properties, also known as CSS variables, are named values that can be reused throughout a style sheet. Their value depends on the scope in which they are defined, but within that scope they evaluate to the same value wherever they are used. This makes styles easier to maintain and reduces duplication.
+
+Custom properties are defined using a name that begins with two dashes, ``` --```, followed by a descriptive identifier. Their value can be accessed using the CSS ``` var()``` function. @primary-color-custom-property demonstrates how the custom property ``` --primary-color``` can be defined once and reused throughout a website. This approach is particularly useful when implementing multiple themes, such as light and dark mode, because colors can be changed in a single central location. @custom-properties
 
 #figure(
   align(left,
     ```css
     :root {
-      --primary-color: #204CCF;
+      --primary-color:          #204CCF;
       --primary-color-contrast: #FFFFFF;
     }
 
@@ -150,10 +158,10 @@ CSS custom properties, also referred to as CSS variables, are entities represent
 
     ```
   ),
-  caption: [Defining a primary color custom property that can be used throughout the website.],
+  caption: [Defining a primary color custom property that can be reused throughout the website.],
 ) <primary-color-custom-property>
 
-It is possible to be more precise when defining a custom property by using the ``` @property``` at-rule, allowing to define the value type with ``` syntax```, if the property inherits by default with ``` inherits``` and an initial value with ``` initial-value```. There is a wide range of values possible for ``` syntax``` such as ``` <color>```, ``` <number>``` and ``` <url>``` to name a few. @primary-color-custom-property-at-rule shows how the ``` --primary-color``` example from before is achieved with this at-rule. @at-property @at-property-syntax
+The ``` @property``` at-rule allows custom properties to be defined more precisely. It makes it possible to specify the expected value type using ``` syntax```, whether the property is inherited by default using ``` inherits```, and an initial value using ``` initial-value```. Possible syntax definitions include ``` <color>```, ``` <number>```, and ``` <url>```. @primary-color-custom-property-at-rule shows how the previous ``` --primary-color``` example can be expressed using this at-rule. @at-property @at-property-syntax
 
 #figure(
   align(left,
@@ -165,10 +173,10 @@ It is possible to be more precise when defining a custom property by using the `
     }
     ```
   ),
-  caption: [Defining a primary color custom property using the ``` @property``` rule to be more precise.],
+  caption: [Defining a primary color custom property using the ``` @property``` at-rule.],
 ) <primary-color-custom-property-at-rule>
 
-As displayed in @primary-color-custom-property-js below, both variations are also definable with JavaScript using ``` registerProperty()``` or ``` setProperty()```. @register-property @set-property
+As shown in @primary-color-custom-property-js, custom properties can also be defined in JavaScript using ``` registerProperty()``` or using ``` setProperty()```. @register-property @set-property
 
 #figure(
   align(left,
@@ -184,10 +192,10 @@ As displayed in @primary-color-custom-property-js below, both variations are als
     root.style.setProperty('--primary-color-contrast', '#FFFFFF');
     ```
   ),
-  caption: [Using both ``` registerProperty()``` and ``` setProperty()``` in JavaScript to create CSS custom properties.],
+  caption: [Using ``` registerProperty()``` and ``` setProperty()``` in JavaScript to define CSS custom properties.],
 ) <primary-color-custom-property-js>
 
-Of course it is not only possible to write, but also read custom properties with the function ``` getPropertyValue()``` shown in @primary-color-custom-property-js-read to be able to react to changed values and further work with the latest value.
+Custom properties can also be read in JavaScript using ``` getPropertyValue()```, as shown in @primary-color-custom-property-js-read. This makes it possible to react to dynamically changed values and use them in application logic.
 
 #figure(
   align(left,
@@ -196,14 +204,14 @@ Of course it is not only possible to write, but also read custom properties with
     const contrastColor = getComputedStyle(root).getPropertyValue('--contrast-color');
     ```
   ),
-  caption: [With ``` getPropertyValue()``` the previously set CSS custom property can be read in JavaScript again.],
+  caption: [Reading a CSS custom property in JavaScript using ``` getPropertyValue()```.],
 ) <primary-color-custom-property-js-read>
 
 === Global State Management
 
-The CSS custom property can not only be used to store values such as colors to be applied to properties but also for state management. As the values can be altered and accessed both within CSS, as well as in JavaScript, it lends itself to store configuration data, based on which the user interface adapts.
+CSS custom properties are not limited to storing design values such as colors. They can also be used to manage application state. Because custom properties can be read and modified in both CSS and JavaScript, they provide a convenient way to store configuration values that directly influence the user interface.
 
-When a user has not enabled a reduced motion setting in his OS or browser yet deactivates it with some website specific settings, it is possible to store that preference within a custom property, such as ``` --prefers-reduced-motion: true``` and act on that with the ``` @container``` at-rule to apply different styling at runtime similar to @at-container-reduced-motion. @at-container
+For example, a user may not have enabled reduced motion at the operating system or browser level, but may choose to disable animations through a website-specific setting. This preference can be stored in a custom property such as ``` --prefers-reduced-motion: true```. The ``` @container``` at-rule can then react to this value and apply different styles at runtime, as shown in @at-container-reduced-motion. @at-container
 
 #figure(
   align(left,
@@ -219,10 +227,10 @@ When a user has not enabled a reduced motion setting in his OS or browser yet de
     }
     ```
   ),
-  caption: [CSS ``` @container``` at-rule used to react to custom properties turning off animations based on user preferences.],
+  caption: [Using the CSS ``` @container``` at-rule to disable animations based on a custom property.],
 ) <at-container-reduced-motion>
 
-Another possibility would be to use the CSS attribute selector to overwrite other custom properties if another color theme is needed. When the users OS and browser settings suggest he wants a light color theme but he configures it differently on the website itself a custom property such as ``` --prefers-dark-theme: true``` could be set to change the applications color palette as shown in @attribute-selector-dark-color-theme. @attribute-selector
+Another approach is to use a CSS attribute selector to override custom properties when a different color theme is selected. For example, the operating system and browser may indicate a preference for a light theme, while the user explicitly selects a dark theme on the website. In this case, a custom property such as ``` --prefers-dark-theme: true``` can be used to switch the application's color palette, as demonstrated in @attribute-selector-dark-color-theme. @attribute-selector
 
 #figure(
   align(left,
@@ -230,29 +238,29 @@ Another possibility would be to use the CSS attribute selector to overwrite othe
     :root {
       --prefers-dark-theme: false;
 
-        --text-color: #222222;
-        --bg-color: #FCFCFC;
-        --border-color: #EEEEEE;
+        --text-color:     #222222;
+        --bg-color:       #FCFCFC;
+        --border-color:   #EEEEEE;
         --primary-accent: #0056B3;
     }
 
     :root[style*="--prefers-dark-theme: true"] {
-        --text-color: #EDEDED;
-        --bg-color: #212121;
-        --border-color: #232323;
+        --text-color:     #EDEDED;
+        --bg-color:       #212121;
+        --border-color:   #232323;
         --primary-accent: #6DB3F4;
     }
 
     ```
   ),
-  caption: [CSS attribute selector used to react to custom properties switching to a dark color theme based on user preferences.],
+  caption: [Using a CSS attribute selector to switch to a dark color theme based on a custom property.],
 ) <attribute-selector-dark-color-theme>
 
 === Custom Property Toggle
 
-In the landscape of modern CSS, developers often face the challenge of managing repetitive declarations, particularly when implementing light and dark themes. Whether using traditional class-based switching or standard ``` @media (prefers-color-scheme: dark)``` blocks, the logic frequently requires duplicating property keys to override their values. A tiny footnote in the CSS specifications allows for a more elegant approach to state management using custom property to toggle values.
+In modern CSS, developers often face the challenge of managing repetitive declarations, especially when implementing light and dark themes. Whether the switch is handled through classes or through ``` @media (prefers-color-scheme: dark)```, the same property names typically need to be declared multiple times with different values. A lesser-known detail in the CSS specification makes it possible to implement this kind of state management more elegantly by using custom properties as toggle values.
 
-According to CSS specifications, a custom property must represent at least one token to be valid. This token can be a simple whitespace, allowing for exploitation to create ``` boolean``` values as shown in @whitespace-property-value. @custom-property-declaration-value
+According to the CSS specification, a custom property must contain at least one token to be considered valid. A single whitespace character satisfies this requirement and can therefore be used to simulate boolean-like values, as shown in @whitespace-property-value. @custom-property-declaration-value
 
 #figure(
   align(left,
@@ -266,7 +274,7 @@ According to CSS specifications, a custom property must represent at least one t
   caption: [Both ``` ' '``` and ``` initial``` are valid values for custom properties.],
 ) <whitespace-property-value>
 
-Traditional theming setups require to define variables twice for both the light- as well as the dark-theme. Taking advantage of the pseudo ``` boolean``` values from @whitespace-property-value the toggle logic can be put into a single custom property, demonstrated in @toggle-custom-property.
+In traditional theming setups, each variable must be defined separately for both the light and dark theme. By using the pseudo-boolean values introduced in @whitespace-property-value, the theme state can be stored in a single custom property, as demonstrated in @toggle-custom-property.
 
 #figure(
   align(left,
@@ -282,10 +290,10 @@ Traditional theming setups require to define variables twice for both the light-
     }
     ```
   ),
-  caption: [Assigning either ``` ' '``` or ``` initial``` debending on the chosen theme allows to create the base for the toggle logic.],
+  caption: [Assigning either ``` ' '``` or ``` initial``` depending on the active theme creates the basis for the toggle logic.],
 ) <toggle-custom-property>
 
-Setting the ``` --is-light-theme``` property as prefix when declairing a custom property results either in a valid declaration, if a whitespace is set as prefix, or an invalid declaration, if ``` initial``` is set as the prefix value. Using ``` var()``` with a fallback value is now automatically assigning either the light-theme or dark-theme color, depending on the validity of the light-theme custom properties displayed in @var-fallback-property.
+When ``` --is-light-theme``` is used as a prefix in another custom property declaration, the resulting declaration is either valid or invalid depending on its value. If the prefix expands to a whitespace character, the declaration remains valid. If it expands to ``` initial```, the declaration becomes invalid. In that case, the fallback value provided to ``` var()``` is used automatically, as illustrated in @var-fallback-property.
 
 #figure(
   align(left,
@@ -304,15 +312,17 @@ Setting the ``` --is-light-theme``` property as prefix when declairing a custom 
     }
     ```
   ),
-  caption: [Prepending ``` initial``` when setting the value of a custom property results in ``` var()``` taking the fallback argument.],
+  caption: [When a custom property becomes invalid, ``` var()``` automatically uses the fallback value.],
 ) <var-fallback-property>
 
-Multiple fallback values, based on different toggle properties, representing different stylings, could be chained with the ``` var()``` CSS function. This allows for a central state management, assigning custom properties used throughout the whole setup in one single place. @custom-property-theme-switch @var-function
+Multiple fallback values based on different toggle properties can be chained using the CSS ``` var()``` function. This enables centralized state management, where the custom properties used throughout the entire style sheet are controlled from a single location. @custom-property-theme-switch @var-function
+
+An example of this theme toggle is available in the project's repository: #link("https://github.com/Flaverus/P8_sandbox/tree/main/examples/theme-switch")
 
 #pagebreak()
 == CSS Functions
 
-There are many native CSS functions available that make a developer's life easier. Some of these functions might be useful when it comes to accessibility such as the ``` contrast-color()``` function that became newly available during the implementation of this project in April 2026 and works across the latest devices and browser versions. This function returns either white or black, depending on which of these two colors has a higher contrast to the color passed to the function as parameter. An example with a ``` button``` styling can be seen in @contrast-color-example. @contrast-color
+CSS provides a wide range of built-in functions that simplify common styling tasks. Some of these functions are particularly useful for accessibility. One notable example is ``` contrast-color()```, which became broadly available during the implementation of this project in April 2026 and is supported by current browser versions. The function returns either black or white, depending on which of the two provides the higher contrast against the color passed as its argument. @contrast-color-example shows this approach in the context of a ``` button``` element. @contrast-color
 
 #figure(
   align(left,
@@ -323,10 +333,10 @@ There are many native CSS functions available that make a developer's life easie
     }
     ```
   ),
-  caption: [Setting the text color of a button black or white, depending on the background color],
+  caption: [Setting the text color of a button to black or white based on the background color.],
 ) <contrast-color-example>
 
-Having either black or white as font color on a background is a very safe approach but might, depending on the background, feel too harsh, making the reading experience less pleasant. Another relatively fresh available CSS function is the ``` light-dark()```, allowing developers to provide two colors or images. Depending on the active color scheme the first value is returned for the light theme and the second value for the dark theme. In @light-dark-example this approach ids shown using custom properties. @light-dark
+Using either black or white for text is a reliable way to ensure strong contrast. Depending on the background color, however, the result may appear visually harsh and less pleasant to read. Another recently introduced CSS function is ``` light-dark()```, which accepts two colors or images. The first value is used when a light color scheme is active, while the second value is used for a dark color scheme. @light-dark-example demonstrates this approach using custom properties. @light-dark
 
 #figure(
   align(left,
@@ -339,12 +349,14 @@ Having either black or white as font color on a background is a very safe approa
     }
     ```
   ),
-  caption: [Defining the text and background color depending on the selected theme with custom properties.],
+  caption: [Defining text and background colors based on the active color theme using custom properties.],
 ) <light-dark-example>
 
 === CSS Custom Functions
 
-Whilst the wide range of available functions in CSS covers a lot of use cases there might be scenarios that do not fit these provided possibilities and need combination of functions or even completely different functionalities. This is where the currently still as experimental flagged ``` @function``` at-rule comes into play. This feature has a similar look and feel to the CSS custom properties, also starting with a leading ``` --``` in their name. To declare such a function the ``` @function```keyword is needed, followed by a custom name and some optional parameters. Both parameters and function name start with ``` --```, followed by a case-sensitive identifier defined by the user. Finaly a value defined with ``` result:``` is evaluated and the result returned as seen in @at-function-example. @at-function
+Although the growing set of built-in CSS functions covers many use cases, some scenarios still require functionality that cannot be expressed with the currently available primitives. In such cases, developers may need to combine multiple functions or implement custom logic. This is where the experimental ``` @function``` at-rule becomes relevant.
+
+This feature is conceptually similar to CSS custom properties, as custom functions also use names that begin with ``` --```. A function is declared using the ``` @function``` keyword, followed by a custom name and an optional list of parameters. Both the function name and its parameters start with ``` --``` and are followed by case-sensitive identifiers defined by the developer. Inside the function body, the expression assigned to ``` result:``` is evaluated and returned, as shown in @at-function-example. @at-function
 
 #figure(
   align(left,
@@ -354,19 +366,23 @@ Whilst the wide range of available functions in CSS covers a lot of use cases th
     }
     ```
   ),
-  caption: [A custom function that serves the same purpose as ``` contrast-color()``` but was creates before this feature was widely available.],
+  caption: [A custom function that provides behavior similar to ``` contrast-color()``` and was created before that function became widely available.],
 ) <at-function-example>
 
-Similar to the CSS custom properties, a CSS data types, such as ``` <color>```, ``` <number>```, ``` <string>``` and many more, can be declared for both parameter value types and the return value type on a function.
+As with CSS custom properties, CSS data types such as ``` <color>```, ``` <number>```, and ``` <string>``` can be specified for both function parameters and the return value.
 
 #pagebreak()
 == Color Spaces
 
-There are many different models to describe colors the human eye can perceive. Each of these models has different strong suits and weaknesses and is used for different applications throughout different areas not only limited to displays on digital devices. For a long time, colors in CSS were defined in the RGB color space and therefore limited to a certain degree. The CSS Colors Module Level 4 specification provided additional support to manipulate colors in CSS in other ways with other color models. Currently there is even a CSS color module level 5 draft in the works at the W3 consortium. @CSS-colors
+There are many different models for describing the colors perceptible to the human eye. Each model has its own strengths and weaknesses and is used in different contexts, ranging from print and photography to digital displays.
+
+For many years, CSS relied primarily on the RGB color space, which limited how colors could be described and manipulated. The CSS Color Module Level 4 specification introduced support for additional color spaces and more advanced color functions, significantly expanding the possibilities for working with color in CSS. Development in this area continues, and the W3C is currently working on the CSS Color Module Level 5 specification. @CSS-colors
 
 === RGB
 
-RGB mixes the primary colors ``` red```, ``` green``` and ``` blue``` in different saturations. Additionally, to the colors an alpha channel can optionally be added to define the opacity of a color. This way of describing colors has been used in CSS for ages and can be written both with the ``` rgb()``` function or with the hex annotation which would look like ``` #2d1fb180``` to achive the same color as shown in @rgb-color-example. @CSS-colors
+The RGB color model represents colors by combining different intensities of the primary colors ``` red```, ``` green```, and ``` blue```. An optional alpha channel can be added to define the opacity of the resulting color.
+
+RGB has been supported in CSS since its early days and can be expressed using the ``` rgb()``` function or hexadecimal notation. For example, the color shown in @rgb-color-example can also be written as ``` #2d1fb180```. @CSS-colors
 
 #figure(
   kind: raw,
@@ -378,12 +394,14 @@ RGB mixes the primary colors ``` red```, ``` green``` and ``` blue``` in differe
       rgb(45, 31, 177, 50%)
     ),
   ),
-  caption: [An example showing how to use ``` rgb()``` with a color from the Kolibri palette with a 50% oppacity],
+  caption: [Using ``` rgb()``` to define a color from the Kolibri palette with 50% opacity.],
 ) <rgb-color-example>
 
 === HSL
 
-With the addition of CSS Color Module Level 3 HSL was introduced to CSS where the colors hue is picked based on a color wheel within the RGB color space. The color is described by the ``` hue``` angle on the color wheel, the ``` saturation``` and ``` lightness``` as presented in @hsl-color-example. Additionally, an alpha channel can be added, analogue to RGB. This allows to pick a color and manipulate its saturation or lightness, without having to re-calculate RBG values, allowing the creation of different shades of the same color way easier. @CSS-colors
+CSS Color Module Level 3 introduced the HSL color model to CSS. HSL describes colors using three components: ``` hue```, ``` saturation```, and ``` lightness```, as illustrated in @hsl-color-example. The hue is represented as an angle on the color wheel, while saturation and lightness define the intensity and brightness of the color. As with RGB, an optional alpha channel can be added to control opacity.
+
+HSL makes it easier to create variations of a color because saturation and lightness can be adjusted directly without recalculating individual RGB values. This is particularly useful when generating lighter or darker shades of the same base color. @CSS-colors
 
 #figure(
   kind: raw,
@@ -395,13 +413,16 @@ With the addition of CSS Color Module Level 3 HSL was introduced to CSS where th
       rgb(95, 46, 234, 60%)
     ),
   ),
-  caption: [How to use ``` hsl()``` to configure another color from the Kolibri palette with a 60% oppacity],
+  caption: [Using ``` hsl()``` to define a color from the Kolibri palette with 60% opacity.],
 ) <hsl-color-example>
-
 
 === CIELAB Colors
 
-This color space allows to use additional and more vibrant colors outside of the RGB limitation. It is a uniform color space that defines colors based on how they are perceived by the human eye. The ``` oklab()``` function describes colors in that space with ``` red/green-ness```, ``` yellow/blueness``` along the a and b axis in the Oklab color space. Alternatively ``` oklch()``` uses ``` lightness```,  ``` chroma``` and ``` hue``` to describe colors. These ways of describing colors are consideret the current state of the art and an example can be seen in @ok-color-example. Both functions accept an optional alpha channel for opacity. @CSS-colors
+Perceptual color spaces such as Oklab and OkLCH make it possible to define colors in a way that more closely matches human vision. They also provide access to a wider range of colors than those that can be represented in the traditional sRGB color space.
+
+The ``` oklab()``` function describes a color using three components: ``` lightness```, the ``` a``` axis representing red-green variation, and the ``` b``` axis representing yellow-blue variation. The related ``` oklch()``` function uses ``` lightness```, ``` chroma```, and ``` hue``` instead. Both functions support an optional alpha channel to control opacity.
+
+These color models are widely regarded as the current state of the art for working with color in CSS because they produce more perceptually uniform results. In practice, this means that adjusting lightness or chroma leads to more predictable visual changes than with older color models. @CSS-colors
 
 #figure(
   kind: raw,
@@ -413,12 +434,12 @@ This color space allows to use additional and more vibrant colors outside of the
       rgb(190, 88, 253, 70%)
     ),
   ),
-  caption: [Showcasing ``` oklab()``` and ``` oklch()``` with yet another color from the Kolibri palette with a 70% oppacity],
+  caption: [Using ``` oklab()``` and ``` oklch()``` to define a color from the Kolibri palette with 70% opacity.],
 ) <ok-color-example>
 
 === HWB
 
-Independent from the new color space ``` hwb()```was added, which considers the ``` hue```, ``` whiteness``` as well as ``` blackness``` within the RGB color space and is similar to ``` hsl()```. An example is seen in @hwb-color-example. @CSS-colors
+The ``` hwb()``` color function was introduced alongside the newer CSS color features. It describes colors using three components within the RGB color space: ``` hue```, ``` whiteness```, and ``` blackness```. In practice, it offers an alternative to ``` hsl()``` that many developers find more intuitive when adjusting tints and shades. An example is shown in @hwb-color-example. @CSS-colors
 
 #figure(
   kind: raw,
@@ -429,25 +450,29 @@ Independent from the new color space ``` hwb()```was added, which considers the 
       rgb(254, 46, 168, 30%)
     ),
   ),
-  caption: [Using ``` hwb()``` to recreate a different color shade from the Kolibri palette with a 30% oppacity],
+  caption: [Using ``` hwb()``` to define a color from the Kolibri palette with 30% opacity.],
 ) <hwb-color-example>
 
 #pagebreak()
-== Contrast perception
+== Contrast Perception
 
-Contrast is essential for distinguishing and differentiating elements. Such contrasts can be achieved through brightness, size, texture, or shape. On the web, lightness is predominantly used to ensure readability and to emphasize the boundaries between elements. The following section deals with the current contrast standard of WCAG 2.x and provides an overview of the upcoming working draft standard for WCAG 3.0.
+Contrast is essential for distinguishing elements and understanding their relationships. Differences in brightness, size, texture, and shape all contribute to visual contrast. On the web, variations in lightness are the primary means of ensuring text readability and clearly separating interface elements.
+
+The following section introduces the contrast requirements defined in WCAG 2.x and provides an overview of the emerging approach proposed for WCAG 3.0.
 
 === Relative Luminance
 
-The current WCAG 2.x standard bases contrast requirements on relative luminance between text and its background, independent of hue. This assumes that for individuals with color vision deficiencies, hue and saturation have minimal or no effect regarding legibility as assessed by reading performance. Since the inability to distinguish specific colors does not typically impair light-dark perception, color itself is not considered a primary factor in these calculations. Far more important is that smaller and thinner fonts may be rendered by user agents with a much fainter appearance than the color defined in the CSS, leading to a perceived contrast that is notably lower than the theoretical ratio.
+The contrast requirements in WCAG 2.x are based on the relative luminance of text and its background, independent of hue. This approach assumes that hue and saturation have little influence on reading performance, even for users with color vision deficiencies. Since the inability to distinguish certain colors does not usually affect the perception of light and dark, color itself is not treated as a primary factor in the contrast calculation.
 
-The WCAG guideline requires at least a contrast ratio of 3:1 to satisfy the corelating requirement for level AA. This is based in the recommendation from ISO-9241-3. To achieve level AAA certification the minimum ratio is set to 7:1. This ratio was chosen because it compensated for the loss in contrast sensitivity experienced by users with approximately 20/80 vision (This means that someone needs to be 20 feet away to see what a person with normal vision can see from 80 feet away). People with more than this degree of vision loss usually use assistive technologies.
+In practice, the perceived contrast may differ from the theoretical value. Smaller or thinner fonts can appear noticeably lighter than the color specified in CSS due to anti-aliasing and font rendering. As a result, text may appear to have lower contrast than the calculated ratio suggests.
 
-Color deficiencies are so diverse that it is impossible to generalize effective color pairs for contrast based on quantitative data. This is why contrast independent of color perception is so important.
+WCAG 2.x requires a minimum contrast ratio of 4.5:1 for normal text to meet Level AA. Large text must reach at least 3:1. For Level AAA, the minimum contrast ratio increases to 7:1. These thresholds are based in part on recommendations from ISO 9241-3 and are intended to compensate for reduced contrast sensitivity in users with moderate visual impairments. Users with more severe vision loss typically rely on assistive technologies such as screen magnifiers or screen readers.
 
-A notable exception is protanopia where red color tones are perceived as dark grey, resulting in a bad contrast on darker colors and black. This is why it is recommended to generally not use red on black. @WCAG-1.4.3
+Color vision deficiencies vary significantly, making it difficult to define universally effective color combinations based solely on hue. This is one of the main reasons why WCAG evaluates contrast primarily through relative luminance.
 
-The formula depicted in @relative-luminanc-formula is used in the WCAG 2.x specification to calculate the relative luminance used for further calculations such as color contrast. @relative_luminanc
+One notable exception is ``` protanopia```, in which red tones may appear significantly darker than expected. As a result, red text on dark backgrounds can provide much less contrast than the calculated ratio suggests and should generally be avoided. @WCAG-1.4.3
+
+The formula shown in @relative-luminanc-formula is used by WCAG 2.x to calculate relative luminance, which serves as the basis for determining contrast ratios. @relative_luminanc
 
 #figure(
   box(
@@ -502,33 +527,38 @@ The formula depicted in @relative-luminanc-formula is used in the WCAG 2.x speci
 
 === Perceptual Color Models
 
-The WCAG 2.x contrast guidelines that are based on relative luminance are being replaced in the future with the WCAG 3.0 guidelines that use the Accessible Perceptual Contrast Algorithm (APCA). Massive changes in display technology, web content and CSS functionality led to the approach that was defined nearly 2 decades ago for WCAG 2.x to be outdated and in need for replacement based on advances in vision science since 2005.
+The contrast model used in WCAG 2.x is based on relative luminance. In the future, it is expected to be replaced by the Accessible Perceptual Contrast Algorithm (APCA), which forms part of the ongoing WCAG 3.0 work. Advances in display technology, modern web design, and vision science have shown that the approach introduced nearly two decades ago in WCAG 2.x no longer reflects how contrast is perceived in practice.
 
-The current approach follows a binary nature where the criteria either passes or fails as a whole. It is important to understand the non-linear aspects of perception and using a model that takes these aspects in account.
+WCAG 2.x follows a binary model in which a contrast ratio either passes or fails. APCA takes a different approach by accounting for the non-linear nature of human perception and by evaluating contrast in the context in which the colors are used.
 
-All perception is context sensitive and when it comes to readability contrast font weight and line thickness are principal factors that must be taken into account when looking at luminance contrast.
-
-The color contrast regarding hue, chroma or saturation is less relevant for readability, but high light/dark contrast ensures the best readability. Smaller and thinner visual characteristics lower the perceived contrast, requiring for the light/darkness difference to increase as showcased in @apca-curve.
+Readability depends on more than the luminance difference between two colors. Font size, font weight, stroke thickness, and surrounding context all influence how contrast is perceived. High light-dark contrast generally improves readability, but smaller and thinner text requires a greater difference in lightness to remain legible, as illustrated in @apca-curve.
 
 #figure(
   box(
     inset: 12pt,
     radius: 6pt,
+    clip: true,
     stroke: 0.5pt + rgb("#cbd5e1"),
   {
     image("../ressources/apca_curve.png", width: 80%)
   }),
-  caption: [This chart demonstrates with the usage of text samples the spatial dependance of human contrast sensitivity. @APCA],
+  caption: [This chart illustrates the spatial dependence of human contrast sensitivity using text samples. @APCA],
 ) <apca-curve>
 
-Nontextual objects like an icon require a lower lightness contrast compared to text and the contrast requirement of two colors is dependent of the use case, size, thickness and so on. The math behind WCAG 2.x contrast for accessibility has problems that have been known for a long time and are criticized widely. Case studies that compare contrast between white and black text on a colored background found that the variant that was deemed as inaccessible by the guidelines were perceived as more readable by the majority of contestants with color vision deficiencies. @white-on-orange-case-study
+Non-text elements such as icons typically require less contrast than body text. More generally, the appropriate contrast between two colors depends on the specific use case, including the size, thickness, and purpose of the element.
 
-APCA is a new approach for calculating and predicting readability contrast related to color appearance on self-illuminated RGB computer displays introducing the lightness contrast ($L^c$) value. This new approach considers the context in which two colors are used rather than passing or failing regardless of the use case. @APCA
+The contrast formula used in WCAG 2.x has been criticized for many years. Case studies comparing white and black text on colored backgrounds have shown that combinations classified as inaccessible under WCAG 2.x were sometimes perceived as more readable by participants with color vision deficiencies. @white-on-orange-case-study
+
+APCA introduces a new metric called lightness contrast, expressed as $L^c$. Instead of assigning a universal pass-or-fail threshold, it estimates readability based on the perceptual relationship between foreground and background colors within their actual visual context. @APCA
 
 #pagebreak()
 == Canvas
 
-The HTML ``` <canvas>``` element is intended to draw graphics and animations on a website. The element itself does not have a default visual styling and is intended to be manipulated via JavaScript with either the ``` Canvas API``` or the ``` WebGL API```. With the ``` Canvas API``` it is possible to create game graphics, data visualization, photo manipulations, real-time video processing among other things. ``` Canvas API``` focuses mainly on 2D graphics while ``` WebGL API``` draws hardware-accelerated 2D and 3D graphics. Along manipulation possibilities, it is also possible to extract ``` ImageData``` from a graphic. @canvas-rgba-extraction shows an example how ``` RGBA``` values from an area on a canvas can be extracted in JavaScript. @canvas-element @canvas-api @image-data
+The HTML ``` <canvas>``` element is used to draw graphics and animations directly within a web page. By default, the element has no visual representation of its own and must be rendered through JavaScript using either the ``` Canvas API``` or the ``` WebGL API```.
+
+The ``` Canvas API``` is primarily designed for two-dimensional graphics and is commonly used for tasks such as game rendering, data visualization, image manipulation, and real-time video processing. The ``` WebGL API``` extends these capabilities by providing hardware-accelerated rendering for both two-dimensional and three-dimensional graphics.
+
+In addition to drawing content, the canvas also allows pixel data to be read and analyzed. The ``` ImageData``` interface provides access to the underlying RGBA values of a rendered image. @canvas-rgba-extraction demonstrates how the color values of a selected area can be extracted in JavaScript. @canvas-element @canvas-api @image-data
 
 #figure(
   align(left,
@@ -546,23 +576,23 @@ The HTML ``` <canvas>``` element is intended to draw graphics and animations on 
 
     ```
   ),
-  caption: [Creating a purple 100 x 100 pixels square add extracting the RGBA data from a 10 x 10 pixels part at the coordinates x=10 and y=10 from that square.],
+  caption: [Creating a purple 100 × 100 pixel square and extracting the RGBA values from a 10 × 10 pixel region starting at coordinates x = 10 and y = 10.],
 ) <canvas-rgba-extraction>
 
 #pagebreak()
 == Ishihara
 
-The Ishihara color test, named after Japanese ophthalmologist Shinobu Ishihara, was originally designed in 1917 to identify red-green color vision deficiencies. The test utilizes a series of circular plates covered in pseudo-isochromatic dots, randomly sized circles of varying colors that appear identical to those with color blindness but distinct to those with standard vision. @ishihara
+The Ishihara color test, named after the Japanese ophthalmologist Shinobu Ishihara, was developed in 1917 to detect red-green color vision deficiencies. The test consists of a series of circular plates composed of pseudo-isochromatic dots. These dots vary in size and color and are arranged in patterns that appear distinct to individuals with typical color vision, while blending together for people with certain forms of color blindness. @ishihara
 
-An example of such a plate can be seen in @ishihara-example01 that uses a orange and teal color plate which should be visible independent of the viewers vision types. This color combination was typically used as demonstratin plate at the beginning of a ishihara test.
+An example of such a plate is shown in @ishihara-example01. It uses orange and teal tones and is designed to remain visible regardless of the viewer's color perception. Plates of this kind are commonly used as introductory demonstration images at the beginning of an Ishihara test.
 
 === Functional Application in Contrast Testing
 
-While traditionally a diagnostic tool for the human eye, the mechanics of these plates offer a rigorous framework for testing visual hierarchy and contrast in design.
+Although originally developed as a diagnostic tool, the underlying principle of Ishihara plates also provides a useful framework for evaluating color contrast in interface design.
 
-By packing dots of different colors together, the Ishihara method forces the eye to rely on "chromatic contrast" to find a pattern. In a custom application, if a design’s foreground and background colors "bleed" together on a dotted plate, it proves the colors lack the necessary luminance contrast to be accessible.
+By placing many small dots of different colors next to each other, the method forces the visual system to rely primarily on chromatic contrast to identify a pattern. In a custom accessibility tool, if the foreground and background colors visually blend together within such a plate, this indicates that the chosen color combination may not provide sufficient perceptual contrast.
 
-Custom plates can be generated using specific color palettes to ensure that a brand's primary colors are distinguishable not just to standard viewers, but across the spectrum of for example Protanopia or Deuteranopia.
+Custom plates can be generated using a specific brand palette to verify that key colors remain distinguishable not only for users with typical color vision, but also for users with conditions such as ``` protanopia``` or ``` deuteranopia```.
 
 #figure(
   box(
@@ -570,9 +600,9 @@ Custom plates can be generated using specific color palettes to ensure that a br
     radius: 6pt,
     stroke: 0.5pt + rgb("#cbd5e1"),
   {
-    image("../ressources/Ishihara-example01.png", width: 50%)
+    image("../ressources/Ishihara-example01.png", width: 40%)
   }),
-  caption: [This plate displays a high-contrast figure designed to remain legible across all vision types, serving as the universal baseline for the Ishihara color test.],
+  caption: [A high-contrast demonstration plate designed to remain legible across all common vision types.],
 ) <ishihara-example01>
 
 #pagebreak()

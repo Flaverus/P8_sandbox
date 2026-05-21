@@ -1,12 +1,14 @@
 = Implementation
 
-This chapter contains suggestions that extend browser standards regarding improved accessibility. The *preferences widget* allows user-specific configuration of an individual website, the *contrast color function* is a function that extends the new ``` contrast-color()``` CSS function by adding a color component, and the *interactive ishihara plate* allows users to manually check color contrasts, as well as test color values and their contrasts using different color filters that simulate various forms of color blindness.
+This chapter presents practical approaches that extend existing browser standards to further improve accessibility. The *preferences widget* enables users to define website-specific settings tailored to their individual needs. The *contrast color function* expands the native ``` contrast-color()``` CSS function by introducing an additional color component. The *interactive Ishihara plate* allows users to evaluate color combinations manually and to test contrast under simulated color vision deficiencies.
 
-== Preferences Weidget
+== Preferences Widget
 
-CSS media queries already allow to address certain user needs. However, this requires that the user has configured specific needs in their operating system or browser settings. If no settings have been configured, there is no way to take the necessary precautions to offer the user a tailored accessibility experience. If incorrect settings exist, or if certain measures are not desired by the user in specific scenarios, these would have to be adjusted globally, even if the circumstances differ only for a single website. Furthermore, there are accessibility aspects that are not yet covered by CSS media queries and therefore cannot be directly considered.
+CSS media queries already make it possible to respond to certain user preferences. However, this only works when the user has configured the corresponding settings in the operating system or browser. If no such settings exist, websites have no reliable way to adapt to the user's individual accessibility needs.
 
-To prevent these limitations and give the user complete freedom, this preferences widget, shown in @preference-widget, was created. It refers to existing system settings but allows users to customize them and offers the possibility to extend the limited scope of CSS media queries to suit specific websites.
+Even when system-level preferences are configured, they may not reflect the requirements of every website. A user may prefer reduced motion in general, but still want to enable animations on a specific page, or the opposite. In addition, some accessibility preferences, such as color blindness simulations, are not currently covered by CSS media queries and therefore cannot be addressed through native browser mechanisms alone.
+
+To overcome these limitations and give users greater control, the preferences widget shown in @preference-widget was developed. It uses existing system settings as a starting point, while allowing them to be adjusted and extended on a per-website basis.
 
 #figure(
   box(
@@ -17,12 +19,14 @@ To prevent these limitations and give the user complete freedom, this preference
   {
     image("../ressources/preference-widget.png", width: 25%)
   }),
-  caption: [A screenshot of the preferences widget where custom settings for reduced motion and colorblindness on a pagespecifiv level were configured.],
+  caption: [A screenshot of the preferences widget with page-specific settings for reduced motion and color blindness.],
 ) <preference-widget>
 
 === JavaScript Part
 
-Existing media queries are used as a basis, provided the relevant setting is included in the scope of CSS media queries. It is possible to configure settings specifically based on the operating system or browser settings. The system settings are used as the initial value when a page is visited for the first time. All values are stored in the browsers ``` localStorage```, ensuring that settings are not lost on page refreshes and are consistently available across a web application. The values are set as CSS custom properties on the pseudo-class ``` :root```, from where they can then be used, as shown in @set-accessibility-property.
+Where supported, existing CSS media queries serve as the foundation for the widget's default values. When a user visits the page for the first time, the current operating system or browser settings are used as the initial configuration. Any changes made through the widget are stored in the browser's ``` localStorage```, ensuring that preferences persist across page reloads and remain available throughout the application.
+
+Each preference is also written to a CSS custom property on the ``` :root``` element, making the value accessible from both JavaScript and CSS. This approach establishes a single source of truth that can be used consistently across the entire application, as shown in @set-accessibility-property.
 
 #figure(
   align(left,
@@ -42,10 +46,10 @@ Existing media queries are used as a basis, provided the relevant setting is inc
     }
     ```
   ),
-  caption: [The ``` setAccessibilityProperty()``` saves a property value to the ``` localStorage``` and creates a custom property on ``` :root```.],
+  caption: [The ``` setAccessibilityProperty()``` function stores a value in ``` localStorage``` and updates the corresponding custom property on ``` :root```.] ,
 ) <set-accessibility-property>
 
-With the function ``` getAccessibilityProperty()``` shown in @get-accessibility-property previously saved configurations are read from the ``` localStorage``` or set to the system default if they have not been defined yet.
+The ``` getAccessibilityProperty()``` function shown in @get-accessibility-property reads a previously saved value from ``` localStorage```. If no value has been stored yet, it returns ``` 'system'```, indicating that the operating system or browser setting should be used as the default.
 
 #figure(
   align(left,
@@ -61,10 +65,10 @@ With the function ``` getAccessibilityProperty()``` shown in @get-accessibility-
     }
     ```
   ),
-  caption: [With the usage of ``` getAccessibilityProperty()``` previously saved values are returned or the systems default value will be used.],
+  caption: [The ``` getAccessibilityProperty()``` function returns a saved value or falls back to the system setting.],
 ) <get-accessibility-property>
 
-The widget makes use of both the ``` setAccessibilityProperty()```and ``` getAccessibilityProperty()``` functions to set the custom properties on page load as it can be seen in @handle-accessibility-property. The first parameter in ``` setAccessibilityProperty()``` is the custom property name that will be set to the ``` :root```, the second parameter contains the return value of the ``` getAccessibilityProperty()``` function which is either the previously saved value from the ``` localStorage``` or the string 'system' as default value if no saved data exists so far, as well as the CSS media query string as the third and last parameter if only a ``` true``` or ``` false``` value is considered for this property.
+During page initialization, both functions are used to populate the custom properties with either the stored value or the corresponding system preference, as shown in @handle-accessibility-property.
 
 #figure(
   align(left,
@@ -87,10 +91,10 @@ The widget makes use of both the ``` setAccessibilityProperty()```and ``` getAcc
                              '');
     ```
   ),
-  caption: [Setting the global custom propperties on page load with the properties custom name, the return value of ``` getAccessibilityProperty()``` to consider already set values and system settings, as well as the media query in question.],
+  caption: [Initializing the global custom properties with stored values or system defaults.],
 ) <handle-accessibility-property>
 
-As a next step the function ``` syncWidgetOption()``` seen in @sync-accessibility-option synchronizes the values from the CSS custom properties to the radio buttons representing the setings in the UI. This makes use of the custom properties on the ``` :root``` as single source of truth to not having to propagates data change to different areas of the code as it is accessible both from CSS and JavaScript.
+The ``` syncWidgetOption()``` function shown in @sync-accessibility-option synchronizes the values stored in the custom properties with the corresponding radio buttons in the widget. By reading the values directly from ``` :root```, the custom properties remain the single source of truth for both the user interface and the underlying logic.
 
 #figure(
   align(left,
@@ -109,11 +113,10 @@ As a next step the function ``` syncWidgetOption()``` seen in @sync-accessibilit
     syncWidgetOption(colorblindness, '--prefers-colorblind-mode');
     ```
   ),
-  caption: [Setting the global custom propperties on page load with the properties custom name, the return value of ``` getAccessibilityProperty()``` to consider already set values and system settings, as well as the media query in question.],
+  caption: [Synchronizing the selected radio buttons with the values stored in the custom properties.],
 ) <sync-accessibility-option>
 
-Lastly each setting needs to be updated in both the ``` localStorage``` as well as the property value in the document if the selection in the radio button group changes which is shown in @on-change-accessibility-option.
-
+Finally, each radio group registers a ``` change``` event listener that updates both ``` localStorage``` and the corresponding custom property whenever the user selects a different option, as shown in @on-change-accessibility-option.
 
 #figure(
   align(left,
@@ -142,12 +145,12 @@ Lastly each setting needs to be updated in both the ``` localStorage``` as well 
     }
     ```
   ),
-  caption: [Reacting to changes in the radio button group to update the users preference setting.],
+  caption: [Updating the user's preference when the selected radio button changes.],
 ) <on-change-accessibility-option>
 
 === CSS Part
 
-With the CSS custom properties that represent the users preferences in place the next step is to make use of these properties and build different representations of a website for the possible combinations of these configurations. In @change-css-base-properties-attribute-selector custom CSS properties are defined, holding the base style for a website and with the CSS attribute selector ``` []``` these base styles are overwritten for the dark color theme if the user prefers that one.
+Once the CSS custom properties representing the user's preferences are in place, they can be used to create different visual representations of the website. In @change-css-base-properties-attribute-selector, a set of custom properties defines the default styling. These values are selectively overridden using the CSS attribute selector ``` []``` when the user prefers a dark color scheme.
 
 #figure(
   align(left,
@@ -175,10 +178,10 @@ With the CSS custom properties that represent the users preferences in place the
     }
     ```
   ),
-  caption: [Overwriting the base styling CSS custom properties with the CSS attribute selector on ``` :root``` for a dark color scheme styling.],
+  caption: [Overriding the default custom properties with the CSS attribute selector on ``` :root``` to apply a dark color scheme.],
 ) <change-css-base-properties-attribute-selector>
 
-The more configuration properties available the more combinations of different settings must me considered. @change-css-base-multiple-properties shows how the base styling properties are set to yet other values if both the color scheme is set to dark as well as the high contrast styling is enabled, resulting in another visual representation of the website.
+As additional preferences are introduced, the number of possible combinations increases. @change-css-base-multiple-properties demonstrates how the base styling is adjusted when both the dark theme and the high contrast mode are enabled, resulting in a different visual presentation.
 
 #figure(
   align(left,
@@ -194,10 +197,10 @@ The more configuration properties available the more combinations of different s
     }
     ```
   ),
-  caption: [Considering both the color scheme as well as the high contrast setting leads to another styling.],
+  caption: [Applying a dedicated style when both dark mode and high contrast mode are enabled.],
 ) <change-css-base-multiple-properties>
 
-If not only the base styles change based on the widget configuration but also additional rules must be applies the ``` @container``` CSS rule with the ``` style()``` query provide the needed functionality. This allows to select the root level for styling as the properties are defined on ``` :root``` and therfore can be applies throughout the whole application. @additonal-rules-custom-properties considers disabling animations and transitions when the user prefers reduced motion.
+In some cases, changing individual custom property values is not sufficient and additional CSS rules must be applied. The ``` @container``` at-rule combined with the ``` style()``` query makes this possible. Because the preference properties are defined on ``` :root```, they can be used to conditionally apply styles across the entire application. @additonal-rules-custom-properties demonstrates how animations and transitions can be disabled when the user prefers reduced motion.
 
 #figure(
   align(left,
@@ -213,17 +216,23 @@ If not only the base styles change based on the widget configuration but also ad
     }
     ```
   ),
-  caption: [Additional styling based on the custom propperties can be added with the ``` @container``` rule in combination with the ``` style()``` query.],
+  caption: [Applying additional styles based on custom properties using the ``` @container``` rule and a ``` style()``` query.],
 ) <additonal-rules-custom-properties>
+
+The implementation of the accessibility widget, including several example settings that demonstrate how individual and combined preferences affect the website's styling, is available in the project's repository: #link("https://github.com/Flaverus/P8_sandbox/tree/main/examples/widget")
 
 #pagebreak()
 == Contrast Color Functions
 
-In the theory chapter the ``` contrast-color()``` CSS function was used as an example and how such a function could be built with CSS custom functions. As mentioned before, this CSS function returns for a given color either white or black, depending on which of those two have a higher lightness contrast to the given color. It was also mentioned that having pure black or white can feel harsh to read.
+The theory chapter introduced the native ``` contrast-color()``` CSS function and demonstrated how similar behavior can be implemented using CSS custom functions. Given a color, ``` contrast-color()``` returns either black or white, depending on which of the two provides the greater lightness contrast. While this approach is effective, pure black and white can appear visually harsh, especially when used for larger blocks of text.
 
-To solve this problem an improved version of the ``` contrast-color()``` that can be inspected in @custom-color-contrast-function has been created during this project. This custom function takes a parameter from type ``` <color>``` as well as an optional ``` <percentage>``` parameter. In a first step it is calculated weather black or white has a better contrast to the given color with the help of  ``` oklch()```. If a color has a lightness value of 50% or above the resulting color for ``` --black-or-white``` is black and otherwise white. In a second step the resulting black or white is put into the ``` color-mix()```function that allows to mix two colors together. Here the ``` --intensity``` parameter comes into play, as the defined percentage defines, how much from the given color should be mixed back into the resulting contrast color to smoothen it out further.
+To address this limitation, an enhanced version of ``` contrast-color()``` was developed during this project and is shown in @custom-color-contrast-function. The custom function accepts a required parameter of type ``` <color>``` and an optional ``` <percentage>``` parameter named ``` --intensity```.
 
-To not have the problem of a contrast that hurts your eyes when reading in the first place, the lightness of ``` --black-or-white``` is reduced with the usage of the ``` clamp()``` function. This part ensures that the lightness for a light contrast color is at least 15% and a dark contrast color will not exceed 97.5%, smoothening the resulting color even if there is no color from the selected color mixed back in.
+In the first step, the function determines whether black or white provides the better contrast by evaluating the lightness component of the input color in the OkLCH color space. This is achieved by subtracting the lightness value from ``` 0.5```, representing 50% lightness, and multiplying the result by the constant ``` infinity```. Due to the way ``` oklch()``` handles lightness values, this effectively collapses the result to either 0 or 1, depending on whether the original color is darker or lighter than 50%. If the lightness value is greater than or equal to 50%, black is selected. Otherwise, white is used.
+
+In the second step, the selected contrast color is passed to the ``` color-mix()``` function. The optional ``` --intensity``` parameter controls how much of the original color is mixed back into the result. This produces a softer contrast color that retains some of the visual characteristics of the source color.
+
+To further reduce extreme contrast, the lightness of the selected black or white is adjusted using the ``` clamp()``` function. This ensures that light colors do not exceed a lightness of 97.5% and dark colors do not fall below 15%. As a result, the generated contrast color remains readable while appearing less visually aggressive.
 
 #figure(
   align(left,
@@ -235,10 +244,10 @@ To not have the problem of a contrast that hurts your eyes when reading in the f
     }
     ```
   ),
-  caption: [A custom color contrast function that adjusts the lightness of the resulting black or white and allows to mix back in some parts of the original color.],
+  caption: [A custom contrast function that softens pure black and white and optionally mixes in a portion of the original color.],
 ) <custom-color-contrast-function>
 
-The example page from the examples collection for this custom contrast color function also calculates the resulting contrast ratio as defined for WCAG 2.x as it can be seen in @custom-contrast-color-example-screenshot below.
+The accompanying example from the project's example collection also calculates the WCAG 2.x contrast ratio for the generated colors, as shown in @custom-contrast-color-example-screenshot.
 
 #figure(
   box(
@@ -249,10 +258,12 @@ The example page from the examples collection for this custom contrast color fun
   {
     image("../ressources/custom-contrast-color-example.png")
   }),
-  caption: [A screenshot of the configuration UI for the custom contrast color function.],
+  caption: [A screenshot of the configuration interface for the custom contrast color function.],
 ) <custom-contrast-color-example-screenshot>
 
-To be able to calculate the relative contrast ratio of two colors the ``` RGB``` values of each color are needed. When working with e.g. ``` oklch()``` these values are not directly accessible within the browser as the computed styles are in the ``` oklch()``` format too. A workaround to extract the needed values that was used for this example is to use the HTML ``` <canvas>``` element. This element allows styling with the common CSS color functions and allows to extract ``` RGBA``` values through the ``` getImageData()``` function. With this little trick shown in @canvas-for-color-extraction it is possible to extract these values from every color, no matter the original format.
+To calculate the WCAG 2.x contrast ratio, the RGB values of both colors are required. When colors are defined using functions such as ``` oklch()```, these values are not directly available, as browsers may preserve the original color format in the computed styles.
+
+A practical workaround is to use the HTML ``` <canvas>``` element. The canvas can be filled with any valid CSS color, and the resulting RGBA values can then be extracted using ``` getImageData()```. As shown in @canvas-for-color-extraction, this technique makes it possible to convert any supported CSS color format into numeric RGBA values.
 
 #figure(
   align(left,
@@ -269,10 +280,183 @@ To be able to calculate the relative contrast ratio of two colors the ``` RGB```
     };
     ```
   ),
-  caption: [Extracting the ``` RGBA``` values from any color in any format through the ``` <canvas>``` element.],
+  caption: [Extracting the ``` RGBA``` values of any CSS color using the HTML ``` <canvas>``` element.],
 ) <canvas-for-color-extraction>
+
+The implementation of the custom contrast color function is available in the project's repository: #link("https://github.com/Flaverus/P8_sandbox/tree/main/examples/contrast-color")
 
 #pagebreak()
 == Interactive Ishihara Plate
+
+The interactive Ishihara plate is not intended to directly enhance a website through integration into a production environment. Instead, it serves as a developer tool for visually evaluating color contrast in situations where shape, placement, or additional visual cues do not influence recognition. The focus lies entirely on the perception of color itself.
+
+The application allows three separate colors to be defined for the background circles and three additional colors for the foreground circles. Through their arrangement, the foreground circles form the number 42. This setup makes it possible to evaluate how different shades of the same color, for example variations in saturation or lightness, interact with one another and whether sufficient visual contrast remains between foreground and background elements. An example configuration using colors from the Kolibri palette is shown in @interactive-ishihara-plate.
+
+#figure(
+  box(
+    inset: 0pt,
+    radius: 6pt,
+    clip: true,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+  {
+    image("../ressources/ishihara-plate-with-controls.png")
+  }),
+  caption: [A screenshot of the interactive Ishihara plate configured with colors from the Kolibri palette.],
+) <interactive-ishihara-plate>
+
+In addition to freely configurable colors, the application also includes predefined color combinations designed to simulate scenarios that are difficult or impossible to distinguish for people with specific forms of color vision deficiency such as ``` Protanopia```, ``` Deuteranopia```, and ``` Tritanopia```. These presets make it possible to evaluate whether certain color combinations remain distinguishable under different forms of impaired color perception.
+
+Although these configurations are inspired by the original Ishihara test plates, the application is not intended to serve as a medically accurate diagnostic tool. Instead, it should be considered a visual indicator that may suggest the need for further professional examination.
+
+An example of these comparison modes can be seen in @ishihara-plate-comparisement. The left side displays a plate configured with colors that are difficult to distinguish for users with ``` Deuteranopia```. The right side shows the same plate with a ``` Deuteranopia``` simulation filter applied, illustrating how the color combination may appear to affected users. The simulation filters are based on the bookmarklet filters developed during the previous P7 project.
+
+#figure(
+  box(
+    inset: 0pt,
+    radius: 6pt,
+    clip: true,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+  {
+    image("../ressources/ishihara-comparisement.png", width: 80%)
+  }),
+  caption: [A comparison between a plate configured for ``` Deuteranopia``` on the left and the same plate viewed through a ``` Deuteranopia``` simulation filter on the right.],
+) <ishihara-plate-comparisement>
+
+The implementation of the interactive Ishihara plate is available in the project's repository: #link("https://github.com/Flaverus/P8_sandbox/tree/main/examples/widget")
+
+#pagebreak()
+== (Accessible Drag and Drop Suggestion)
+
+The accessible drag and drop solution presented in this chapter was not a direct part of the project itself. However, it was explored during the project's development period and fits thematically into the broader accessibility focus of this documentation. The underlying problem emerged during a coordination meeting related to the project and was further investigated out of personal curiosity.
+
+Because this topic is not part of the project's core implementation, the related theory was intentionally omitted from the main theory chapter. In addition, this section does not analyze the implementation in the same level of detail as the primary project components.
+
+The draggable elements are HTML ``` <li>``` elements with the attribute ``` draggable="true"``` applied to them. Within the context of this example, they represent tickets in a kanban board. Each ticket additionally contains a ``` <select>``` element that is populated with available placement options, allowing the same interaction to be performed using a keyboard.
+
+The tickets can be moved between different states such as _BACKLOG_ and _IN DEVELOPMENT_, which are represented by ``` <ol>``` elements. The basic HTML structure is shown in @drag-and-drop-html.
+
+#figure(
+  align(left,
+    ```html
+    <div class="kanban">
+      <section>
+        <h3>BACKLOG</h3>
+        <ol id="area-one" data-identifier="Backlog">
+          <li draggable="true" id="one">
+            <article>
+              <div class="tile-header">
+                <a href="#">TICKET-123</a>
+                <label>
+                  <span class="visually-hidden">Move TICKET-123 to:</span>
+                  <select></select>
+                </label>
+              </div>
+              <p>Task description one</p>
+            </article>
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h3>IN DEVELOPMENT</h3>
+        <ol id="area-two" data-identifier="In Development"></ol>
+      </section>
+    </div>
+    ```
+  ),
+  caption: [The basic HTML structure with draggable ``` <li>``` elements that can be moved between ``` <ol>``` containers.],
+) <drag-and-drop-html>
+
+To support drag and drop interactions, the elements require additional JavaScript functionality. The ``` dragstartHandler()```, ``` dragoverHandler()```, and ``` dropHandler()``` functions provide the core interaction logic.
+
+The ``` dragstartHandler()``` stores the identifier of the dragged element for later use. The ``` dragoverHandler()``` prevents the default browser behavior so dropping remains possible. Finally, ``` dropHandler()``` appends the dragged ``` <li>``` element to the target ``` <ol>``` element and updates the available keyboard selection options, as shown in @drag-and-drop-api-js.
+
+#figure(
+  align(left,
+    ```js
+    const dragstartHandler = ev => {
+      ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    const dragoverHandler = ev => {
+      ev.preventDefault();
+    }
+
+    const dropHandler = ev => {
+      ev.preventDefault();
+      const data   = ev.dataTransfer.getData("text");
+      const target = ev.target.closest('ol');
+      if(target) {
+        target.appendChild(document.getElementById(data));
+        updateSelectMenus();
+      }
+    }
+
+    const initBoardEvents = () => {
+      const allOLs = document.querySelectorAll('.kanban ol');
+      allOLs.forEach(ol => {
+        ol.addEventListener('drop', dropHandler);
+        ol.addEventListener('dragover', dragoverHandler);
+      });
+
+      const allLIs = document.querySelectorAll('.kanban li');
+      allLIs.forEach(li => {
+        li.addEventListener('dragstart', dragstartHandler);
+      });
+    };
+    ```
+  ),
+  caption: [JavaScript event handlers used to support drag and drop interactions between the ``` <ol>``` containers.],
+) <drag-and-drop-api-js>
+
+The accessibility-related addition that differentiates this example from the implementation shown in Mozilla's HTML Drag and Drop API documentation @drag-and-drop-api is the ``` updateSelectMenus()``` function. This function dynamically updates all ``` <select>``` elements with the available target columns, allowing tickets to be moved entirely through keyboard interaction.
+
+The ``` selectHandler()``` function then moves the corresponding ``` <li>``` element to the selected column whenever the value of the ``` <select>``` element changes, as demonstrated in @drag-and-drop-select-js.
+
+Although the implementation is intentionally simple and not heavily optimized, it demonstrates that accessible drag and drop interactions can be implemented with relatively little additional complexity.
+
+#figure(
+  align(left,
+    ```js
+    const selectHandler = ev => {
+      const targetColumnId = ev.target.value;
+      const listItem       = ev.target.closest('li');
+      const targetColumn   = document.getElementById(targetColumnId);
+      targetColumn.appendChild(listItem);
+      updateSelectMenus();
+    }
+
+
+    const updateSelectMenus = () => {
+      const columns = document.querySelectorAll('.kanban ol');
+      const selects = document.querySelectorAll('.kanban li select');
+
+      selects.forEach(select => {
+        const parentUl        = select.closest('ol');
+        const currentColumnId = parentUl.id;
+        select.innerHTML      = '';
+
+        columns.forEach(column => {
+          const option       = document.createElement('option');
+          option.value       = column.id;
+          option.textContent = column.getAttribute('data-identifier');
+
+          if (column.id === currentColumnId) {
+            option.selected = true;
+          }
+
+          select.appendChild(option);
+        });
+
+        select.removeEventListener('change', selectHandler);
+        select.addEventListener('change', selectHandler);
+      });
+    };
+    ```
+  ),
+  caption: [Keyboard accessible movement of tickets through dynamically updated ``` <select>``` elements.],
+) <drag-and-drop-select-js>
+
+The implementation of the keyboard accessible drag and drop example is available in the project's repository: #link("https://github.com/Flaverus/P8_sandbox/tree/main/examples/drag-and-drop")
 
 #pagebreak()
