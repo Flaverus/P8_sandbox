@@ -325,3 +325,138 @@ An example of these comparison modes can be seen in @ishihara-plate-comparisemen
 The implementation of the interactive Ishihara plate is available in the project's repository: #link("https://github.com/Flaverus/P8_sandbox/tree/main/examples/widget")
 
 #pagebreak()
+== (Accessible Drag and Drop Suggestion)
+
+The accessible drag and drop solution presented in this chapter was not a direct part of the project itself. However, it was explored during the project's development period and fits thematically into the broader accessibility focus of this documentation. The underlying problem emerged during a coordination meeting related to the project and was further investigated out of personal curiosity.
+
+Because this topic is not part of the project's core implementation, the related theory was intentionally omitted from the main theory chapter. In addition, this section does not analyze the implementation in the same level of detail as the primary project components.
+
+The draggable elements are HTML ``` <li>``` elements with the attribute ``` draggable="true"``` applied to them. Within the context of this example, they represent tickets in a kanban board. Each ticket additionally contains a ``` <select>``` element that is populated with available placement options, allowing the same interaction to be performed using a keyboard.
+
+The tickets can be moved between different states such as _BACKLOG_ and _IN DEVELOPMENT_, which are represented by ``` <ol>``` elements. The basic HTML structure is shown in @drag-and-drop-html.
+
+#figure(
+  align(left,
+    ```html
+    <div class="kanban">
+      <section>
+        <h3>BACKLOG</h3>
+        <ol id="area-one" data-identifier="Backlog">
+          <li draggable="true" id="one">
+            <article>
+              <div class="tile-header">
+                <a href="#">TICKET-123</a>
+                <label>
+                  <span class="visually-hidden">Move TICKET-123 to:</span>
+                  <select></select>
+                </label>
+              </div>
+              <p>Task description one</p>
+            </article>
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h3>IN DEVELOPMENT</h3>
+        <ol id="area-two" data-identifier="In Development"></ol>
+      </section>
+    </div>
+    ```
+  ),
+  caption: [The basic HTML structure with draggable ``` <li>``` elements that can be moved between ``` <ol>``` containers.],
+) <drag-and-drop-html>
+
+To support drag and drop interactions, the elements require additional JavaScript functionality. The ``` dragstartHandler()```, ``` dragoverHandler()```, and ``` dropHandler()``` functions provide the core interaction logic.
+
+The ``` dragstartHandler()``` stores the identifier of the dragged element for later use. The ``` dragoverHandler()``` prevents the default browser behavior so dropping remains possible. Finally, ``` dropHandler()``` appends the dragged ``` <li>``` element to the target ``` <ol>``` element and updates the available keyboard selection options, as shown in @drag-and-drop-api-js.
+
+#figure(
+  align(left,
+    ```js
+    const dragstartHandler = ev => {
+      ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    const dragoverHandler = ev => {
+      ev.preventDefault();
+    }
+
+    const dropHandler = ev => {
+      ev.preventDefault();
+      const data   = ev.dataTransfer.getData("text");
+      const target = ev.target.closest('ol');
+      if(target) {
+        target.appendChild(document.getElementById(data));
+        updateSelectMenus();
+      }
+    }
+
+    const initBoardEvents = () => {
+      const allOLs = document.querySelectorAll('.kanban ol');
+      allOLs.forEach(ol => {
+        ol.addEventListener('drop', dropHandler);
+        ol.addEventListener('dragover', dragoverHandler);
+      });
+
+      const allLIs = document.querySelectorAll('.kanban li');
+      allLIs.forEach(li => {
+        li.addEventListener('dragstart', dragstartHandler);
+      });
+    };
+    ```
+  ),
+  caption: [JavaScript event handlers used to support drag and drop interactions between the ``` <ol>``` containers.],
+) <drag-and-drop-api-js>
+
+The accessibility-related addition that differentiates this example from the implementation shown in Mozilla's HTML Drag and Drop API documentation @drag-and-drop-api is the ``` updateSelectMenus()``` function. This function dynamically updates all ``` <select>``` elements with the available target columns, allowing tickets to be moved entirely through keyboard interaction.
+
+The ``` selectHandler()``` function then moves the corresponding ``` <li>``` element to the selected column whenever the value of the ``` <select>``` element changes, as demonstrated in @drag-and-drop-select-js.
+
+Although the implementation is intentionally simple and not heavily optimized, it demonstrates that accessible drag and drop interactions can be implemented with relatively little additional complexity.
+
+#figure(
+  align(left,
+    ```js
+    const selectHandler = ev => {
+      const targetColumnId = ev.target.value;
+      const listItem       = ev.target.closest('li');
+      const targetColumn   = document.getElementById(targetColumnId);
+      targetColumn.appendChild(listItem);
+      updateSelectMenus();
+    }
+
+
+    const updateSelectMenus = () => {
+      const columns = document.querySelectorAll('.kanban ol');
+      const selects = document.querySelectorAll('.kanban li select');
+
+      selects.forEach(select => {
+        const parentUl        = select.closest('ol');
+        const currentColumnId = parentUl.id;
+        select.innerHTML      = '';
+
+        columns.forEach(column => {
+          const option       = document.createElement('option');
+          option.value       = column.id;
+          option.textContent = column.getAttribute('data-identifier');
+
+          if (column.id === currentColumnId) {
+            option.selected = true;
+          }
+
+          select.appendChild(option);
+        });
+
+        select.removeEventListener('change', selectHandler);
+        select.addEventListener('change', selectHandler);
+      });
+    };
+    ```
+  ),
+  caption: [Keyboard accessible movement of tickets through dynamically updated ``` <select>``` elements.],
+) <drag-and-drop-select-js>
+
+The implementation of the keyboard accessible drag and drop example is available in the project's repository: #link("https://github.com/Flaverus/P8_sandbox/tree/main/examples/drag-and-drop")
+
+#pagebreak()
