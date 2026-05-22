@@ -1,5 +1,5 @@
 const dragstartHandler = ev => {
-  ev.dataTransfer.setData("text", ev.target.id);
+  ev.dataTransfer.setData('text', ev.target.id);
 }
 
 const dragoverHandler = ev => {
@@ -8,7 +8,7 @@ const dragoverHandler = ev => {
 
 const dropHandler = ev => {
   ev.preventDefault();
-  const data   = ev.dataTransfer.getData("text");
+  const data   = ev.dataTransfer.getData('text');
   const target = ev.target.closest('ol');
   if(target) {
     target.appendChild(document.getElementById(data));

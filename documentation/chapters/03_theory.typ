@@ -104,7 +104,7 @@ The ``` window``` interface provides the ``` matchMedia()``` method, which retur
 #figure(
   align(left,
     ```js
-    const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
     ```
   ),
   caption: [Checking whether the user's system settings prefer a dark color scheme.],
