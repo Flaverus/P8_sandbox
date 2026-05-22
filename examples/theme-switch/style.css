@@ -1,9 +1,9 @@
 :root {
-    --true: ;
-    --false: initial;
+    --ON: ;
+    --OFF: initial;
 
     --prefers-dark-theme: false;
-    --is-light-theme: var(--true);
+    --is-light-theme: var(--ON);
     color-scheme: light;
 
     /*
@@ -12,13 +12,13 @@
     --color-background--light:         var(--is-light-theme) #fcfcfc;
     --color-background--dark:                                #212121;
     --color-text--light:               var(--is-light-theme) #222222;
-    --color-text--dark:                                      #EDEDED;
+    --color-text--dark:                                      #ededed;
     --color-content-background--light: var(--is-light-theme) #ffffff;
-    --color-content-background--dark:                        #2E2E2E;
+    --color-content-background--dark:                        #2e2e2e;
     --color-border--light:             var(--is-light-theme) #eeeeee;
     --color-border--dark:                                    #232323;
     --color-primary-accent--light:     var(--is-light-theme) #0056b3;
-    --color-primary-accent--dark:                            #6DB3F4;
+    --color-primary-accent--dark:                            #6db3f4;
     --shaddow--light:                  var(--is-light-theme) 0 2px 8px rgba(0, 0, 0, 0.1);
     --shaddow--dark:                                         0 2px 8px rgba(0, 0, 0, 0.5);
 
@@ -35,11 +35,11 @@
 }
 
 :root[style*="--prefers-dark-theme: true"] {
-    --is-light-theme: var(--false);
+    --is-light-theme: var(--OFF);
     color-scheme: dark;
 }
 
 :root[style*="--prefers-dark-theme: false"] {
-    --is-light-theme: var(--true);
+    --is-light-theme: var(--ON);
     color-scheme: light;
 }

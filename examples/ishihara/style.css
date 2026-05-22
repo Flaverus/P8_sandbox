@@ -1,10 +1,10 @@
 :root {
-    --canvas:            #FFFFFF;
+    --canvas:            #ffffff;
     --background-dark:   #2d1fb1;
     --background-medium: #5f2eea;
     --background-light:  #be58fd;
     --foreground-dark:   #da42bc;
-    --foreground-medium: #FE2EA8;
+    --foreground-medium: #fe2ea8;
     --foreground-light:  #f654bf;
 }
 

@@ -168,10 +168,10 @@ Once the CSS custom properties representing the user's preferences are in place,
 
     :root[style*="--prefers-dark-theme: true"] {
       --bg-color:       #212121;
-      --text-color:     #EDEDED;
-      --content-bg:     #2E2E2E;
+      --text-color:     #ededed;
+      --content-bg:     #2e2e2e;
       --border-color:   #232323;
-      --primary-accent: #6DB3F4;
+      --primary-accent: #6db3f4;
       --shadow:         0 2px 8px rgba(0, 0, 0, 0.5);
 
       color-scheme: dark;

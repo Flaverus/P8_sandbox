@@ -143,8 +143,8 @@ Custom properties are defined using a name that begins with two dashes, ``` --``
   align(left,
     ```css
     :root {
-      --primary-color:          #204CCF;
-      --primary-color-contrast: #FFFFFF;
+      --primary-color:          #204ccf;
+      --primary-color-contrast: #ffffff;
     }
 
     button.primary {
@@ -169,7 +169,7 @@ The ``` @property``` at-rule allows custom properties to be defined more precise
     @property --primary-color {
       syntax: "<color>";
       inherits: false;
-      initial-value: #204CCF;
+      initial-value: #204ccf;
     }
     ```
   ),
@@ -185,11 +185,11 @@ As shown in @primary-color-custom-property-js, custom properties can also be def
       name: '--primary-color',
       syntax: '<color>',
       inherits: false,
-      initialValue: '#204CCF ',
+      initialValue: '#204ccf ',
     });
 
     const root = document.documentElement;
-    root.style.setProperty('--primary-color-contrast', '#FFFFFF');
+    root.style.setProperty('--primary-color-contrast', '#ffffff');
     ```
   ),
   caption: [Using ``` registerProperty()``` and ``` setProperty()``` in JavaScript to define CSS custom properties.],
@@ -239,16 +239,16 @@ Another approach is to use a CSS attribute selector to override custom propertie
       --prefers-dark-theme: false;
 
         --text-color:     #222222;
-        --bg-color:       #FCFCFC;
-        --border-color:   #EEEEEE;
-        --primary-accent: #0056B3;
+        --bg-color:       #fcfcfc;
+        --border-color:   #eeeeee;
+        --primary-accent: #0056b3;
     }
 
     :root[style*="--prefers-dark-theme: true"] {
-        --text-color:     #EDEDED;
+        --text-color:     #ededed;
         --bg-color:       #212121;
         --border-color:   #232323;
-        --primary-accent: #6DB3F4;
+        --primary-accent: #6Db3f4;
     }
 
     ```
@@ -266,8 +266,8 @@ According to the CSS specification, a custom property must contain at least one 
   align(left,
     ```css
     :root {
-    	--true: ;
-    	--false: initial;
+    	--ON: ;
+    	--OFF: initial;
     }
     ```
   ),
@@ -280,12 +280,12 @@ In traditional theming setups, each variable must be defined separately for both
   align(left,
     ```css
     :root {
-      --is-light-theme: var(--true);
+      --is-light-theme: var(--ON);
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --is-light-theme: var(--false);
+        --is-light-theme: var(--OFF);
       }
     }
     ```
