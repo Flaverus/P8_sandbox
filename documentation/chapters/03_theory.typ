@@ -221,7 +221,7 @@ For example, a user may not have enabled reduced motion at the operating system 
     }
 
     @container style(--prefers-reduced-motion: true) {
-        .animated-content {
+        .animated-contents {
             animation: none !important;
         }
     }
