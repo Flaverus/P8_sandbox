@@ -130,6 +130,8 @@
 
 == Artificial Intelligence and Language Models
 
+#v(2em)
+
 *Tool: Gemini (Google), Version 3 Flash.*
 
 *Type of Usage*: Used for linguistic refinement of drafts and formating mathematical formulas (Relative Luminance).
