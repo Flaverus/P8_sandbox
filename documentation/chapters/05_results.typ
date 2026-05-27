@@ -17,7 +17,7 @@ To overcome these limitations and give users greater control, the preferences wi
     clip: true,
     stroke: 0.5pt + rgb("#cbd5e1"),
   {
-    image("../ressources/preference-widget.png", width: 25%)
+    image("../ressources/preference-widget.png")
   }),
   caption: [A screenshot of the preferences widget with page-specific settings for reduced motion and color blindness.],
 ) <preference-widget>
@@ -327,7 +327,19 @@ The implementation of the interactive Ishihara plate is available in the project
 #pagebreak()
 == (Accessible Drag and Drop Suggestion)
 
-The accessible drag and drop solution presented in this chapter was not a direct part of the project itself. However, it was explored during the project's development period and fits thematically into the broader accessibility focus of this documentation. The underlying problem emerged during a coordination meeting related to the project and was further investigated out of personal curiosity.
+The accessible drag and drop solution presented in this chapter as seen in @drag-and-drop-full was not a direct part of the project itself. However, it was explored during the project's development period and fits thematically into the broader accessibility focus of this documentation. The underlying problem emerged during a coordination meeting related to the project and was further investigated out of personal curiosity.
+
+#figure(
+  box(
+    inset: 0pt,
+    radius: 6pt,
+    clip: true,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+  {
+    image("../ressources/drag-and-drop.png")
+  }),
+  caption: [A screenshot of the keyboard accessible drag and drop example.],
+) <drag-and-drop-full>
 
 Because this topic is not part of the project's core implementation, the related theory was intentionally omitted from the main theory chapter. In addition, this section does not analyze the implementation in the same level of detail as the primary project components.
 
