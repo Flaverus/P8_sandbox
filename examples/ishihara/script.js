@@ -1,4 +1,26 @@
-const root = document.documentElement;
+const backgroundDark   = document.getElementById('background-dark');
+const backgroundMedium = document.getElementById('background-medium');
+const backgroundLight  = document.getElementById('background-light');
+const foregroundDark   = document.getElementById('foreground-dark');
+const foregroundMedium = document.getElementById('foreground-medium');
+const foregroundLight  = document.getElementById('foreground-light');
+const root             = document.documentElement;
+
+const setPlateColors = (colors) => {
+    root.style.setProperty('--background-dark',   colors.bgDark);
+    root.style.setProperty('--background-medium', colors.bgMedium);
+    root.style.setProperty('--background-light',  colors.bgLight);
+    root.style.setProperty('--foreground-dark',   colors.fgDark);
+    root.style.setProperty('--foreground-medium', colors.fgMedium);
+    root.style.setProperty('--foreground-light',  colors.fgLight);
+
+    backgroundDark.value   = colors.bgDark;
+    backgroundMedium.value = colors.bgMedium;
+    backgroundLight.value  = colors.bgLight;
+    foregroundDark.value   = colors.fgDark;
+    foregroundMedium.value = colors.fgMedium;
+    foregroundLight.value  = colors.fgLight;
+}
 
 document.querySelectorAll('.color-picker').forEach(picker => {
     picker.addEventListener('change', e => {
@@ -7,39 +29,47 @@ document.querySelectorAll('.color-picker').forEach(picker => {
 });
 
 document.getElementById('protanopia').addEventListener('click', () => {
-    root.style.setProperty('--background-dark',   '#2f2c2f');
-    root.style.setProperty('--background-medium', '#544841');
-    root.style.setProperty('--background-light',  '#847358');
-    root.style.setProperty('--foreground-dark',   '#a61b21');
-    root.style.setProperty('--foreground-medium', '#cf4342');
-    root.style.setProperty('--foreground-light',  '#fa665a');
+    setPlateColors({
+        bgDark:   '#2f2c2f',
+        bgMedium: '#544841',
+        bgLight:  '#847358',
+        fgDark:   '#a61b21',
+        fgMedium: '#cf4342',
+        fgLight:  '#fa665a'
+    });
 });
 
 document.getElementById('deuteranopia').addEventListener('click', () => {
-    root.style.setProperty('--background-dark',   '#2f2c2f');
-    root.style.setProperty('--background-medium', '#544841');
-    root.style.setProperty('--background-light',  '#847358');
-    root.style.setProperty('--foreground-dark',   '#943a47');
-    root.style.setProperty('--foreground-medium', '#ab334b');
-    root.style.setProperty('--foreground-light',  '#f46959');
+    setPlateColors({
+        bgDark:   '#2f2c2f',
+        bgMedium: '#544841',
+        bgLight:  '#847358',
+        fgDark:   '#943a47',
+        fgMedium: '#ab334b',
+        fgLight:  '#f46959'
+    });
 });
 
 document.getElementById('tritanopia').addEventListener('click', () => {
-        root.style.setProperty('--background-dark',   '#ae0a69');
-        root.style.setProperty('--background-medium', '#d11180');
-        root.style.setProperty('--background-light',  '#e71092');
-        root.style.setProperty('--foreground-dark',   '#a62810');
-        root.style.setProperty('--foreground-medium', '#cc3214');
-        root.style.setProperty('--foreground-light',  '#de3519');
+    setPlateColors({
+        bgDark:   '#ae0a69',
+        bgMedium: '#d11180',
+        bgLight:  '#e71092',
+        fgDark:   '#a62810',
+        fgMedium: '#cc3214',
+        fgLight:  '#de3519'
+    });
 });
 
 document.getElementById('daltonism').addEventListener('click', () => {
-    root.style.setProperty('--background-dark',   '#607478');
-    root.style.setProperty('--background-medium', '#756e40');
-    root.style.setProperty('--background-light',  '#eed16c');
-    root.style.setProperty('--foreground-dark',   '#ca5433');
-    root.style.setProperty('--foreground-medium', '#fa7347');
-    root.style.setProperty('--foreground-light',  '#fca15f');
+    setPlateColors({
+        bgDark:   '#607478',
+        bgMedium: '#756e40',
+        bgLight:  '#eed16c',
+        fgDark:   '#ca5433',
+        fgMedium: '#fa7347',
+        fgLight:  '#fca15f'
+    });
 });
 
 const setVision = (type) => {

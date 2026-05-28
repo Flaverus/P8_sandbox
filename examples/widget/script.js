@@ -46,10 +46,10 @@ const addOptionEventListener = (option, property, mediaQueryString) => {
 }
 
 // Users initial or saved settings
-setAccessibilityProperty('--prefers-reduced-motion',      getAccessibilityProperty('--prefers-reduced-motion'),  '(prefers-reduced-motion: reduce)');
-setAccessibilityProperty('--prefers-contrast',            getAccessibilityProperty('--prefers-contrast'),        '(prefers-contrast: more)');
-setAccessibilityProperty('--prefers-dark-theme',          getAccessibilityProperty('--prefers-dark-theme'),      '(prefers-color-scheme: dark)');
-setAccessibilityProperty('--prefers-colorblind-mode',     getAccessibilityProperty('--prefers-colorblind-mode'), '');
+setAccessibilityProperty('--prefers-reduced-motion',  getAccessibilityProperty('--prefers-reduced-motion'),  '(prefers-reduced-motion: reduce)');
+setAccessibilityProperty('--prefers-contrast',        getAccessibilityProperty('--prefers-contrast'),        '(prefers-contrast: more)');
+setAccessibilityProperty('--prefers-dark-theme',      getAccessibilityProperty('--prefers-dark-theme'),      '(prefers-color-scheme: dark)');
+setAccessibilityProperty('--prefers-colorblind-mode', getAccessibilityProperty('--prefers-colorblind-mode'), '');
 
 // Set widget values based on user settings (returns strings)
 syncWidgetOption(motion,         '--prefers-reduced-motion');
