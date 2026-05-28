@@ -219,10 +219,46 @@ In some cases, changing individual custom property values is not sufficient and 
   caption: [Applying additional styles based on custom properties using the ``` @container``` rule and a ``` style()``` query.],
 ) <additonal-rules-custom-properties>
 
-The implementation of the accessibility widget, including several example settings that demonstrate how individual and combined preferences affect the website's styling, is available in the project's repository: #link("https://github.com/Flaverus/P8_sandbox/tree/main/examples/widget")
+=== The Paradox of Reduced Motion Transitions
+
+An interesting and somewhat ironic aspect is that enabling reduced motion preferences does not necessarily mean that all transitions and animations should be removed from a webpage. In certain contexts, the opposite can even be beneficial. Different accessibility concerns require different solutions, and some of these measures may appear counterintuitive at first glance.
+
+For example, users who prefer reduced motion may still benefit from smooth and controlled transitions when switching between color themes. Abrupt flashes or immediate color changes, even when triggered intentionally by the user, can create discomfort or visual strain. In such situations, introducing subtle transitions may improve the overall experience rather than worsen it.
+
+Although it may initially seem contradictory to apply transitions when ``` --prefers-reduced-motion: true``` is configured, carefully controlled color transitions can therefore represent a valid accessibility measure.
+
+To animate CSS custom properties, the ``` @property``` at-rule is required. This informs the browser about the expected value type of a property, such as ``` <color>```, allowing it to interpolate the values during transitions. Once defined, transitions can be applied directly to the custom properties within a ``` @container``` rule using the global ``` *``` selector, since the registered properties themselves are not scoped locally. @smooth-transition demonstrates how custom color properties can be registered and transitioned.
+
+#figure(
+  align(left,
+    ```css
+    @property --bg-color {
+      syntax: '<color>';
+      inherits: true;
+      initial-value: #fcfcfc;
+    }
+
+    @property --text-color {
+      syntax: '<color>';
+      inherits: true;
+      initial-value: #222222;
+    }
+
+    @container style(--prefers-reduced-motion: true) {
+      * {
+        transition: --bg-color   0.3s linear,
+                    --text-color 0.3s linear,
+      }
+    }
+    ```
+  ),
+  caption: [Having custom properties defined with ``` @property``` to be able to add a transition within a ``` @container``` rule.],
+) <smooth-transition>
+
+The implementation of the preference widget, including several example settings that demonstrate how individual and combined preferences affect the website's styling, is available in the project's repository: #link("https://github.com/Flaverus/P8_sandbox/tree/main/examples/widget")
 
 #pagebreak()
-== Contrast Color Functions
+== Contrast Color Function
 
 The theory chapter introduced the native ``` contrast-color()``` CSS function and demonstrated how similar behavior can be implemented using CSS custom functions. Given a color, ``` contrast-color()``` returns either black or white, depending on which of the two provides the greater lightness contrast. While this approach is effective, pure black and white can appear visually harsh, especially when used for larger blocks of text.
 
@@ -232,7 +268,7 @@ In the first step, the function determines whether black or white provides the b
 
 In the second step, the selected contrast color is passed to the ``` color-mix()``` function. The optional ``` --intensity``` parameter controls how much of the original color is mixed back into the result. This produces a softer contrast color that retains some of the visual characteristics of the source color.
 
-To further reduce extreme contrast, the lightness of the selected black or white is adjusted using the ``` clamp()``` function. This ensures that light colors do not exceed a lightness of 97.5% and dark colors do not fall below 15%. As a result, the generated contrast color remains readable while appearing less visually aggressive.
+To further reduce extreme contrast, the lightness of the selected black or white is adjusted using the clamp() function. This ensures that light colors do not exceed a lightness of 97.5% and dark colors do not fall below 15%. As a result, the generated contrast color remains readable while appearing less visually aggressive. The selected bounds represent pragmatic perceptual limits intended to preserve strong readability while reducing the visual harshness associated with maximum contrast combinations.
 
 #figure(
   align(left,

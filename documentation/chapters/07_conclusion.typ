@@ -10,7 +10,7 @@ The scope of this project was limited and therefore no large-scale user testing 
 
 APCA represents a significant improvement over the current relative luminance approach used in WCAG 2.x because it considers perceptual aspects such as text size, font weight, and surrounding context. However, the underlying theory and calculations are considerably more complex than the current WCAG 2.x model. Furthermore, APCA is still under active development and has not yet been finalized or officially established as a web standard. As a result, it is still too early to draw definitive conclusions regarding its long-term adoption and practical impact.
 
-== Future work
+== Future Work
 
 In its current form, the Preferences Widget cannot yet be integrated directly into the Kolibri Web UI toolkit. Although this was not an official part of the project scope, the widget will undergo additional user testing to evaluate its usability and effectiveness before being further refined into a draft proposal for integration into Kolibri.
 

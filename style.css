@@ -1,10 +1,35 @@
 /* Base Variables for Consistency */
+@property --bg-color {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #fcfcfc;
+}
+
+@property --text-color {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #222222;
+}
+
+@property --content-bg {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #ffffff;
+}
+
+@property --border-color {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #eeeeee;
+}
+
+@property --primary-accent {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #0056b3;
+}
+
 :root {
-    --bg-color:       #fcfcfc;
-    --text-color:     #222222;
-    --content-bg:     #ffffff;
-    --border-color:   #eeeeee;
-    --primary-accent: #0056b3;
     --shadow:         0 2px 8px rgba(0, 0, 0, 0.1);
 
     --border-radius: 0.375rem;

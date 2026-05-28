@@ -62,3 +62,5 @@ addOptionEventListener(motion,         '--prefers-reduced-motion',  '(prefers-re
 addOptionEventListener(contrast,       '--prefers-contrast',        '(prefers-contrast: more)');
 addOptionEventListener(colorscheme,    '--prefers-dark-theme',      '(prefers-color-scheme: dark)');
 addOptionEventListener(colorblindness, '--prefers-colorblind-mode', '');
+
+document.body.classList.remove('preload');

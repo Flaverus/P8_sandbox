@@ -97,8 +97,22 @@
     }
 }
 
+/* Making sure the transition happens not on the initial page load */
+.preload {
+    transition: none !important;
+}
+
 /* Overwrite if motion is active */
 @container style(--prefers-reduced-motion: true) {
+    * {
+        /* Transition the variables for color change */
+        transition: --bg-color       0.3s linear,
+                    --text-color     0.3s linear,
+                    --content-bg     0.3s linear,
+                    --border-color   0.3s linear,
+                    --primary-accent 0.3s linear;
+    }
+
     .square {
         animation: none !important;
     }
