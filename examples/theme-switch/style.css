@@ -1,6 +1,6 @@
 :root {
     --ON: ;
-    --OFF: initial;
+    --OFF: initial; /* Guaranteed invalid value according to W3C specs: https://www.w3.org/TR/css-variables-1/#guaranteed-invalid-value  */
 
     --prefers-dark-theme: false;
     --is-light-theme: var(--ON);
