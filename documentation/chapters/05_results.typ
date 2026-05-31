@@ -268,7 +268,7 @@ In the first step, the function determines whether black or white provides the b
 
 In the second step, the selected contrast color is passed to the ``` color-mix()``` function. The optional ``` --intensity``` parameter controls how much of the original color is mixed back into the result. This produces a softer contrast color that retains some of the visual characteristics of the source color.
 
-To further reduce extreme contrast, the lightness of the selected black or white is adjusted using the clamp() function. This ensures that light colors do not exceed a lightness of 97.5% and dark colors do not fall below 15%. As a result, the generated contrast color remains readable while appearing less visually aggressive. The selected bounds represent pragmatic perceptual limits intended to preserve strong readability while reducing the visual harshness associated with maximum contrast combinations.
+To further reduce extreme contrast, the lightness of the selected black or white is adjusted using the ``` clamp()``` function. This ensures that light colors do not exceed a lightness of 97.5% and dark colors do not fall below 15%. As a result, the generated contrast color remains readable while appearing less visually aggressive. The selected bounds represent pragmatic perceptual limits intended to preserve strong readability while reducing the visual harshness associated with maximum contrast combinations.
 
 #figure(
   align(left,
@@ -282,6 +282,8 @@ To further reduce extreme contrast, the lightness of the selected black or white
   ),
   caption: [A custom contrast function that softens pure black and white and optionally mixes in a portion of the original color.],
 ) <custom-color-contrast-function>
+
+*Note:* The specific thresholds of 15% and 97.5% used in this function serve as a subjective, baseline example to illustrate the concept. These values are not absolute standards and should be modified to align with the specific contrast ratios, aesthetic preferences, and accessibility requirements of the design system in use.
 
 The accompanying example from the project's example collection also calculates the WCAG 2.x contrast ratio for the generated colors, as shown in @custom-contrast-color-example-screenshot.
 
@@ -345,6 +347,8 @@ In addition to freely configurable colors, the application also includes predefi
 Although these configurations are inspired by the original Ishihara test plates, the application is not intended to serve as a medically accurate diagnostic tool. Instead, it should be considered a visual indicator that may suggest the need for further professional examination.
 
 An example of these comparison modes can be seen in @ishihara-plate-comparisement. The left side displays a plate configured with colors that are difficult to distinguish for users with ``` Deuteranopia```. The right side shows the same plate with a ``` Deuteranopia``` simulation filter applied, illustrating how the color combination may appear to affected users. The simulation filters are based on the bookmarklet filters developed during the previous P7 project.
+
+A more detailed discussion of these bookmarklets is available in the corresponding chapter of the previous P7 project: #link("https://accessible-web-initiative.gitbook.io/accessibility-on-the-web-where-we-stand/research/debugging-and-testing-accessibility")
 
 #figure(
   box(

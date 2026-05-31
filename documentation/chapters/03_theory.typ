@@ -118,7 +118,9 @@ CSS media queries continue to evolve, but one important aspect of visual accessi
 
 An open issue in the W3C's ``` csswg-drafts``` repository proposes a new media feature called ``` color-vision-adjustment```. Its goal is to improve web accessibility by allowing developers to respond directly to the needs of users with color vision deficiencies.
 
-The proposal includes support for several specific conditions, including ``` protanopia``` (red deficiency), ``` deuteranopia``` (red-green deficiency), ``` tritanopia``` (blue-yellow deficiency), and ``` achromatopsia``` (near-total color blindness, resulting in grayscale vision). These impairments were introduced in the previous P7 project through bookmarklets that simulated their visual effects.
+The proposal includes support for several specific conditions, including protanopia (red deficiency), deuteranopia (red-green deficiency), tritanopia (blue-yellow deficiency), and achromatopsia (near-total color blindness, resulting in grayscale vision). These impairments were previously investigated in the P7 project through browser bookmarklets designed to simulate the corresponding visual deficiencies.
+
+Further details regarding the implementation and theoretical background of these simulations can be found in the P7 project documentation: #link("https://accessible-web-initiative.gitbook.io/accessibility-on-the-web-where-we-stand").
 
 A media feature of this kind would increase awareness of color vision deficiencies and provide developers with a standardized way to adapt interfaces to the needs of affected users. @color_blindness_media_qiery
 
@@ -376,7 +378,7 @@ As with CSS custom properties, CSS data types such as ``` <color>```, ``` <numbe
 
 There are many different models for describing the colors perceptible to the human eye. Each model has its own strengths and weaknesses and is used in different contexts, ranging from print and photography to digital displays.
 
-For many years, CSS relied primarily on the RGB color space, which limited how colors could be described and manipulated. The CSS Color Module Level 4 specification introduced support for additional color spaces and more advanced color functions, significantly expanding the possibilities for working with color in CSS. Development in this area continues, and the W3C is currently working on the CSS Color Module Level 5 specification. @CSS-colors
+For many years, CSS relied primarily on the RGB color space, which limited how colors could be described and manipulated. To update features faster, the W3C now evolves CSS through independent modules rather than giant versions. Under this system, the CSS Color Module Level 4 specification acts as a direct software update to the three previously released levels, introducing support for additional color spaces and more advanced color functions to significantly expand the possibilities for working with color in CSS. Development in this area continues, and the W3C is currently working on the CSS Color Module Level 5 specification.
 
 === RGB
 
