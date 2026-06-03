@@ -240,17 +240,17 @@ Another approach is to use a CSS attribute selector to override custom propertie
     :root {
       --prefers-dark-theme: false;
 
-        --text-color:     #222222;
-        --bg-color:       #fcfcfc;
-        --border-color:   #eeeeee;
-        --primary-accent: #0056b3;
+      --text-color:     #222222;
+      --bg-color:       #fcfcfc;
+      --border-color:   #eeeeee;
+      --primary-accent: #0056b3;
     }
 
     :root[style*="--prefers-dark-theme: true"] {
-        --text-color:     #ededed;
-        --bg-color:       #212121;
-        --border-color:   #232323;
-        --primary-accent: #6Db3f4;
+      --text-color:     #ededed;
+      --bg-color:       #212121;
+      --border-color:   #232323;
+      --primary-accent: #6Db3f4;
     }
 
     ```
@@ -364,7 +364,7 @@ This feature is conceptually similar to CSS custom properties, as custom functio
   align(left,
     ```css
     @function --color-contrast(--color <color>) returns <color> {
-        result: oklch(from var(--color) calc((0.5 - l) * infinity) 0 0);
+      result: oklch(from var(--color) calc((0.5 - l) * infinity) 0 0);
     }
     ```
   ),
@@ -372,6 +372,50 @@ This feature is conceptually similar to CSS custom properties, as custom functio
 ) <at-function-example>
 
 As with CSS custom properties, CSS data types such as ``` <color>```, ``` <number>```, and ``` <string>``` can be specified for both function parameters and the return value.
+
+#pagebreak()
+== View Transition API
+
+The View Transition API provides a native mechanism for animating transitions between different states of a web application. It can be used to create smooth visual effects when navigating between pages or when updating views within single-page applications (SPAs).
+
+For transitions that occur within the same document, the state change is wrapped inside the ``` document.startViewTransition()``` method. Cross-document transitions in multi-page applications (MPAs) are triggered automatically during navigation and can be enabled through the ``` @view-transition``` at-rule. Internally, the API captures snapshots of both the previous and the new state and animates between them. By default, this transition consists of a simple fade effect, where the old view gradually decreases its opacity to ``` 0``` while the new view increases its opacity to ``` 1```.
+
+The generated animations can be customized through the ``` ::view-transition-old()``` and ``` ::view-transition-new()``` pseudo-elements, which target the previous and new view respectively. Shared styling can be applied through ``` ::view-transition-group()```. These pseudo-elements accept different targets, including ``` root``` for animating the entire page, ``` *``` for all transition targets, or a custom ``` view-transition-name``` to animate specific elements independently.
+
+An example of a custom page transition is shown in @view-transition-example. In this case, the previous page is animated out of view towards the left while the new page enters from the right, creating a horizontal swipe effect. @view-transition-api
+
+#figure(
+  align(left,
+    ```css
+    @keyframes move-out {
+      from {
+        transform: translateX(0%);
+      }
+      to {
+        transform: translateX(-100%);
+      }
+    }
+
+    @keyframes move-in {
+      from {
+        transform: translateX(100%);
+      }
+      to {
+        transform: translateX(0%);
+      }
+    }
+
+    ::view-transition-old(root) {
+      animation: 0.4s ease-in both move-out;
+    }
+
+    ::view-transition-new(root) {
+      animation: 0.4s ease-in both move-in;
+    }
+    ```
+  ),
+  caption: [A custom page transition that swipes the previous view out to the left while moving the new view in from the right.],
+) <view-transition-example>
 
 #pagebreak()
 == Color Spaces

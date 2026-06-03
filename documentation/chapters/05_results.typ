@@ -227,6 +227,8 @@ For example, users who prefer reduced motion may still benefit from smooth and c
 
 Although it may initially seem contradictory to apply transitions when ``` --prefers-reduced-motion: true``` is configured, carefully controlled color transitions can therefore represent a valid accessibility measure.
 
+==== Animating Properties
+
 To animate CSS custom properties, the ``` @property``` at-rule is required. This informs the browser about the expected value type of a property, such as ``` <color>```, allowing it to interpolate the values during transitions. Once defined, transitions can be applied directly to the custom properties within a ``` @container``` rule using the global ``` *``` selector, since the registered properties themselves are not scoped locally. @smooth-transition demonstrates how custom color properties can be registered and transitioned.
 
 #figure(
@@ -254,6 +256,34 @@ To animate CSS custom properties, the ``` @property``` at-rule is required. This
   ),
   caption: [Having custom properties defined with ``` @property``` to be able to add a transition within a ``` @container``` rule.],
 ) <smooth-transition>
+
+==== View Transition
+
+While animating individual properties can be useful, it may result in less coherent transitions when multiple properties change simultaneously. In such situations, individual animations can compete for attention and create a visually noisy effect that is ultimately more distracting than beneficial. To avoid this, it is often preferable to transition the page state as a whole by using the View Transition API.
+
+For the Preferences Widget, this can be achieved by wrapping the property update inside the ``` document.startViewTransition()``` method, as shown in @smooth-view-transition-js. This allows the browser to capture the previous and new state of the page and animate the transition between them in a coordinated manner. The resulting animation can be further refined through CSS. For example, the duration can be increased to create a smoother transition, as demonstrated in @smooth-view-transition-css.
+
+#figure(
+  align(left,
+    ```js
+    document.startViewTransition(() => {
+      root.style.setProperty(property, appliedValue);
+    });
+    ```
+  ),
+  caption: [Enabling a view transition for a property change using the ``` startViewTransition()``` method.],
+) <smooth-view-transition-js>
+
+#figure(
+  align(left,
+    ```css
+::view-transition-group(root) {
+    animation-duration: 0.6s;
+}
+    ```
+  ),
+  caption: [Increasing the duration of the view transition to create a smoother visual effect.],
+) <smooth-view-transition-css>
 
 The implementation of the preference widget, including several example settings that demonstrate how individual and combined preferences affect the website's styling, is available in the project's repository: #link("https://github.com/Flaverus/P8_sandbox/tree/main/examples/widget")
 
