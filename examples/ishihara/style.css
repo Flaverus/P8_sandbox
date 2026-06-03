@@ -49,6 +49,11 @@ body[data-vision="regular"] {
     filter: none;
 }
 
+fieldset:has(input) {
+    display: flex;
+    justify-content: space-between;
+}
+
 fieldset:has(button) {
     display: flex;
     flex-direction: column;

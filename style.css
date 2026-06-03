@@ -177,6 +177,7 @@ fieldset {
 .control {
     display: flex;
     justify-content: space-between;
+    gap: 8px;
     align-items: center;
     margin-bottom: 0.75rem;
 }
