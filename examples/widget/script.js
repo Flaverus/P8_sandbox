@@ -1,9 +1,41 @@
 // Get references to the DOM elements
+const widget         = document.getElementById('preferences-widget');
+const widgetToggle   = document.getElementById('widget-toggle');
 const motion         = document.querySelectorAll('input[name="motion"]');
 const contrast       = document.querySelectorAll('input[name="contrast"]');
 const colorscheme    = document.querySelectorAll('input[name="colorscheme"]');
 const colorblindness = document.querySelectorAll('input[name="colorblindness"]');
 const root           = document.documentElement;
+
+const toggleWidgetState = (forceClose = false) => {
+    const isWidgetOpen =  widget.classList.contains('open')
+
+    if(forceClose || isWidgetOpen) {
+        widget.classList.remove('open');
+        widgetToggle.setAttribute('aria-expanded', 'false');
+    } else {
+        widget.classList.add('open');
+        widgetToggle.setAttribute('aria-expanded', 'true');
+    }
+}
+
+widgetToggle.addEventListener('click', () => {
+    toggleWidgetState();
+});
+
+// Close widget if clicked outside
+document.addEventListener('click', (e) => {
+    if (!widget.contains(e.target)) {
+        toggleWidgetState(true);
+    }
+});
+
+// Close widget with escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' || e.key === 'Esc') {
+        toggleWidgetState(true);
+    }
+});
 
 // Helper functions
 const setAccessibilityProperty = (property, value, mediaQueryString) => {
