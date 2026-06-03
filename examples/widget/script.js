@@ -41,11 +41,20 @@ document.addEventListener('keydown', (e) => {
 const setAccessibilityProperty = (property, value, mediaQueryString) => {
     localStorage.setItem(property, value);
 
-    // 'settings' is not a value we listen to in the CSS, as is can be anything, so we have to get the media query value
-    if(value === 'system' && mediaQueryString !== '') {
-        root.style.setProperty(property, window.matchMedia(mediaQueryString).matches);
+    const appliedValue = (value === 'system' && mediaQueryString !== '')
+                       ? window.matchMedia(mediaQueryString).matches
+                       : value;
+
+    const isPreloading      = document.body.classList.contains('preload');
+    const isReducedMotionOn = root.style.getPropertyValue('--prefers-reduced-motion') === 'true' && property !== '--prefers-reduced-motion';
+
+    // only do view transition when reduced-motion is on and after initial page load
+    if (isPreloading || !isReducedMotionOn) {
+        root.style.setProperty(property, appliedValue);
     } else {
-        root.style.setProperty(property, value);
+        document.startViewTransition(() => {
+            root.style.setProperty(property, appliedValue);
+        });
     }
 }
 

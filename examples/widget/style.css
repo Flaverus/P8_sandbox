@@ -125,16 +125,27 @@
     transition: none !important;
 }
 
+/* Animations for transitions that take place whilst reduced-motion is on */
+::view-transition-old(root),
+::view-transition-new(root) {
+    mix-blend-mode: normal;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-in-out;
+}
+
 /* Overwrite if motion is active */
 @container style(--prefers-reduced-motion: true) {
+    /* Alternative solution, transitioning properties individually on change
+
     * {
-        /* Transition the variables for color change */
         transition: --bg-color       0.3s linear,
                     --text-color     0.3s linear,
                     --content-bg     0.3s linear,
                     --border-color   0.3s linear,
                     --primary-accent 0.3s linear;
     }
+
+     */
 
     .square {
         animation: none !important;
@@ -146,17 +157,17 @@
 }
 
 /* Overwrite if Protanopia is active */
-:root[style*="--prefers-colorblind-mode: protanopia;"] {
+:root[style*="--prefers-colorblind-mode: protanopia"] {
     --primary-accent: #1656b1;
 }
 
 /* Overwrite if Deuteranopia is active */
-:root[style*="--prefers-colorblind-mode: deuteranopia;"] {
+:root[style*="--prefers-colorblind-mode: deuteranopia"] {
     --primary-accent: #005b9c;
 }
 
 /* Overwrite if Tritanopia is active */
-:root[style*="--prefers-colorblind-mode: tritanopia;"] {
+:root[style*="--prefers-colorblind-mode: tritanopia"] {
     --primary-accent: #006369;
 }
 
@@ -173,17 +184,17 @@
 }
 
 /* Overwrite if dark theme AND Protanopia is active */
-:root[style*="--prefers-dark-theme: true"][style*="--prefers-colorblind-mode: protanopia;"] {
+:root[style*="--prefers-dark-theme: true"][style*="--prefers-colorblind-mode: protanopia"] {
     --primary-accent: #96aaee;
 }
 
 /* Overwrite if dark theme AND Deuteranopia is active */
-:root[style*="--prefers-dark-theme: true"][style*="--prefers-colorblind-mode: deuteranopia;"] {
+:root[style*="--prefers-dark-theme: true"][style*="--prefers-colorblind-mode: deuteranopia"] {
     --primary-accent: #8dabf6;
 }
 
 /* Overwrite if dark theme AND Tritanopia is active */
-:root[style*="--prefers-dark-theme: true"][style*="--prefers-colorblind-mode: tritanopia;"] {
+:root[style*="--prefers-dark-theme: true"][style*="--prefers-colorblind-mode: tritanopia"] {
     --primary-accent: #5abac9;
 }
 
@@ -198,17 +209,17 @@
 }
 
 /* Overwrite if contrast AND Protanopia is active */
-:root[style*="--prefers-contrast: true"][style*="--prefers-colorblind-mode: protanopia;"] {
+:root[style*="--prefers-contrast: true"][style*="--prefers-colorblind-mode: protanopia"] {
     --primary-accent: #193788;
 }
 
 /* Overwrite if contrast AND Deuteranopia is active */
-:root[style*="--prefers-contrast: true"][style*="--prefers-colorblind-mode: deuteranopia;"] {
+:root[style*="--prefers-contrast: true"][style*="--prefers-colorblind-mode: deuteranopia"] {
     --primary-accent: #27438e;
 }
 
 /* Overwrite if contrast AND Tritanopia is active */
-:root[style*="--prefers-contrast: true"][style*="--prefers-colorblind-mode: tritanopia;"] {
+:root[style*="--prefers-contrast: true"][style*="--prefers-colorblind-mode: tritanopia"] {
     --primary-accent: #005158;
 }
 
@@ -223,17 +234,17 @@
 }
 
 /* Overwrite if dark theme AND contrast AND Protanopia is active */
-:root[style*="--prefers-dark-theme: true"][style*="--prefers-contrast: true"][style*="--prefers-colorblind-mode: protanopia;"] {
+:root[style*="--prefers-dark-theme: true"][style*="--prefers-contrast: true"][style*="--prefers-colorblind-mode: protanopia"] {
     --primary-accent: #9eb6fd;
 }
 
 /* Overwrite if dark theme AND contrast AND Deuteranopia is active */
-:root[style*="--prefers-dark-theme: true"][style*="--prefers-contrast: true"][style*="--prefers-colorblind-mode: deuteranopia;"] {
+:root[style*="--prefers-dark-theme: true"][style*="--prefers-contrast: true"][style*="--prefers-colorblind-mode: deuteranopia"] {
     --primary-accent: #adc3fe;
 }
 
 /* Overwrite if dark theme AND contrast AND Tritanopia is active */
-:root[style*="--prefers-dark-theme: true"][style*="--prefers-contrast: true"][style*="--prefers-colorblind-mode: tritanopia;"] {
+:root[style*="--prefers-dark-theme: true"][style*="--prefers-contrast: true"][style*="--prefers-colorblind-mode: tritanopia"] {
     --primary-accent: #61d4d6;
 }
 
