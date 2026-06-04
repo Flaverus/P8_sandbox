@@ -69,7 +69,7 @@ const getAccessibilityProperty = (property) => {
 }
 
 const syncWidgetOption = (option, property) => {
-    const value = root.style.getPropertyValue(property);
+    const value = getAccessibilityProperty(property);
 
     option.forEach(radio => {
         radio.checked = radio.value === value;
