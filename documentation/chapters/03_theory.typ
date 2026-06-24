@@ -426,7 +426,7 @@ For many years, CSS relied primarily on the RGB color space, which limited how c
 
 === RGB
 
-The RGB color model represents colors by combining different intensities of the primary colors ``` red```, ``` green```, and ``` blue```. An optional alpha channel can be added to define the opacity of the resulting color.
+The RGB color model represents colors by combining different intensities of the primary colors ``` red```, ``` green```, and ``` blue```. An optional alpha channel can be added to define the opacity of the resulting color. The geometric relationship of these three primary channels is mapped as a three-dimensional cube, as shown in @rgb-model-image.
 
 RGB has been supported in CSS since its early days and can be expressed using the ``` rgb()``` function or hexadecimal notation. For example, the color shown in @rgb-color-example can also be written as ``` #2d1fb180```. @CSS-colors
 
@@ -443,9 +443,20 @@ RGB has been supported in CSS since its early days and can be expressed using th
   caption: [Using ``` rgb()``` to define a color from the Kolibri palette with 50% opacity.],
 ) <rgb-color-example>
 
+#figure(
+  box(
+    radius: 6pt,
+    clip: true,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+  {
+    image("../ressources/RGB_model.png", width: 40%)
+  }),
+  caption: [A visual representation of the RGB model with its dimention showcasing how color values are defined. @RGB_model],
+) <rgb-model-image>
+
 === HSL
 
-CSS Color Module Level 3 introduced the HSL color model to CSS. HSL describes colors using three components: ``` hue```, ``` saturation```, and ``` lightness```, as illustrated in @hsl-color-example. The hue is represented as an angle on the color wheel, while saturation and lightness define the intensity and brightness of the color. As with RGB, an optional alpha channel can be added to control opacity.
+CSS Color Module Level 3 introduced the HSL color model to CSS. HSL describes colors using three components: ``` hue```, ``` saturation```, and ``` lightness```, as illustrated in @hsl-color-example and visually mapped onto the cylindrical coordinate system in @hsl-model-image. The hue is represented as an angle on the color wheel, while saturation and lightness define the intensity and brightness of the color. As with RGB, an optional alpha channel can be added to control opacity.
 
 HSL makes it easier to create variations of a color because saturation and lightness can be adjusted directly without recalculating individual RGB values. This is particularly useful when generating lighter or darker shades of the same base color. @CSS-colors
 
@@ -462,11 +473,23 @@ HSL makes it easier to create variations of a color because saturation and light
   caption: [Using ``` hsl()``` to define a color from the Kolibri palette with 60% opacity.],
 ) <hsl-color-example>
 
+#figure(
+  box(
+    radius: 6pt,
+    clip: true,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+  {
+    image("../ressources/HSL_model.png", width: 50%)
+  }),
+  caption: [A visual representation of the HSL cylindrical model with its dimensions showcasing how color values are defined. @HSL_model],
+) <hsl-model-image>
+
+#pagebreak()
 === CIELAB Colors
 
-Perceptual color spaces such as Oklab and OkLCH make it possible to define colors in a way that more closely matches human vision. They also provide access to a wider range of colors than those that can be represented in the traditional sRGB color space.
+Perceptual color spaces such as Oklab and Oklch make it possible to define colors in a way that more closely matches human vision. They also provide access to a wider range of colors than those that can be represented in the traditional sRGB color space.
 
-The ``` oklab()``` function describes a color using three components: ``` lightness```, the ``` a``` axis representing red-green variation, and the ``` b``` axis representing yellow-blue variation. The related ``` oklch()``` function uses ``` lightness```, ``` chroma```, and ``` hue``` instead. Both functions support an optional alpha channel to control opacity. An exemplary usage of both functions can be observed in @ok-color-example.
+The ``` oklab()``` function describes a color using three components: ``` lightness```, the ``` a``` axis representing red-green variation, and the ``` b``` axis representing yellow-blue variation. The related ``` oklch()``` function uses ``` lightness```, ``` chroma```, and ``` hue``` instead. Both functions support an optional alpha channel to control opacity. An exemplary usage of both functions can be observed in @ok-color-example. While Oklab and Oklch utilize optimized math for modern screens, they are based on the perceptual axes shown in @cielab-model-image, where lightness forms the vertical spine while the color components radiate outward horizontally.
 
 These color models are widely regarded as the current state of the art for working with color in CSS because they produce more perceptually uniform results. In practice, this means that adjusting lightness or chroma leads to more predictable visual changes than with older color models. @CSS-colors
 
@@ -483,9 +506,21 @@ These color models are widely regarded as the current state of the art for worki
   caption: [Using ``` oklab()``` and ``` oklch()``` to define a color from the Kolibri palette with 70% opacity.],
 ) <ok-color-example>
 
+#figure(
+  box(
+    radius: 6pt,
+    clip: true,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+  {
+    image("../ressources/CIELAB_model.png", width: 90%)
+  }),
+  caption: [A visual representation of the CIELAB/CIELCH coordinate dimensions, mapping perceptual lightness ($L$), chromatic axes ($a, b$), chroma ($C$), and hue ($H$). @CIELAB_model_a @CIELAB_model_b],
+) <cielab-model-image>
+
+#pagebreak()
 === HWB
 
-The ``` hwb()``` color function was introduced alongside the newer CSS color features. It describes colors using three components within the RGB color space: ``` hue```, ``` whiteness```, and ``` blackness```. In practice, it offers an alternative to ``` hsl()``` that many developers find more intuitive when adjusting tints and shades. An example is shown in @hwb-color-example. @CSS-colors
+The ``` hwb()``` color function was introduced alongside the newer CSS color features. It describes colors using three components within the RGB color space: ``` hue```, ``` whiteness```, and ``` blackness```. In practice, it offers an alternative to ``` hsl()``` that many developers find more intuitive when adjusting tints and shades. An example is shown in @hwb-color-example, while @hwb-model-image illustrates how these coordinates are mapped relative to the peripheral hue wheel. @CSS-colors
 
 #figure(
   kind: raw,
@@ -498,6 +533,18 @@ The ``` hwb()``` color function was introduced alongside the newer CSS color fea
   ),
   caption: [Using ``` hwb()``` to define a color from the Kolibri palette with 30% opacity.],
 ) <hwb-color-example>
+
+#figure(
+  box(
+    //inset: 12pt,
+    radius: 6pt,
+    clip: true,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+  {
+    image("../ressources/HWB_model.png", width: 50%)
+  }),
+  caption: [A visual representation of the HWB color space structured as a triangle-wheel picker, showcasing how hue, whiteness, and blackness interact. @HWB_model],
+) <hwb-model-image>
 
 #pagebreak()
 == Contrast Perception
