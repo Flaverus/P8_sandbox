@@ -132,6 +132,14 @@
 
 #v(2em)
 
+*Tool: ChatGPT (OpenAI), Version GPT-5.5.*
+
+*Type of Usage*: Used for linguistic refinement of drafts and improvement of readability and text flow.
+
+*Extent*: Specific sections of the documentation were refined using the tool to improve wording, transitions, and overall readability. The original content, technical facts, code, and project structure remained author-created and were manually verified for accuracy.
+
+#v(2em)
+
 *Tool: Gemini (Google), Version 3 Flash.*
 
 *Type of Usage*: Used for linguistic refinement of drafts and formating mathematical formulas (Relative Luminance).
@@ -140,11 +148,11 @@
 
 #v(2em)
 
-*Tool: ChatGPT (OpenAI), Version GPT-5.5.*
+*Tool: Gemini (Google), Version 3 Flash.*
 
-*Type of Usage*: Used for linguistic refinement of drafts and improvement of readability and text flow.
+*Type of Usage*: Used for graphic editing and uniform styling of figures.
 
-*Extent*: Specific sections of the documentation were refined using the tool to improve wording, transitions, and overall readability. The original content, technical facts, code, and project structure remained author-created and were manually verified for accuracy.
+*Extent*: The backgrounds of the three-dimensional color model illustrations were mechanically modified to a uniform white color for visual consistency. The original geometric structures, annotations, and colors remained completely unaltered.
 
 #pagebreak()
 = MSE-Declaration of Originality
