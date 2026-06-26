@@ -7,7 +7,7 @@ The accompanying repository contains interactive example pages and code snippets
 The three main tools developed during this project are:
 
 - A user-centric Preferences Widget that enables persistent website-specific accessibility settings beyond native operating system restrictions.
-- A Custom Contrast Color Function based on the OkLCH color space that softens harsh contrast through perceptual color mixing.
+- A Custom Contrast Color Function based on the Oklch color space that softens harsh contrast through perceptual color mixing.
 - An Interactive Ishihara Plate generator designed as a developer tool for evaluating color combinations and simulating color vision deficiencies such as ``` Protanopia```, ``` Deuteranopia```, and ``` Tritanopia```.
 
 This project demonstrates that modern web standards already provide the foundation for highly personalized and perceptually aware accessibility solutions without requiring large external frameworks or overly complex configurations.
