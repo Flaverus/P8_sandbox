@@ -138,7 +138,9 @@ Finally, each radio group registers a ``` change``` event listener that updates 
       option.forEach(radio => {
         radio.addEventListener('change', () => {
           if(radio.checked) {
-            setAccessibilityProperty(property, radio.value, mediaQueryString);
+            setAccessibilityProperty(
+                property, radio.value, mediaQueryString
+            );
           }
         });
       });
@@ -303,10 +305,19 @@ To further reduce extreme contrast, the lightness of the selected black or white
 #figure(
   align(left,
     ```css
-    @function --color-contrast(--color <color>, --intensity <percentage>: 0%) returns <color> {
-      --black-or-white: oklch(from var(--color) calc((0.5 - l) * infinity) 0 0);
+    @function --color-contrast(
+      --color <color>,
+      --intensity <percentage>: 0%
+    ) returns <color> {
+      --black-or-white: oklch(
+        from var(--color) calc((0.5 - l) * infinity) 0 0
+      );
 
-      result: color-mix(in oklch, oklch(from var(--black-or-white) clamp(0.15, l, 0.975) c h), var(--color) var(--intensity));
+      result: color-mix(
+        in oklch,
+        oklch(from var(--black-or-white) clamp(0.15, l, 0.975) c h),
+        var(--color) var(--intensity)
+      );
     }
     ```
   ),

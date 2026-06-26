@@ -104,7 +104,9 @@ The ``` window``` interface provides the ``` matchMedia()``` method, which retur
 #figure(
   align(left,
     ```js
-    const isDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDarkTheme = window.matchMedia(
+                          '(prefers-color-scheme: dark)'
+                        ).matches;
     ```
   ),
   caption: [Checking whether the user's system settings prefer a dark color scheme.],
@@ -203,7 +205,9 @@ Custom properties can also be read in JavaScript using ``` getPropertyValue()```
   align(left,
     ```js
     const root          = document.documentElement;
-    const contrastColor = getComputedStyle(root).getPropertyValue('--contrast-color');
+    const contrastColor = getComputedStyle(root).getPropertyValue(
+                            '--contrast-color'
+                          );
     ```
   ),
   caption: [Reading a CSS custom property in JavaScript using ``` getPropertyValue()```.],
