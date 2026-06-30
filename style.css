@@ -29,7 +29,7 @@
     initial-value: #0056b3;
 }
 
-:root {
+body {
     --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     --border-radius: 0.375rem;
     --z-index-elevated: 1;

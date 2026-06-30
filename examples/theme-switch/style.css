@@ -1,8 +1,11 @@
 :root {
+    --prefers-dark-theme: false;
+}
+
+body {
     --ON: ;
     --OFF: initial; /* Guaranteed invalid value according to W3C specs: https://www.w3.org/TR/css-variables-1/#guaranteed-invalid-value  */
 
-    --prefers-dark-theme: false;
     --is-light-theme: var(--ON);
     color-scheme: light;
 
@@ -34,12 +37,16 @@
     --shadow:         var(--shadow--light,                   var(--shadow--dark));
 }
 
-:root[style*="--prefers-dark-theme: true"] {
-    --is-light-theme: var(--OFF);
-    color-scheme: dark;
+@container style(--prefers-dark-theme: true) {
+    body {
+        --is-light-theme: var(--OFF);
+        color-scheme: dark;
+    }
 }
 
-:root[style*="--prefers-dark-theme: false"] {
-    --is-light-theme: var(--ON);
-    color-scheme: light;
+@container style(--prefers-dark-theme: false) {
+    body {
+        --is-light-theme: var(--ON);
+        color-scheme: light;
+    }
 }

@@ -26,7 +26,7 @@ To overcome these limitations and give users greater control, the preferences wi
 
 Where supported, existing CSS media queries serve as the foundation for the widget's default values. When a user visits the page for the first time, the current operating system or browser settings are used as the initial configuration. Any changes made through the widget are stored in the browser's ``` localStorage```, ensuring that preferences persist across page reloads and remain available throughout the application.
 
-Each preference is also written to a CSS custom property on the ``` :root``` element, making the value accessible from both JavaScript and CSS. This approach establishes a single source of truth that can be used consistently across the entire application, as shown in @set-accessibility-property.
+Each preference is also written to a CSS custom property on the ``` root``` element, making the value accessible from both JavaScript and CSS. This approach establishes a single source of truth that can be used consistently across the entire application, as shown in @set-accessibility-property.
 
 #figure(
   align(left,
@@ -39,14 +39,14 @@ Each preference is also written to a CSS custom property on the ``` :root``` ele
 
       if(value === 'system' && mediaQueryString !== '') {
         const systemSetting = window.matchMedia(mediaQueryString).matches;
-        root.style.setProperty(property, systemSetting);
+        document.documentElement.style.setProperty(property, systemSetting);
       } else {
-        root.style.setProperty(property, value);
+        document.documentElement.style.setProperty(property, value);
       }
     }
     ```
   ),
-  caption: [The ``` setAccessibilityProperty()``` function stores a value in ``` localStorage``` and updates the corresponding custom property on ``` :root```.] ,
+  caption: [The ``` setAccessibilityProperty()``` function stores a value in ``` localStorage``` and updates the corresponding custom property on ``` root```.] ,
 ) <set-accessibility-property>
 
 The ``` getAccessibilityProperty()``` function shown in @get-accessibility-property reads a previously saved value from ``` localStorage```. If no value has been stored yet, it returns ``` 'system'```, indicating that the operating system or browser setting should be used as the default.
@@ -94,7 +94,7 @@ During page initialization, both functions are used to populate the custom prope
   caption: [Initializing the global custom properties with stored values or system defaults.],
 ) <handle-accessibility-property>
 
-The ``` syncWidgetOption()``` function shown in @sync-accessibility-option synchronizes the values stored in the custom properties with the corresponding radio buttons in the widget. By reading the values directly from ``` :root```, the custom properties remain the single source of truth for both the user interface and the underlying logic.
+The ``` syncWidgetOption()``` function shown in @sync-accessibility-option synchronizes the values stored in the custom properties with the corresponding radio buttons in the widget. By reading the values directly from ``` root```, the custom properties remain the single source of truth for both the user interface and the underlying logic.
 
 #figure(
   align(left,
@@ -152,12 +152,12 @@ Finally, each radio group registers a ``` change``` event listener that updates 
 
 === CSS Part
 
-Once the CSS custom properties representing the user's preferences are in place, they can be used to create different visual representations of the website. In @change-css-base-properties-attribute-selector, a set of custom properties defines the default styling. These values are selectively overridden using the CSS attribute selector ``` []``` when the user prefers a dark color scheme.
+Once the CSS custom properties representing the user's preferences are in place, they can be used to create different visual representations of the website. In @change-css-base-properties-attribute-selector, a set of custom properties defines the default styling. These values are selectively overridden using the CSS ``` @container``` at-rule when the user prefers a dark color scheme.
 
 #figure(
   align(left,
     ```css
-    :root {
+    body {
       --bg-color:       #fcfcfc;
       --text-color:     #222222;
       --content-bg:     #ffffff;
@@ -168,19 +168,21 @@ Once the CSS custom properties representing the user's preferences are in place,
       color-scheme: light;
     }
 
-    :root[style*="--prefers-dark-theme: true"] {
-      --bg-color:       #212121;
-      --text-color:     #ededed;
-      --content-bg:     #2e2e2e;
-      --border-color:   #232323;
-      --primary-accent: #6db3f4;
-      --shadow:         0 2px 8px rgba(0, 0, 0, 0.5);
+    @container style(--prefers-dark-theme: true) {
+      body {
+        --bg-color:       #212121;
+        --text-color:     #ededed;
+        --content-bg:     #2e2e2e;
+        --border-color:   #232323;
+        --primary-accent: #6db3f4;
+        --shadow:         0 2px 8px rgba(0, 0, 0, 0.5);
 
-      color-scheme: dark;
+        color-scheme: dark;
+      }
     }
     ```
   ),
-  caption: [Overriding the default custom properties with the CSS attribute selector on ``` :root``` to apply a dark color scheme.],
+  caption: [Overriding the default custom properties with the CSS ``` @container``` at-rule on ``` body``` to apply a dark color scheme.],
 ) <change-css-base-properties-attribute-selector>
 
 As additional preferences are introduced, the number of possible combinations increases. @change-css-base-multiple-properties demonstrates how the base styling is adjusted when both the dark theme and the high contrast mode are enabled, resulting in a different visual presentation.
@@ -188,21 +190,23 @@ As additional preferences are introduced, the number of possible combinations in
 #figure(
   align(left,
     ```css
-    :root[style*="--prefers-dark-theme: true"]
-    [style*="--prefers-contrast: true"] {
-      --bg-color:       #000000;
-      --text-color:     #ffffff;
-      --content-bg:     #000000;
-      --border-color:   #ffffff;
-      --primary-accent: #80c5ff;
-      --shadow:         none;
+    @container style(--prefers-dark-theme: true) and
+    style(--prefers-contrast: true) {
+      body {
+        --bg-color:       #000000;
+        --text-color:     #ffffff;
+        --content-bg:     #000000;
+        --border-color:   #ffffff;
+        --primary-accent: #80c5ff;
+        --shadow:         none;
+      }
     }
     ```
   ),
   caption: [Applying a dedicated style when both dark mode and high contrast mode are enabled.],
 ) <change-css-base-multiple-properties>
 
-In some cases, changing individual custom property values is not sufficient and additional CSS rules must be applied. The ``` @container``` at-rule combined with the ``` style()``` query makes this possible. Because the preference properties are defined on ``` :root```, they can be used to conditionally apply styles across the entire application. @additonal-rules-custom-properties demonstrates how animations and transitions can be disabled when the user prefers reduced motion.
+In some cases, changing individual custom property values is not sufficient and additional CSS rules must be applied. The ``` @container``` at-rule combined with the ``` style()``` query makes this possible. Because the preference properties are defined on ``` body```, they can be used to conditionally apply styles across the entire application. @additonal-rules-custom-properties demonstrates how animations and transitions can be disabled when the user prefers reduced motion.
 
 #figure(
   align(left,
@@ -269,7 +273,7 @@ For the Preferences Widget, this can be achieved by wrapping the property update
   align(left,
     ```js
     document.startViewTransition(() => {
-      root.style.setProperty(property, appliedValue);
+      document.documentElement.style.setProperty(property, appliedValue);
     });
     ```
   ),

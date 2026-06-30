@@ -141,12 +141,12 @@ Some browsers also provide settings that further limit this information. For exa
 
 CSS custom properties, also known as CSS variables, are named values that can be reused throughout a style sheet. Their value depends on the scope in which they are defined, but within that scope they evaluate to the same value wherever they are used. This makes styles easier to maintain and reduces duplication.
 
-Custom properties are defined using a name that begins with two dashes, ``` --```, followed by a descriptive identifier. Their value can be accessed using the CSS ``` var()``` function. @primary-color-custom-property demonstrates how the custom property ``` --primary-color``` can be defined once and reused throughout a website. This approach is particularly useful when implementing multiple themes, such as light and dark mode, because colors can be changed in a single central location. @custom-properties
+Custom properties are defined using a name that begins with a dashed-ident, ``` --```, followed by a descriptive identifier. Their value can be accessed using the CSS ``` var()``` function. @primary-color-custom-property demonstrates how the custom property ``` --primary-color``` can be defined once and reused throughout a website. This approach is particularly useful when implementing multiple themes, such as light and dark mode, because colors can be changed in a single central location. @custom-properties
 
 #figure(
   align(left,
     ```css
-    :root {
+    body {
       --primary-color:          #204ccf;
       --primary-color-contrast: #ffffff;
     }
@@ -192,8 +192,8 @@ As shown in @primary-color-custom-property-js, custom properties can also be def
       initialValue: '#204ccf ',
     });
 
-    const root = document.documentElement;
-    root.style.setProperty('--primary-color-contrast', '#ffffff');
+    const body = document.body;
+    body.style.setProperty('--primary-color-contrast', '#ffffff');
     ```
   ),
   caption: [Using ``` registerProperty()``` and ``` setProperty()``` in JavaScript to define CSS custom properties.],
@@ -204,8 +204,8 @@ Custom properties can also be read in JavaScript using ``` getPropertyValue()```
 #figure(
   align(left,
     ```js
-    const root          = document.documentElement;
-    const contrastColor = getComputedStyle(root).getPropertyValue(
+    const body          = document.body;
+    const contrastColor = getComputedStyle(body).getPropertyValue(
                             '--contrast-color'
                           );
     ```
@@ -243,18 +243,22 @@ Another approach is to use a CSS attribute selector to override custom propertie
     ```css
     :root {
       --prefers-dark-theme: false;
+    }
 
+    body {
       --text-color:     #222222;
       --bg-color:       #fcfcfc;
       --border-color:   #eeeeee;
       --primary-accent: #0056b3;
     }
 
-    :root[style*="--prefers-dark-theme: true"] {
-      --text-color:     #ededed;
-      --bg-color:       #212121;
-      --border-color:   #232323;
-      --primary-accent: #6Db3f4;
+    @container style(--prefers-dark-theme: true) {
+      body {
+        --text-color:     #ededed;
+        --bg-color:       #212121;
+        --border-color:   #232323;
+        --primary-accent: #6Db3f4;
+      }
     }
 
     ```
@@ -271,7 +275,7 @@ According to the CSS specification, a custom property must contain at least one 
 #figure(
   align(left,
     ```css
-    :root {
+    body {
     	--ON: ;
     	--OFF: initial;
     }
@@ -285,12 +289,12 @@ In traditional theming setups, each variable must be defined separately for both
 #figure(
   align(left,
     ```css
-    :root {
+    body {
       --is-light-theme: var(--ON);
     }
 
     @media (prefers-color-scheme: dark) {
-      :root {
+      body {
         --is-light-theme: var(--OFF);
       }
     }
@@ -304,7 +308,7 @@ When ``` --is-light-theme``` is used as a prefix in another custom property decl
 #figure(
   align(left,
     ```css
-    :root {
+    body {
       --color-text--light: var(--is-light-theme) black;
       --color-text--dark: white;
 

@@ -4,15 +4,15 @@ const backgroundLight  = document.getElementById('background-light');
 const foregroundDark   = document.getElementById('foreground-dark');
 const foregroundMedium = document.getElementById('foreground-medium');
 const foregroundLight  = document.getElementById('foreground-light');
-const root             = document.documentElement;
+const body             = document.body;
 
 const setPlateColors = (colors) => {
-    root.style.setProperty('--background-dark',   colors.bgDark);
-    root.style.setProperty('--background-medium', colors.bgMedium);
-    root.style.setProperty('--background-light',  colors.bgLight);
-    root.style.setProperty('--foreground-dark',   colors.fgDark);
-    root.style.setProperty('--foreground-medium', colors.fgMedium);
-    root.style.setProperty('--foreground-light',  colors.fgLight);
+    body.style.setProperty('--background-dark',   colors.bgDark);
+    body.style.setProperty('--background-medium', colors.bgMedium);
+    body.style.setProperty('--background-light',  colors.bgLight);
+    body.style.setProperty('--foreground-dark',   colors.fgDark);
+    body.style.setProperty('--foreground-medium', colors.fgMedium);
+    body.style.setProperty('--foreground-light',  colors.fgLight);
 
     backgroundDark.value   = colors.bgDark;
     backgroundMedium.value = colors.bgMedium;
@@ -24,7 +24,7 @@ const setPlateColors = (colors) => {
 
 document.querySelectorAll('.color-picker').forEach(picker => {
     picker.addEventListener('change', e => {
-        root.style.setProperty(e.target.dataset.variable, e.target.value);
+        body.style.setProperty(e.target.dataset.variable, e.target.value);
     });
 });
 

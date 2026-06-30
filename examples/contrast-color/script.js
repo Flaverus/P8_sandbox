@@ -4,7 +4,7 @@ const pickedColorParagraph    = document.getElementById('picked-color-text');
 const resultingColorParagraph = document.getElementById('resulting-color-text');
 const contrastRatioParagraph  = document.getElementById('contrast-ratio-text');
 const copyButton              = document.getElementById('copy-button');
-const root                    = document.documentElement;
+const body                    = document.body;
 
 const linearizeChannel = channel => {
     const normalized = channel / 255;
@@ -53,7 +53,7 @@ const calculateContrastRatio = (color1, color2) => {
 };
 
 const updateResultingColorText = () => {
-    const contrastColor   = getComputedStyle(root).getPropertyValue('--contrast-color').trim();
+    const contrastColor   = getComputedStyle(body).getPropertyValue('--contrast-color').trim();
     const backgroundColor = colorPicker.value;
     const ratio           = calculateContrastRatio(backgroundColor, contrastColor);
 
@@ -64,14 +64,14 @@ updateResultingColorText();
 
 colorPicker.addEventListener('change', () => {
     const color = colorPicker.value;
-    root.style.setProperty('--selected-color', color);
+    body.style.setProperty('--selected-color', color);
     pickedColorParagraph.innerText = color;
     updateResultingColorText();
 });
 
 intensityPercentage.addEventListener('change', () => {
     const percentage = intensityPercentage.value;
-    root.style.setProperty('--selected-percentage', `${percentage}%`);
+    body.style.setProperty('--selected-percentage', `${percentage}%`);
     updateResultingColorText();
 });
 
