@@ -38,6 +38,7 @@
 
 // Figure
 #show figure.caption: emph
+#show figure.caption: set align(right)
 #show figure: set block(above: 28pt, below: 28pt)
 
 // --- Cover Page ---

@@ -172,7 +172,7 @@ The ``` @property``` at-rule allows custom properties to be defined more precise
     ```css
     @property --primary-color {
       syntax: "<color>";
-      inherits: false;
+      inherits: true;
       initial-value: #204ccf;
     }
     ```
@@ -188,7 +188,7 @@ As shown in @primary-color-custom-property-js, custom properties can also be def
     window.CSS.registerProperty({
       name: '--primary-color',
       syntax: '<color>',
-      inherits: false,
+      inherits: true,
       initialValue: '#204ccf ',
     });
 
