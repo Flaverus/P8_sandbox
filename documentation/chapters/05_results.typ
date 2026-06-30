@@ -314,7 +314,7 @@ To further reduce extreme contrast, the lightness of the selected black or white
       --intensity <percentage>: 0%
     ) returns <color> {
       --black-or-white: oklch(
-        from var(--color) calc((0.5 - l) * infinity) 0 0
+        from var(--color) calc(((l * -1) + 0.5) * infinity) 0 0
       );
 
       result: color-mix(

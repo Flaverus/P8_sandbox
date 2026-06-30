@@ -29,6 +29,7 @@
     initial-value: #0056b3;
 }
 
+/* Base Styles */
 body {
     --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     --border-radius: 0.375rem;
@@ -37,10 +38,7 @@ body {
     --z-index-front: 100;
 
     color-scheme: light;
-}
 
-/* Base Styles */
-body {
     font-family: system-ui, -apple-system, sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);

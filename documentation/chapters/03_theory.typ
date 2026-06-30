@@ -192,8 +192,7 @@ As shown in @primary-color-custom-property-js, custom properties can also be def
       initialValue: '#204ccf ',
     });
 
-    const body = document.body;
-    body.style.setProperty('--primary-color-contrast', '#ffffff');
+    document.body.style.setProperty('--primary-color-contrast', '#ffffff');
     ```
   ),
   caption: [Using ``` registerProperty()``` and ``` setProperty()``` in JavaScript to define CSS custom properties.],
@@ -366,13 +365,13 @@ Using either black or white for text is a reliable way to ensure strong contrast
 
 Although the growing set of built-in CSS functions covers many use cases, some scenarios still require functionality that cannot be expressed with the currently available primitives. In such cases, developers may need to combine multiple functions or implement custom logic. This is where the experimental ``` @function``` at-rule becomes relevant.
 
-This feature is conceptually similar to CSS custom properties, as custom functions also use names that begin with ``` --```. A function is declared using the ``` @function``` keyword, followed by a custom name and an optional list of parameters. Both the function name and its parameters start with ``` --``` and are followed by case-sensitive identifiers defined by the developer. Inside the function body, the expression assigned to ``` result:``` is evaluated and returned, as shown in @at-function-example. @at-function
+This feature is conceptually similar to CSS custom properties, as custom functions also use names that begin with a dashed-ident ``` --```. A function is declared using the ``` @function``` keyword, followed by a custom name and an optional list of parameters. Both the function name and its parameters start with ``` --``` and are followed by case-sensitive identifiers defined by the developer. Inside the function body, the expression assigned to ``` result:``` is evaluated and returned, as shown in @at-function-example. @at-function
 
 #figure(
   align(left,
     ```css
     @function --color-contrast(--color <color>) returns <color> {
-      result: oklch(from var(--color) calc((0.5 - l) * infinity) 0 0);
+      result: oklch(from var(--color) calc(((l * -1) + 0.5) * infinity) 0 0);
     }
     ```
   ),
@@ -426,7 +425,7 @@ An example of a custom page transition is shown in @view-transition-example. In 
 ) <view-transition-example>
 
 #pagebreak()
-== Color Spaces
+== Color Models
 
 There are many different models for describing the colors perceptible to the human eye. Each model has its own strengths and weaknesses and is used in different contexts, ranging from print and photography to digital displays.
 
@@ -473,7 +472,7 @@ HSL makes it easier to create variations of a color because saturation and light
   align(left,
     color-snippet(
       ```css
-      hsl(256 82 55 / 0.6);
+      hsl(256deg 82% 55% / 60%);
       ```,
       rgb(95, 46, 234, 60%)
     ),
@@ -505,8 +504,8 @@ These color models are widely regarded as the current state of the art for worki
   kind: raw,
   align(left,
     color-snippet(```css
-      oklab(0.638 0.176 -0.279 / 0.7);
-      oklch(0.718 0.255 301.5 / 0.7);
+      oklab(63.8% 0.176 -0.279 / 0.7);
+      oklch(71.8% 0.255 301.5 / 0.7);
       ```,
       rgb(190, 88, 253, 70%)
     ),
@@ -534,7 +533,7 @@ The ``` hwb()``` color function was introduced alongside the newer CSS color fea
   kind: raw,
   align(left,
     color-snippet(```css
-      hwb(325 18 0 / 0.3);
+      hwb(325deg 18% 0% / 30%);
       ```,
       rgb(254, 46, 168, 30%)
     ),
