@@ -12,9 +12,9 @@ APCA represents a significant improvement over the current relative luminance ap
 
 == Future Work
 
-In its current form, the Preferences Widget cannot yet be integrated directly into the Kolibri Web UI toolkit. Although this was not part of the original project scope, the widget underwent user testing to evaluate its usability and effectiveness. Based on the insights gained during these tests, a draft proposal for integration into Kolibri was developed. The draft implementation can be found in the following repository: #link("https://github.com/Flaverus/Kolibri_widget_draft/tree/main/src/kolibri/preferences").
+In its current form, the Preferences Widget cannot yet be integrated directly into the Kolibri Web UI toolkit. Although this was not part of the original project scope, the widget underwent user testing to evaluate its usability and effectiveness. Based on the insights gained during these tests, a draft proposal for integration into Kolibri was developed. The draft implementation can be found in the following repository. @p8-widget-kolibri
 
-An exemplary implementation of the widget within the Kolibri ecosystem is also available in the same repository under the examples section: #link("https://github.com/Flaverus/Kolibri_widget_draft/tree/main/src/examples/preferences").
+An exemplary implementation of the widget within the Kolibri ecosystem is also available in the same repository under the examples section. @p8-widget-kolibri-example
 
 The example application for the custom contrast color function could also be extended with APCA support in the future. This would make it possible to evaluate not only WCAG 2.x contrast requirements but also the future WCAG 3.0 perceptual contrast model once the specification becomes finalized and publicly established.
 

@@ -291,7 +291,7 @@ For the Preferences Widget, this can be achieved by wrapping the property update
   caption: [Increasing the duration of the view transition \ to create a smoother visual effect.],
 ) <smooth-view-transition-css>
 
-The implementation of the preference widget, including several example settings that demonstrate how individual and combined preferences affect the website's styling, is available in the project's repository: #link("https://github.com/Flaverus/P8_sandbox/tree/main/examples/widget")
+The implementation of the preference widget, including several example settings that demonstrate how individual and combined preferences affect the website's styling, is available in the project's repository. @p8-widget
 
 #pagebreak()
 == Contrast Color Function
@@ -366,7 +366,7 @@ A practical workaround is to use the HTML ``` <canvas>``` element. The canvas ca
   caption: [Extracting the ``` RGBA``` values of any CSS \ color using the HTML ``` <canvas>``` element.],
 ) <canvas-for-color-extraction>
 
-The implementation of the custom contrast color function is available in the project's repository: #link("https://github.com/Flaverus/P8_sandbox/tree/main/examples/contrast-color")
+The implementation of the custom contrast color function is available in the project's repository. @p8-contrast-color
 
 #pagebreak()
 == Interactive Ishihara Plate
@@ -393,7 +393,7 @@ Although these configurations are inspired by the original Ishihara test plates,
 
 An example of these comparison modes can be seen in @ishihara-plate-comparisement. The left side displays a plate configured with colors that are difficult to distinguish for users with ``` Deuteranopia```. The right side shows the same plate with a ``` Deuteranopia``` simulation filter applied, illustrating how the color combination may appear to affected users. The simulation filters are based on the bookmarklet filters developed during the previous P7 project.
 
-A more detailed discussion of these bookmarklets is available in the corresponding chapter of the previous P7 project: #link("https://accessible-web-initiative.gitbook.io/accessibility-on-the-web-where-we-stand/research/debugging-and-testing-accessibility")
+A more detailed discussion of these bookmarklets is available in the corresponding chapter of the previous P7 project. @p7-debugging
 
 #figure(
   box(
@@ -407,6 +407,6 @@ A more detailed discussion of these bookmarklets is available in the correspondi
   caption: [A comparison between a plate configured for ``` Deuteranopia``` on the left \ and the same plate viewed through a ``` Deuteranopia``` simulation filter on the right.],
 ) <ishihara-plate-comparisement>
 
-The implementation of the interactive Ishihara plate is available in the project's repository: #link("https://github.com/Flaverus/P8_sandbox/tree/main/examples/widget")
+The implementation of the interactive Ishihara plate is available in the project's repository. @p8-ishihara
 
 #pagebreak()

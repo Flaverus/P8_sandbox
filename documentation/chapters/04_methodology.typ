@@ -2,11 +2,11 @@
 
 == Research and Ideation
 
-This project initially started in a different direction by exploring how accessibility can be tested in an automated manner. During this research phase, a wide range of accessibility testing tools was examined, including both free and commercial solutions. One particularly influential source was the blog of Karl Groves, which states that only around 30–40% of accessibility issues can be reliably detected through automated testing @karl-groves. Although the original article was published in 2012, it received updates in late 2025. While automated accessibility testing has improved since the article was first written, the research process gradually shifted the focus of this project into another direction.
+This project initially started in a different direction by exploring how accessibility can be tested in an automated manner. During this research phase, a wide range of accessibility testing tools was examined, including both free and commercial solutions. One particularly influential source was the blog of Karl Groves, which states that only around 30–40% of accessibility issues can be reliably detected through automated testing @karl-groves. While automated accessibility testing has improved since the article was first written, the research process gradually shifted the focus of this project into another direction.
 
 During this phase, additional ideas emerged regarding accessibility support beyond testing itself. Instead of focusing exclusively on automated evaluation, the project evolved toward exploring ways to enhance browser standards and provide additional accessibility aids directly within web applications. Since accessibility testing is already heavily researched and commercially established, this alternative direction appeared more valuable and interesting for further exploration.
 
-After redefining the project goals, an exploratory prototyping approach was chosen to rapidly test and refine ideas over time. Existing standards, emerging browser capabilities, and newly introduced CSS and JavaScript features were researched to build a broad overview of current possibilities.
+An exploratory prototyping approach was chosen to rapidly test and refine ideas over time. Existing standards, emerging browser capabilities, and newly introduced CSS and JavaScript features were researched to build a broad overview of current possibilities.
 
 Browser support and compatibility were considered throughout the process to better understand both practical limitations and future opportunities. Experimental features and unconventional approaches were intentionally included where appropriate to avoid building solutions solely around already outdated technologies and standards.
 
@@ -20,7 +20,7 @@ Many examples initially started as simple or partially hacky drafts before being
 
 == Mathematical Foundation
 
-To develop a deeper understanding of the current WCAG 2.x contrast standard, the W3C documentation regarding relative luminance and RGB color calculations was studied extensively. This research helped clarify the mathematical relationship between RGB color values, luminance calculation, and contrast ratios.
+To develop a deeper understanding of the current WCAG 2.x contrast standard, this work analyzed the W3C documentation regarding relative luminance and RGB color calculations. This research helped clarify the mathematical relationship between RGB color values, luminance calculation, and contrast ratios.
 
 The resulting understanding made it possible to formalize the algorithmic approach described in the specification into a clearer mathematical representation. This later enabled the implementation of a contrast ratio indicator that was used within the custom contrast color function example application.
 
@@ -30,7 +30,7 @@ This process also motivated further research into the future WCAG 3.0 contrast m
 
 The Preferences Widget underwent smaller-scale user testing to gather feedback from real users and refine the interface for future integration into Kolibri. The tests were intentionally kept simple to allow participation from users with different backgrounds and experience levels. The primary focus was usability, keyboard accessibility, intuitiveness, and the overall visual experience.
 
-The documentation and results of the conducted user tests are available in the project's repository under the usertests section: #link("https://github.com/Flaverus/P8_sandbox/tree/main/documentation/usertests")
+The documentation and results of the conducted user tests are available in the project's repository under the usertests section. @p8-usertests
 
 The different example applications and prototype pages were additionally validated using automated accessibility testing tools such as the axe DevTools browser extension and Google Lighthouse. These automated checks were supplemented with manual keyboard accessibility testing to verify practical usability beyond purely automated evaluation.
 
