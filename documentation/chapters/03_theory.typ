@@ -33,7 +33,7 @@ CSS Media Queries allow developers to apply different styles based on the charac
     }
     ```
   ),
-  caption: [Syntax of a media query, where ``` <media-query-list>``` contains ``` <media-type>``` values, ``` <media-feature>``` values, and logical operators.],
+  caption: [Syntax of a media query, where ``` <media-query-list>``` contains \ ``` <media-type>``` values, ``` <media-feature>``` values, and logical operators.],
 ) <media-synthax-example>
 
 In web development, the ``` screen``` media type is the most commonly used, but media queries can also target printers by using ``` print```. If no media type is specified, the default value is ``` all```, which applies the styles to all devices.
@@ -162,7 +162,7 @@ Custom properties are defined using a name that begins with a dashed-ident, ``` 
 
     ```
   ),
-  caption: [Defining a primary color custom property that can be reused throughout the website.],
+  caption: [Defining a primary color custom property \ that can be reused throughout the website.],
 ) <primary-color-custom-property>
 
 The ``` @property``` at-rule allows custom properties to be defined more precisely. It makes it possible to specify the expected value type using ``` syntax```, whether the property is inherited by default using ``` inherits```, and an initial value using ``` initial-value```. Possible syntax definitions include ``` <color>```, ``` <number>```, and ``` <url>```. @primary-color-custom-property-at-rule shows how the previous ``` --primary-color``` example can be expressed using this at-rule. @at-property @at-property-syntax
@@ -195,7 +195,7 @@ As shown in @primary-color-custom-property-js, custom properties can also be def
     document.body.style.setProperty('--primary-color-contrast', '#ffffff');
     ```
   ),
-  caption: [Using ``` registerProperty()``` and ``` setProperty()``` in JavaScript to define CSS custom properties.],
+  caption: [Using ``` registerProperty()``` and ``` setProperty()``` \ in JavaScript to define CSS custom properties.],
 ) <primary-color-custom-property-js>
 
 Custom properties can also be read in JavaScript using ``` getPropertyValue()```, as shown in @primary-color-custom-property-js-read. This makes it possible to react to dynamically changed values and use them in application logic.
@@ -232,7 +232,7 @@ For example, a user may not have enabled reduced motion at the operating system 
     }
     ```
   ),
-  caption: [Using the CSS ``` @container``` at-rule to disable animations based on a custom property.],
+  caption: [Using the CSS ``` @container``` at-rule to \ disable animations based on a custom property.],
 ) <at-container-reduced-motion>
 
 Another approach is to use a CSS attribute selector to override custom properties when a different color theme is selected. For example, the operating system and browser may indicate a preference for a light theme, while the user explicitly selects a dark theme on the website. In this case, a custom property such as ``` --prefers-dark-theme: true``` can be used to switch the application's color palette, as demonstrated in @attribute-selector-dark-color-theme. @attribute-selector
@@ -262,7 +262,7 @@ Another approach is to use a CSS attribute selector to override custom propertie
 
     ```
   ),
-  caption: [Using a CSS attribute selector to switch to a dark color theme based on a custom property.],
+  caption: [Using a CSS attribute selector to switch to a \ dark color theme based on a custom property.],
 ) <attribute-selector-dark-color-theme>
 
 === Custom Property Toggle
@@ -299,7 +299,7 @@ In traditional theming setups, each variable must be defined separately for both
     }
     ```
   ),
-  caption: [Assigning either ``` ' '``` or ``` initial``` depending on the active theme creates the basis for the toggle logic.],
+  caption: [Assigning either ``` ' '``` or ``` initial``` depending on \ the active theme creates the basis for the toggle logic.],
 ) <toggle-custom-property>
 
 When ``` --is-light-theme``` is used as a prefix in another custom property declaration, the resulting declaration is either valid or invalid depending on its value. If the prefix expands to a whitespace character, the declaration remains valid. If it expands to ``` initial```, the declaration becomes invalid. In that case, the fallback value provided to ``` var()``` is used automatically, as illustrated in @var-fallback-property.
@@ -321,7 +321,7 @@ When ``` --is-light-theme``` is used as a prefix in another custom property decl
     }
     ```
   ),
-  caption: [When a custom property becomes invalid, ``` var()``` automatically uses the fallback value.],
+  caption: [When a custom property becomes invalid, \ ``` var()``` automatically uses the fallback value.],
 ) <var-fallback-property>
 
 Multiple fallback values based on different toggle properties can be chained using the CSS ``` var()``` function. This enables centralized state management, where the custom properties used throughout the entire style sheet are controlled from a single location. @custom-property-theme-switch @var-function
@@ -342,7 +342,7 @@ CSS provides a wide range of built-in functions that simplify common styling tas
     }
     ```
   ),
-  caption: [Setting the text color of a button to black or white based on the background color.],
+  caption: [Setting the text color of a button to black \ or white based on the background color.],
 ) <contrast-color-example>
 
 Using either black or white for text is a reliable way to ensure strong contrast. Depending on the background color, however, the result may appear visually harsh and less pleasant to read. Another recently introduced CSS function is ``` light-dark()```, which accepts two colors or images. The first value is used when a light color scheme is active, while the second value is used for a dark color scheme. @light-dark-example demonstrates this approach using custom properties. @light-dark
@@ -358,7 +358,7 @@ Using either black or white for text is a reliable way to ensure strong contrast
     }
     ```
   ),
-  caption: [Defining text and background colors based on the active color theme using custom properties.],
+  caption: [Defining text and background colors based on the \ active color theme using custom properties.],
 ) <light-dark-example>
 
 === CSS Custom Functions
@@ -375,7 +375,7 @@ This feature is conceptually similar to CSS custom properties, as custom functio
     }
     ```
   ),
-  caption: [A custom function that provides behavior similar to ``` contrast-color()``` and was created before that function became widely available.],
+  caption: [A custom function that provides behavior similar to ``` contrast-color()``` \ and was created before that function became widely available.],
 ) <at-function-example>
 
 As with CSS custom properties, CSS data types such as ``` <color>```, ``` <number>```, and ``` <string>``` can be specified for both function parameters and the return value.
@@ -421,7 +421,7 @@ An example of a custom page transition is shown in @view-transition-example. In 
     }
     ```
   ),
-  caption: [A custom page transition that swipes the previous view out to the left while moving the new view in from the right.],
+  caption: [A custom page transition that swipes the previous view \ out to the left while moving the new view in from the right.],
 ) <view-transition-example>
 
 #pagebreak()
@@ -458,7 +458,7 @@ RGB has been supported in CSS since its early days and can be expressed using th
   {
     image("../ressources/RGB_model.png", width: 40%)
   }),
-  caption: [A visual representation of the RGB model with its dimention showcasing how color values are defined. @RGB_model],
+  caption: [A visual representation of the RGB model with its \ dimention showcasing how color values are defined. @RGB_model],
 ) <rgb-model-image>
 
 === HSL
@@ -488,7 +488,7 @@ HSL makes it easier to create variations of a color because saturation and light
   {
     image("../ressources/HSL_model.png", width: 50%)
   }),
-  caption: [A visual representation of the HSL cylindrical model with its dimensions showcasing how color values are defined. @HSL_model],
+  caption: [A visual representation of the HSL cylindrical model with \ its dimensions showcasing how color values are defined. @HSL_model],
 ) <hsl-model-image>
 
 #pagebreak()
@@ -510,7 +510,7 @@ These color models are widely regarded as the current state of the art for worki
       rgb(190, 88, 253, 70%)
     ),
   ),
-  caption: [Using ``` oklab()``` and ``` oklch()``` to define a color from the Kolibri palette with 70% opacity.],
+  caption: [Using ``` oklab()``` and ``` oklch()``` to define a \ color from the Kolibri palette with 70% opacity.],
 ) <ok-color-example>
 
 #figure(
@@ -521,7 +521,7 @@ These color models are widely regarded as the current state of the art for worki
   {
     image("../ressources/CIELAB_model.png", width: 90%)
   }),
-  caption: [A visual representation of the CIELAB/CIELCH coordinate dimensions, mapping perceptual lightness ($L$), chromatic axes ($a, b$), chroma ($C$), and hue ($H$). @CIELAB_model_a @CIELAB_model_b],
+  caption: [A visual representation of the CIELAB/CIELCH coordinate \ dimensions, mapping perceptual lightness ($L$), chromatic axes ($a, b$), \ chroma ($C$), and hue ($H$). @CIELAB_model_a @CIELAB_model_b],
 ) <cielab-model-image>
 
 #pagebreak()
@@ -622,7 +622,7 @@ The formula shown in @relative-luminanc-formula is used by WCAG 2.x to calculate
     [*Calculate Contrast Ratio*]
     $ "Ratio" = ("L1" + 0.05)/("L2" + 0.05) $
   }),
-  caption: [Step-by-step calculation of relative luminance based on the W3C sRGB formula. @relative_luminanc],
+  caption: [Step-by-step calculation of relative luminance \ based on the W3C sRGB formula. @relative_luminanc],
 ) <relative-luminanc-formula>
 
 === Perceptual Color Models
@@ -642,7 +642,7 @@ Readability depends on more than the luminance difference between two colors. Fo
   {
     image("../ressources/apca_curve.png", width: 80%)
   }),
-  caption: [This chart illustrates the spatial dependence of human contrast sensitivity using text samples. @APCA],
+  caption: [This chart illustrates the spatial dependence of \ human contrast sensitivity using text samples. @APCA],
 ) <apca-curve>
 
 Non-text elements such as icons typically require less contrast than body text. More generally, the appropriate contrast between two colors depends on the specific use case, including the size, thickness, and purpose of the element.
@@ -702,7 +702,7 @@ Custom plates can be generated using a specific brand palette to verify that key
   {
     image("../ressources/Ishihara-example01.png", width: 40%)
   }),
-  caption: [A high-contrast demonstration plate designed to remain legible across all common vision types.],
+  caption: [A high-contrast demonstration plate designed to \ remain legible across all common vision types.],
 ) <ishihara-example01>
 
 #pagebreak()

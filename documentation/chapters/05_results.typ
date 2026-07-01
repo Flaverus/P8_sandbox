@@ -19,7 +19,7 @@ To overcome these limitations and give users greater control, the preferences wi
   {
     image("../ressources/preference-widget.png")
   }),
-  caption: [A screenshot of the preferences widget with page-specific settings for reduced motion and color blindness.],
+  caption: [A screenshot of the preferences widget with page-specific \ settings for reduced motion and color blindness.],
 ) <preference-widget>
 
 === JavaScript Part
@@ -46,7 +46,7 @@ Each preference is also written to a CSS custom property on the ``` root``` elem
     }
     ```
   ),
-  caption: [The ``` setAccessibilityProperty()``` function stores a value in ``` localStorage``` and updates the corresponding custom property on ``` root```.] ,
+  caption: [The ``` setAccessibilityProperty()``` function stores a value in \ ``` localStorage``` and updates the corresponding custom property on ``` root```.] ,
 ) <set-accessibility-property>
 
 The ``` getAccessibilityProperty()``` function shown in @get-accessibility-property reads a previously saved value from ``` localStorage```. If no value has been stored yet, it returns ``` 'system'```, indicating that the operating system or browser setting should be used as the default.
@@ -65,7 +65,7 @@ The ``` getAccessibilityProperty()``` function shown in @get-accessibility-prope
     }
     ```
   ),
-  caption: [The ``` getAccessibilityProperty()``` function returns a saved value or falls back to the system setting.],
+  caption: [The ``` getAccessibilityProperty()``` function returns \ a saved value or falls back to the system setting.],
 ) <get-accessibility-property>
 
 During page initialization, both functions are used to populate the custom properties with either the stored value or the corresponding system preference, as shown in @handle-accessibility-property.
@@ -113,7 +113,7 @@ The ``` syncWidgetOption()``` function shown in @sync-accessibility-option synch
     syncWidgetOption(colorblindness, '--prefers-colorblind-mode');
     ```
   ),
-  caption: [Synchronizing the selected radio buttons with the values stored in the custom properties.],
+  caption: [Synchronizing the selected radio buttons \ with the values stored in the custom properties.],
 ) <sync-accessibility-option>
 
 Finally, each radio group registers a ``` change``` event listener that updates both ``` localStorage``` and the corresponding custom property whenever the user selects a different option, as shown in @on-change-accessibility-option.
@@ -182,7 +182,7 @@ Once the CSS custom properties representing the user's preferences are in place,
     }
     ```
   ),
-  caption: [Overriding the default custom properties with the CSS ``` @container``` at-rule on ``` body``` to apply a dark color scheme.],
+  caption: [Overriding the default custom properties with the CSS \ ``` @container``` at-rule on ``` body``` to apply a dark color scheme.],
 ) <change-css-base-properties-attribute-selector>
 
 As additional preferences are introduced, the number of possible combinations increases. @change-css-base-multiple-properties demonstrates how the base styling is adjusted when both the dark theme and the high contrast mode are enabled, resulting in a different visual presentation.
@@ -203,7 +203,7 @@ As additional preferences are introduced, the number of possible combinations in
     }
     ```
   ),
-  caption: [Applying a dedicated style when both dark mode and high contrast mode are enabled.],
+  caption: [Applying a dedicated style when both dark \ mode and high contrast mode are enabled.],
 ) <change-css-base-multiple-properties>
 
 In some cases, changing individual custom property values is not sufficient and additional CSS rules must be applied. The ``` @container``` at-rule combined with the ``` style()``` query makes this possible. Because the preference properties are defined on ``` body```, they can be used to conditionally apply styles across the entire application. @additonal-rules-custom-properties demonstrates how animations and transitions can be disabled when the user prefers reduced motion.
@@ -222,7 +222,7 @@ In some cases, changing individual custom property values is not sufficient and 
     }
     ```
   ),
-  caption: [Applying additional styles based on custom properties using the ``` @container``` rule and a ``` style()``` query.],
+  caption: [Applying additional styles based on custom properties \ using the ``` @container``` rule and a ``` style()``` query.],
 ) <additonal-rules-custom-properties>
 
 === The Paradox of Reduced Motion Transitions
@@ -260,7 +260,7 @@ To animate CSS custom properties, the ``` @property``` at-rule is required. This
     }
     ```
   ),
-  caption: [Having custom properties defined with ``` @property``` to be able to add a transition within a ``` @container``` rule.],
+  caption: [Having custom properties defined with ``` @property``` \ to be able to add a transition within a ``` @container``` rule.],
 ) <smooth-transition>
 
 ==== View Transition
@@ -277,7 +277,7 @@ For the Preferences Widget, this can be achieved by wrapping the property update
     });
     ```
   ),
-  caption: [Enabling a view transition for a property change using the ``` startViewTransition()``` method.],
+  caption: [Enabling a view transition for a property change \ using the ``` startViewTransition()``` method.],
 ) <smooth-view-transition-js>
 
 #figure(
@@ -288,7 +288,7 @@ For the Preferences Widget, this can be achieved by wrapping the property update
 }
     ```
   ),
-  caption: [Increasing the duration of the view transition to create a smoother visual effect.],
+  caption: [Increasing the duration of the view transition \ to create a smoother visual effect.],
 ) <smooth-view-transition-css>
 
 The implementation of the preference widget, including several example settings that demonstrate how individual and combined preferences affect the website's styling, is available in the project's repository: #link("https://github.com/Flaverus/P8_sandbox/tree/main/examples/widget")
@@ -325,7 +325,7 @@ To further reduce extreme contrast, the lightness of the selected black or white
     }
     ```
   ),
-  caption: [A custom contrast function that softens pure black and white and optionally mixes in a portion of the original color.],
+  caption: [A custom contrast function that softens pure black and \ white and optionally mixes in a portion of the original color.],
 ) <custom-color-contrast-function>
 
 *Note:* The specific thresholds of 15% and 97.5% used in this function serve as a subjective, baseline example to illustrate the concept. These values are not absolute standards and should be modified to align with the specific contrast ratios, aesthetic preferences, and accessibility requirements of the design system in use.
@@ -341,7 +341,7 @@ The accompanying example from the project's example collection also calculates t
   {
     image("../ressources/custom-contrast-color-example.png")
   }),
-  caption: [A screenshot of the configuration interface for the custom contrast color function.],
+  caption: [A screenshot of the configuration interface \ for the custom contrast color function.],
 ) <custom-contrast-color-example-screenshot>
 
 To calculate the WCAG 2.x contrast ratio, the RGB values of both colors are required. When colors are defined using functions such as ``` oklch()```, these values are not directly available, as browsers may preserve the original color format in the computed styles.
@@ -363,7 +363,7 @@ A practical workaround is to use the HTML ``` <canvas>``` element. The canvas ca
     };
     ```
   ),
-  caption: [Extracting the ``` RGBA``` values of any CSS color using the HTML ``` <canvas>``` element.],
+  caption: [Extracting the ``` RGBA``` values of any CSS \ color using the HTML ``` <canvas>``` element.],
 ) <canvas-for-color-extraction>
 
 The implementation of the custom contrast color function is available in the project's repository: #link("https://github.com/Flaverus/P8_sandbox/tree/main/examples/contrast-color")
@@ -384,7 +384,7 @@ The application allows three separate colors to be defined for the background ci
   {
     image("../ressources/ishihara-plate-with-controls.png")
   }),
-  caption: [A screenshot of the interactive Ishihara plate configured with colors from the Kolibri palette.],
+  caption: [A screenshot of the interactive Ishihara plate \ configured with colors from the Kolibri palette.],
 ) <interactive-ishihara-plate>
 
 In addition to freely configurable colors, the application also includes predefined color combinations designed to simulate scenarios that are difficult or impossible to distinguish for people with specific forms of color vision deficiency such as ``` Protanopia```, ``` Deuteranopia```, and ``` Tritanopia```. These presets make it possible to evaluate whether certain color combinations remain distinguishable under different forms of impaired color perception.
@@ -404,7 +404,7 @@ A more detailed discussion of these bookmarklets is available in the correspondi
   {
     image("../ressources/ishihara-comparisement.png", width: 80%)
   }),
-  caption: [A comparison between a plate configured for ``` Deuteranopia``` on the left and the same plate viewed through a ``` Deuteranopia``` simulation filter on the right.],
+  caption: [A comparison between a plate configured for ``` Deuteranopia``` on the left \ and the same plate viewed through a ``` Deuteranopia``` simulation filter on the right.],
 ) <ishihara-plate-comparisement>
 
 The implementation of the interactive Ishihara plate is available in the project's repository: #link("https://github.com/Flaverus/P8_sandbox/tree/main/examples/widget")
