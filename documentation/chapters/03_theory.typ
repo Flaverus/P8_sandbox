@@ -467,7 +467,7 @@ RGB has been supported in CSS since its early days and can be expressed using th
   {
     image("../ressources/RGB_model.png", width: 40%)
   }),
-  caption: [A 3D RGB color cube visualization. Color values increase from the hidden origin (Black) at the bottom-back along each axis, as seen at the front-most corner where maximum Red and Blue mix with zero Green to create Magenta.  @RGB_model],
+  caption: [A visual representation of the RGB model with its \ dimention showcasing how color values are defined. @RGB_model],
 ) <rgb-model-image>
 
 === HSL
