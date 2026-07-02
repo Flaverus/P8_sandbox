@@ -221,6 +221,7 @@ Custom properties can also be read in JavaScript using ``` getPropertyValue()```
   caption: [Reading a CSS custom property in JavaScript using ``` getPropertyValue()```.],
 ) <primary-color-custom-property-js-read>
 
+#pagebreak()
 === Global State Management
 
 CSS custom properties are not limited to storing design values such as colors. They can also be used to manage application state. Because custom properties can be read and modified in both CSS and JavaScript, they provide a convenient way to store configuration values that directly influence the user interface.
