@@ -1,0 +1,32 @@
+body {
+    --background-color: #000000;
+    --foreground-color: #ffffff;
+}
+
+.visualization-container {
+    gap: 2rem;
+}
+
+.full-width {
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.contrast-background {
+    width: 6.25rem;
+    height: 6.25rem;
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contrast-foreground {
+    color: var(--foreground-color);
+}
+
+div.contrast-foreground {
+    width: 3.75rem;
+    height: 3.75rem;
+    background-color: var(--foreground-color);
+}
