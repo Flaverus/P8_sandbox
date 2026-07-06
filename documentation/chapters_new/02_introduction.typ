@@ -6,13 +6,13 @@ Building on that foundation, this project focuses on essential aspects of access
 
 == Objective of this Project
 
-This project aims to explore accessibility in greater depth by examining ways to build on and extend existing browser standards. It also investigates additional techniques and approaches that can simplify the user journeys of people with impairments, making web applications more user-friendly and adaptable to individual needs.
+This project aims to explore accessibility in greater depth by examining ways to build on and extend existing browser standards, improving readability by optimizing contrast. It also investigates additional techniques and approaches that can simplify the user journeys of people with impairments, making web applications more user-friendly and adaptable to individual needs.
 
 == Research and Ideation
 
-This project initially started in a different direction by exploring how accessibility can be tested in an automated manner. During this research phase, a wide range of accessibility testing tools was examined, including both free and commercial solutions. One particularly influential source was the blog of Karl Groves, which states that only around 30–40% of accessibility issues can be reliably detected through automated testing @karl-groves. While automated accessibility testing has improved since the article was first written, the research process gradually shifted the focus of this project into another direction.
+The initial direction of this project explored how accessibility can be tested in an automated manner. During this research phase, a wide range of accessibility testing tools was examined, including both free and commercial solutions. One particularly influential source was the blog of Karl Groves, which states that only around 30–40% of accessibility issues can be reliably detected through automated testing @karl-groves. While automated accessibility testing has improved since the article was first written, the research process gradually shifted the focus of this project into another direction.
 
-During this phase, additional ideas emerged regarding accessibility support beyond testing itself. Instead of focusing exclusively on automated evaluation, the project evolved toward exploring ways to enhance browser standards and provide additional accessibility aids directly within web applications. Since accessibility testing is already heavily researched and commercially established, this alternative direction appeared more valuable and interesting for further exploration.
+Additional ideas emerged regarding accessibility support beyond testing itself. Instead of focusing exclusively on automated evaluation, the project evolved toward exploring ways to enhance browser standards and provide additional accessibility aids considering contrast optimization and application customization directly within web applications. Since accessibility testing is already heavily researched and commercially established, this alternative direction appeared more valuable and interesting for further exploration.
 
 An exploratory prototyping approach was chosen to rapidly test and refine ideas over time. Existing standards, emerging browser capabilities, and newly introduced CSS and JavaScript features were researched to build a broad overview of current possibilities.
 

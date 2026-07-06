@@ -1,12 +1,14 @@
-= Checking Existing Applications
+= Auditing Existing Applications
 
-The first part sets it's focus on existing webapplications. It introduces important concepts regarding contrast perception, what the current standard is and in what direction it is currentli evolving. Based on this tools are introducted which were created during this project, allowing to calculate the WCAG 2.x based contrast ratio of two colors regarding relative luminance. Additionally a Developer Widget, allowing to simulate different vision impairments, allowing to inspect websides with these simulations to check the current state of a website regarding contrast and enabling to improve on detected issues or weaknesses.
+The first part sets its focus on existing web applications. It introduces key concepts of contrast perception, how current standards are defined, and in what direction they are evolving.
 
-== Prototyping
+Based on this, tools are introduced which were created during this project. A color contrast checker is provided, enabling the calculation of WCAG 2.x-based contrast ratios between two colors using relative luminance. Additionally, a Developer Widget is provided which simulates different vision impairments. This allows inspection of websites under simulated conditions to evaluate their current accessibility state with respect to contrast and to support the identification and improvement of potential weaknesses.
 
-The first practical step was creating an isolated environment, referred to as the Sandbox project, for rapid prototyping and experimentation. This environment allowed different implementation approaches to be tested incrementally while evolving the individual project parts over time.
+== Setup and Exploratory Prototyping
 
-Testing CSS and JavaScript compatibility directly in practice proved especially important, as documentation alone often did not fully reflect actual browser behavior. Experimentation and playful exploration became a major part of the ideation process before more concrete concepts gradually emerged and were refined into the implementations presented throughout this documentation.
+The starting point of this project included the creation of an isolated environment, referred to as the Sandbox project, for rapid prototyping and experimentation. This environment allowed different implementation approaches to be tested incrementally while individual project parts evolved over time.
+
+Testing CSS and JavaScript compatibility directly in practice proved especially important, as documentation alone often did not fully reflect actual browser behavior. Experimentation and exploratory iteration became a central part of the ideation process before more concrete concepts gradually emerged and were refined into the implementations presented throughout this documentation.
 
 Many examples initially started as simple or partially hacky drafts before being iteratively improved into more stable and reusable solutions.
 
@@ -16,6 +18,7 @@ Contrast is essential for distinguishing elements and understanding their relati
 
 The following section introduces the contrast requirements defined in WCAG 2.x and provides an overview of the emerging approach proposed for WCAG 3.0.
 
+#pagebreak()
 === Relative Luminance
 
 The contrast requirements in WCAG 2.x are based on the relative luminance of text and its background, independent of hue. This approach assumes that hue and saturation have little influence on reading performance, even for users with color vision deficiencies. Since the inability to distinguish certain colors does not usually affect the perception of light and dark, color itself is not treated as a primary factor in the contrast calculation.
@@ -81,6 +84,7 @@ The formula shown in @relative-luminanc-formula is used by WCAG 2.x to calculate
   caption: [Step-by-step calculation of relative luminance \ based on the W3C sRGB formula. @relative_luminanc],
 ) <relative-luminanc-formula>
 
+#pagebreak()
 === Perceptual Color Models
 
 The contrast model used in WCAG 2.x is based on relative luminance. In the future, it is expected to be replaced by the Accessible Perceptual Contrast Algorithm (APCA), which forms part of the ongoing WCAG 3.0 work. Advances in display technology, modern web design, and vision science have shown that the approach introduced nearly two decades ago in WCAG 2.x no longer reflects how contrast is perceived in practice.
@@ -107,9 +111,10 @@ The contrast formula used in WCAG 2.x has been criticized for many years. Case s
 
 APCA introduces a new metric called lightness contrast, expressed as $L^c$. Instead of assigning a universal pass-or-fail threshold, it estimates readability based on the perceptual relationship between foreground and background colors within their actual visual context. @APCA
 
-== Checking Color Contrasts
+#pagebreak()
+== Color Contrast Checker
 
-The WCAG contrast ratio requirements are precisely defined but they can not be guessed by simply looking at two colors. Therfore addisional tools are needed to check if the requirements are fulfilled wor two colors. This is where the Color Contrast Checker, shown in @contrast-checker, comes into play. This tool allows to select two colors and calculates the contrast ratio so verify if a color combination can be considered when building a webapplication or if alternative colors should be taken to provide sufficient contrast.
+The WCAG contrast ratio requirements are precisely defined but cannot be reliably estimated by visually comparing two colors. Therefore, additional tools are required to verify whether these requirements are fulfilled for a given color pair. This is where the Color Contrast Checker, shown in @contrast-checker, comes into play. This tool allows the selection of two colors and calculates the contrast ratio to verify whether a color combination is suitable for use in a web application or whether alternative colors are required to ensure sufficient contrast.
 
 #figure(
   box(
@@ -120,14 +125,15 @@ The WCAG contrast ratio requirements are precisely defined but they can not be g
   {
     image("../ressources/contrast-checker.png", width: 100%)
   }),
-  caption: [A screenshot of the color contrast checker that calculates the ratio of two selected colors.],
+  caption: [A screenshot of the color contrast checker that \ calculates the ratio of two selected colors.],
 ) <contrast-checker>
 
 The implementation of the color contrast checker is available in the project’s repository. @p8-color-contrast-checker
 
+#pagebreak()
 == Developer Widget
 
-Whilst having a design that has colors coordinated with each other is important, it is also important to consider the whole picture. It is important that all individual elements incorporatet into a webpage harmonize with each other. The Developer Widget shown in @developer-widget is intended to visually check how a website as a whole looks with certain vision impairments. This widget in its current state allows to simulate common color blindeness types in combination with blurry vision but can be extended to any degree needed.
+While having a design with colors coordinated with each other is important, it is also essential to consider the system as a whole. All individual elements incorporated into a webpage must harmonize with each other in a consistent visual structure. The Developer Widget shown in @developer-widget is intended to visually evaluate how a website behaves under different vision impairments. In its current state, this widget allows simulation of common color blindness types in combination with blurred vision, and can be extended to a wider range of accessibility conditions if required.
 
 #figure(
   box(
@@ -141,8 +147,10 @@ Whilst having a design that has colors coordinated with each other is important,
   caption: [A screenshot of the developer widget where a website is inspected simulating Protanopia combined with intense blurry vision.],
 ) <developer-widget>
 
-The widget itself is a simplified version of the Preferences Widget that is introduced in the chapter afterwasrds. The implementation details are discussed later in more detail as this widget is the same but reduced in its features and functionality. It is simply adding classes to the body which apply different filters which are based on the bookmarklets developed in the previous P7. @p7-debugging
+The widget itself is a simplified version of the Preferences Widget introduced in a later chapter. Implementation details are discussed in more depth later, as this widget shares the same underlying mechanism but operates with a reduced feature set. It applies filter configurations by adding classes to the document body, based on bookmarklets developed in the previous P7 iteration. @p7-debugging
 
-The implementation of the developer widget, alongside an example page with varoius contents, is available in the project’s repository. @p8-developer-widget
+While the simplified Developer Widget modifies the document state through direct class mapping, the more advanced architecture of the full Preferences Widget, detailed in @preferences-widget-section, manages these settings globally by dynamically binding values to CSS custom properties on the root element.
+
+The implementation of the Developer Widget, alongside an example page containing various content types, is available in the project’s repository. @p8-developer-widget
 
 #pagebreak()

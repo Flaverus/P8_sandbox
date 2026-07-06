@@ -1,4 +1,4 @@
-= Enabling Users to Finetune their Experience
+= Empowering Users to Refine Their Experience
 
 Lastly the focus shifts from developers to the users interacting with webapplications. Developers are able to optimize a lot to the individual needs of users based on asumptions made from for example media queries but enabling the user to further refine and personalize his experience allows for even more diversity. This chapter focuses on a more powerful version of the previously introduced Developer Widget giving users the needed tools to customize their experience for each webapplication individually.
 
@@ -56,7 +56,7 @@ The documentation and results of the conducted user tests are available in the p
 
 The different example applications and prototype pages were additionally validated using automated accessibility testing tools such as the axe DevTools browser extension and Google Lighthouse. These automated checks were supplemented with manual keyboard accessibility testing to verify practical usability beyond purely automated evaluation.
 
-== Preferences Widget
+== Preferences Widget <preferences-widget-section>
 
 CSS media queries already make it possible to respond to certain user preferences. However, this only works when the user has configured the corresponding settings in the operating system or browser. If no such settings exist, websites have no reliable way to adapt to the user's individual accessibility needs.
 
