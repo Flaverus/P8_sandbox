@@ -2,7 +2,7 @@
 
 The first part sets its focus on existing web applications. It introduces key concepts of contrast perception, how current standards are defined, and in what direction they are evolving.
 
-Based on this, tools are introduced which were created during this project. A color contrast checker is provided, enabling the calculation of WCAG 2.x-based contrast ratios between two colors using relative luminance. Additionally, a Developer Widget is provided which simulates different vision impairments. This allows inspection of websites under simulated conditions to evaluate their current accessibility state with respect to contrast and to support the identification and improvement of potential weaknesses.
+Based on this, tools created during this project are introduced. A color contrast checker is provided, enabling the calculation of WCAG 2.x-based contrast ratios between two colors using relative luminance. A Developer Widget is provided which simulates different vision impairments, allowing websites to be inspected under simulated conditions to evaluate their current accessibility state with respect to contrast and identify potential weaknesses. Additionally, an interactive Ishihara plate is introduced to evaluate the color compatibility of a design while allowing its colors to be inspected under simulated color blindness conditions.
 
 == Setup and Exploratory Prototyping
 
@@ -122,7 +122,7 @@ APCA introduces a new metric called lightness contrast, expressed as $L^c$. Inst
 #pagebreak()
 == Color Contrast Checker
 
-The WCAG contrast ratio requirements are precisely defined but cannot be reliably estimated by visually comparing two colors. Therefore, additional tools are required to verify whether these requirements are fulfilled for a given color pair. This is where the Color Contrast Checker, shown in @contrast-checker, comes into play. This tool allows the selection of two colors and calculates the contrast ratio to verify whether a color combination is suitable for use in a web application or whether alternative colors are required to ensure sufficient contrast.
+The WCAG contrast ratio requirements are precisely defined but cannot be reliably estimated by visually comparing two colors. Therefore, additional tools are required to verify whether these requirements are fulfilled for a given color pair. This is where the Color Contrast Checker, shown in @contrast-checker, comes into play. This tool allows the selection of two colors and calculates the contrast ratio to verify whether a color combination is suitable for use in a web application or if alternative colors are required to ensure sufficient contrast.
 
 #figure(
   box(
@@ -160,5 +160,71 @@ The widget itself is a simplified version of the Preferences Widget introduced i
 While the simplified Developer Widget modifies the document state through direct class mapping, the more advanced architecture of the full Preferences Widget, detailed in @preferences-widget-section, manages these settings globally by dynamically binding values to CSS custom properties on the root element.
 
 The implementation of the Developer Widget, alongside an example page containing various content types, is available in the project’s repository. @p8-developer-widget
+
+#pagebreak()
+== Ishihara
+
+The Ishihara color test, named after the Japanese ophthalmologist Shinobu Ishihara, was developed in 1917 to detect red-green color vision deficiencies. The test consists of a series of circular plates composed of pseudo-isochromatic dots. These dots vary in size and color and are arranged in patterns that appear distinct to individuals with typical color vision, while blending together for people with certain forms of color blindness. @ishihara
+
+An example of such a plate is shown in @ishihara-example01. It uses orange and teal tones and is designed to remain visible regardless of the viewer's color perception. Plates of this kind are commonly used as introductory demonstration images at the beginning of an Ishihara test.
+
+=== Functional Application in Contrast Testing
+
+Although originally developed as a diagnostic tool, the underlying principle of Ishihara plates also provides a useful framework for evaluating color contrast in interface design.
+
+By placing many small dots of different colors next to each other, the method forces the visual system to rely primarily on chromatic contrast to identify a pattern. In a custom accessibility tool, if the foreground and background colors visually blend together within such a plate, this indicates that the chosen color combination may not provide sufficient perceptual contrast.
+
+Custom plates can be generated using a specific brand palette to verify that key colors remain distinguishable not only for users with typical color vision, but also for users with conditions such as ``` protanopia``` or ``` deuteranopia```.
+
+#figure(
+  box(
+    inset: 12pt,
+    radius: 6pt,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+  {
+    image("../ressources/Ishihara-example01.png", width: 40%)
+  }),
+  caption: [A high-contrast demonstration plate designed to \ remain legible across all common vision types.],
+) <ishihara-example01>
+
+=== Interactive Ishihara Plate
+
+The interactive Ishihara plate created during this project is not intended to directly enhance a website through integration into a production environment. Instead, it serves as a developer tool for visually evaluating color contrast in situations where shape, placement, or additional visual cues do not influence recognition. The focus lies entirely on the perception of color itself.
+
+The application allows three separate colors to be defined for the background circles and three additional colors for the foreground circles. Through their arrangement, the foreground circles form the number 42. This setup makes it possible to evaluate how different shades of the same color, for example variations in saturation or lightness, interact with one another and whether sufficient visual contrast remains between foreground and background elements. An example configuration using colors from the Kolibri palette is shown in @interactive-ishihara-plate.
+
+#figure(
+  box(
+    inset: 0pt,
+    radius: 6pt,
+    clip: true,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+  {
+    image("../ressources/ishihara-plate-with-controls.png")
+  }),
+  caption: [A screenshot of the interactive Ishihara plate \ configured with colors from the Kolibri palette.],
+) <interactive-ishihara-plate>
+
+In addition to freely configurable colors, the application also includes predefined color combinations designed to simulate scenarios that are difficult or impossible to distinguish for people with specific forms of color vision deficiency such as ``` Protanopia```, ``` Deuteranopia```, and ``` Tritanopia```. These presets make it possible to evaluate whether certain color combinations remain distinguishable under different forms of impaired color perception.
+
+Although these configurations are inspired by the original Ishihara test plates, the application is not intended to serve as a medically accurate diagnostic tool. Instead, it should be considered a visual indicator that may suggest the need for further professional examination.
+
+An example of these comparison modes can be seen in @ishihara-plate-comparisement. The left side displays a plate configured with colors that are difficult to distinguish for users with ``` Deuteranopia```. The right side shows the same plate with a ``` Deuteranopia``` simulation filter applied, illustrating how the color combination may appear to affected users. The simulation filters are based on the bookmarklet filters developed during the previous P7 project.
+
+A more detailed discussion of these bookmarklets is available in the corresponding chapter of the previous P7 project. @p7-debugging
+
+#figure(
+  box(
+    inset: 0pt,
+    radius: 6pt,
+    clip: true,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+  {
+    image("../ressources/ishihara-comparisement.png", width: 80%)
+  }),
+  caption: [A comparison between a plate configured for ``` Deuteranopia``` on the left \ and the same plate viewed through a ``` Deuteranopia``` simulation filter on the right.],
+) <ishihara-plate-comparisement>
+
+The implementation of the interactive Ishihara plate is available in the project's repository. @p8-ishihara
 
 #pagebreak()

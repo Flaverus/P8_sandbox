@@ -2,57 +2,6 @@
 
 Lastly, the focus shifts from developers to the users interacting with web applications. Developers are able to optimize many aspects of a website based on assumptions about user preferences, for example through media queries. However, enabling users to further refine and personalize their own experience allows for a greater level of individual adaptation. This chapter focuses on a more powerful version of the previously introduced Developer Widget, providing users with the necessary tools to customize their experience for each web application individually.
 
-== View Transition API
-
-The View Transition API provides a native mechanism for animating transitions between different states of a web application. It can be used to create smooth visual effects when navigating between pages or when updating views within single-page applications (SPAs).
-
-For transitions that occur within the same document, the state change is wrapped inside the ``` document.startViewTransition()``` method. Cross-document transitions in multi-page applications (MPAs) are triggered automatically during navigation and can be enabled through the ``` @view-transition``` at-rule. Internally, the API captures snapshots of both the previous and the new state and animates between them. By default, this transition consists of a simple fade effect, where the old view gradually decreases its opacity to ``` 0``` while the new view increases its opacity to ``` 1```.
-
-The generated animations can be customized through the ``` ::view-transition-old()``` and ``` ::view-transition-new()``` pseudo-elements, which target the previous and new view respectively. Shared styling can be applied through ``` ::view-transition-group()```. These pseudo-elements accept different targets, including ``` root``` for animating the entire page, ``` *``` for all transition targets, or a custom ``` view-transition-name``` to animate specific elements independently.
-
-An example of a custom page transition is shown in @view-transition-example. In this case, the previous page is animated out of view towards the left while the new page enters from the right, creating a horizontal swipe effect. @view-transition-api
-
-#figure(
-  align(left,
-    ```css
-    @keyframes move-out {
-      from {
-        transform: translateX(0%);
-      }
-      to {
-        transform: translateX(-100%);
-      }
-    }
-
-    @keyframes move-in {
-      from {
-        transform: translateX(100%);
-      }
-      to {
-        transform: translateX(0%);
-      }
-    }
-
-    ::view-transition-old(root) {
-      animation: move-out 0.4s ease-in both;
-    }
-
-    ::view-transition-new(root) {
-      animation: move-in 0.4s ease-in both;
-    }
-    ```
-  ),
-  caption: [A custom page transition that swipes the previous view \ out to the left while moving the new view in from the right.],
-) <view-transition-example>
-
-== Validation and Verification
-
-The Preferences Widget underwent smaller-scale user testing to gather feedback from real users and refine the interface for future integration into Kolibri. The tests were intentionally kept simple to allow participation from users with different backgrounds and experience levels. The primary focus was usability, keyboard accessibility, intuitiveness, and the overall visual experience.
-
-The documentation and results of the conducted user tests are available in the project's repository under the usertests section. @p8-usertests
-
-The different example applications and prototype pages were additionally validated using automated accessibility testing tools such as the axe DevTools browser extension and Google Lighthouse. These automated checks were supplemented with manual keyboard accessibility testing to verify practical usability beyond purely automated evaluation.
-
 == Preferences Widget <preferences-widget-section>
 
 CSS media queries already make it possible to respond to certain user preferences. However, this only works when the user has configured the corresponding settings in the operating system or browser. If no such settings exist, websites have no reliable way to adapt to the user's individual accessibility needs.
@@ -84,13 +33,13 @@ Each preference is also written to a CSS custom property on the ``` root``` elem
     ```js
     const setAccessibilityProperty = (property,
                                       value,
-                                      mediaQueryString) => {
+                                      mediaQuery) => {
 
       localStorage.setItem(property, value);
 
-      if(value === 'system' && mediaQueryString !== '') {
-        const systemSetting = window.matchMedia(mediaQueryString).matches;
-        document.documentElement.style.setProperty(property, systemSetting);
+      if(value === 'system' && mediaQuery !== '') {
+        const sysSetting = window.matchMedia(mediaQuery).matches;
+        document.documentElement.style.setProperty(property, sysSetting);
       } else {
         document.documentElement.style.setProperty(property, value);
       }
@@ -185,13 +134,11 @@ Finally, each radio group registers a ``` change``` event listener that updates 
                            '--prefers-colorblind-mode',
                            '');
 
-    const addOptionEventListener = (option, property, mediaQueryString) => {
+    const addOptionEventListener = (option, property, mediaQuery) => {
       option.forEach(radio => {
         radio.addEventListener('change', () => {
           if(radio.checked) {
-            setAccessibilityProperty(
-                property, radio.value, mediaQueryString
-            );
+            setAccessibilityProperty(property, radio.value, mediaQuery);
           }
         });
       });
@@ -201,6 +148,7 @@ Finally, each radio group registers a ``` change``` event listener that updates 
   caption: [Updating the user's preference when the selected radio button changes.],
 ) <on-change-accessibility-option>
 
+#pagebreak()
 === CSS Part
 
 Once the CSS custom properties representing the user's preferences are in place, they can be used to create different visual representations of the website. In @change-css-base-properties-attribute-selector, a set of custom properties defines the default styling. These values are selectively overridden using the CSS ``` @container``` at-rule when the user prefers a dark color scheme.
@@ -276,6 +224,7 @@ In some cases, changing individual custom property values is not sufficient and 
   caption: [Applying additional styles based on custom properties \ using the ``` @container``` rule and a ``` style()``` query.],
 ) <additonal-rules-custom-properties>
 
+#pagebreak()
 === The Paradox of Reduced Motion Transitions
 
 An interesting and somewhat ironic aspect is that enabling reduced motion preferences does not necessarily mean that all transitions and animations should be removed from a webpage. In certain contexts, the opposite can even be beneficial. Different accessibility concerns require different solutions, and some of these measures may appear counterintuitive at first glance.
@@ -318,7 +267,51 @@ To animate CSS custom properties, the ``` @property``` at-rule is required. This
 
 While animating individual properties can be useful, it may result in less coherent transitions when multiple properties change simultaneously. In such situations, individual animations can compete for attention and create a visually noisy effect that is ultimately more distracting than beneficial. To avoid this, it is often preferable to transition the page state as a whole by using the View Transition API.
 
-For the Preferences Widget, this can be achieved by wrapping the property update inside the ``` document.startViewTransition()``` method, as shown in @smooth-view-transition-js. This allows the browser to capture the previous and new state of the page and animate the transition between them in a coordinated manner. The resulting animation can be further refined through CSS. For example, the duration can be increased to create a smoother transition, as demonstrated in @smooth-view-transition-css.
+The View Transition API provides a native mechanism for animating transitions between different states of a web application. It can be used to create smooth visual effects when navigating between pages or when updating views within single-page applications (SPAs).
+
+For transitions that occur within the same document, the state change is wrapped inside the ``` document.startViewTransition()``` method. Cross-document transitions in multi-page applications (MPAs) are triggered automatically during navigation and can be enabled through the ``` @view-transition``` at-rule. Internally, the API captures snapshots of both the previous and the new state and animates between them. By default, this transition consists of a simple fade effect, where the old view gradually decreases its opacity to ``` 0``` while the new view increases its opacity to ``` 1```.
+
+The generated animations can be customized through the ``` ::view-transition-old()``` and ``` ::view-transition-new()``` pseudo-elements, which target the previous and new view respectively. Shared styling can be applied through ``` ::view-transition-group()```. These pseudo-elements accept different targets, including ``` root``` for animating the entire page, ``` *``` for all transition targets, or a custom ``` view-transition-name``` to animate specific elements independently.
+
+An example of a custom page transition is shown in @view-transition-example. In this case, the previous page is animated out of view towards the left while the new page enters from the right, creating a horizontal swipe effect. @view-transition-api
+
+#figure(
+  align(left,
+    ```css
+    @keyframes move-out {
+      from {
+        transform: translateX(0%);
+      }
+      to {
+        transform: translateX(-100%);
+      }
+    }
+
+    @keyframes move-in {
+      from {
+        transform: translateX(100%);
+      }
+      to {
+        transform: translateX(0%);
+      }
+    }
+
+    ::view-transition-old(root) {
+      animation: move-out 0.4s ease-in both;
+    }
+
+    ::view-transition-new(root) {
+      animation: move-in 0.4s ease-in both;
+    }
+    ```
+  ),
+  caption: [A custom page transition that swipes the previous view \ out to the left while moving the new view in from the right.],
+) <view-transition-example>
+
+#pagebreak()
+===== Implementation within the Preferences Widget
+
+For the Preferences Widget, a clean transition can be achieved by wrapping the property update inside the ``` document.startViewTransition()``` method, as shown in @smooth-view-transition-js. This allows the browser to capture the previous and new state of the page and animate the transition between them in a coordinated manner. The resulting animation can be further refined through CSS. For example, the duration can be increased to create a smoother transition, as demonstrated in @smooth-view-transition-css.
 
 #figure(
   align(left,
@@ -343,5 +336,15 @@ For the Preferences Widget, this can be achieved by wrapping the property update
 ) <smooth-view-transition-css>
 
 The implementation of the preference widget, including several example settings that demonstrate how individual and combined preferences affect the website's styling, is available in the project's repository. @p8-widget
+
+#pagebreak()
+
+== Validation and Verification
+
+The Preferences Widget underwent smaller-scale user testing to gather feedback from real users and refine the interface for future integration into Kolibri. The tests were intentionally kept simple to allow participation from users with different backgrounds and experience levels. The primary focus was usability, keyboard accessibility, intuitiveness, and the overall visual experience.
+
+The documentation and results of the conducted user tests are available in the project's repository under the usertests section. @p8-usertests
+
+The different example applications and prototype pages were additionally validated using automated accessibility testing tools such as the axe DevTools browser extension and Google Lighthouse. These automated checks were supplemented with manual keyboard accessibility testing to verify practical usability beyond purely automated evaluation.
 
 #pagebreak()

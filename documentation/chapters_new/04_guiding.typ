@@ -19,7 +19,7 @@
 
 The following section discusses aspects to consider while building a web application and introduces tools that support developers throughout the development process. These tools make it easier to address contrast concerns early, resulting in more accessible websites.
 
-A custom CSS contrast color function is presented that extends the functionality currently available in CSS. Additionally, an interactive Ishihara plate is introduced to evaluate the color compatibility of a design while also allowing its colors to be inspected under simulated color blindness conditions. The section further covers practical CSS and JavaScript concepts, demonstrating how developers can respond to user preferences and implement adaptive behavior using CSS custom properties.
+A custom CSS contrast color function is presented that extends the functionality currently available in CSS. The section further covers practical CSS and JavaScript concepts, demonstrating how developers can respond to user preferences and implement adaptive behavior using CSS custom properties.
 
 == Color Models
 
@@ -129,7 +129,7 @@ Although this color model is relatively new and not yet widely used, it is regar
 #pagebreak()
 === HWB
 
-The ``` hwb()``` color function was introduced alongside newer CSS color features. It describes colors using three components within the RGB color space: ``` hue```, ``` whiteness```, and ``` blackness```. In practice, it provides an alternative to ``` hsl()``` that can be considered more intuitive when adjusting tints and shades. An example is shown in @hwb-color-example, while @hwb-model-image illustrates how these coordinates are mapped relative to the peripheral hue wheel. @CSS-colors
+The ``` hwb()``` color function was introduced alongside newer CSS color features and is widely available since 2022. It describes colors using three components within the RGB color space: ``` hue```, ``` whiteness```, and ``` blackness```. In practice, it provides an alternative to ``` hsl()``` that can be considered more intuitive when adjusting tints and shades. An example is shown in @hwb-color-example, while @hwb-model-image illustrates how these coordinates are mapped relative to the peripheral hue wheel. @CSS-colors
 
 This color model is not widely used and was designed to provide a simpler and more intuitive approach compared to RGB or HSL. Its simplicity comes from the idea of defining a base color and adding white and/or black to create different shades without changing the underlying hue.
 
@@ -156,227 +156,6 @@ This color model is not widely used and was designed to provide a simpler and mo
   }),
   caption: [A visual representation of the HWB color space structured as a triangle-wheel picker, showcasing how hue, whiteness, and blackness interact. @HWB_model],
 ) <hwb-model-image>
-
-#pagebreak()
-== CSS Functions
-
-CSS provides a wide range of built-in functions that simplify common styling tasks. Some of these functions are particularly useful for accessibility. One notable example is ``` contrast-color()```, which became broadly available during the implementation of this project in April 2026 and is supported by current browser versions. The function returns either black or white, depending on which of the two provides the higher contrast against the color passed as its argument. @contrast-color-example shows this approach in the context of a ``` button``` element. @contrast-color
-
-#figure(
-  align(left,
-    ```css
-    button {
-      background-color: var(--button-color);
-      color: contrast-color(var(--button-color));
-    }
-    ```
-  ),
-  caption: [Setting the text color of a button to black \ or white based on the background color.],
-) <contrast-color-example>
-
-Using either black or white for text is a reliable way to ensure strong contrast. Depending on the background color, however, the result may appear visually harsh and less pleasant to read. Another CSS function is ``` light-dark()```, which accepts two color values or images. The first value is used when a light color scheme is active, while the second value is applied when a dark color scheme is active. The active mode is determined by the ``` color-scheme``` CSS property, which indicates the color system an element should render. User agents use this property to adapt elements such as scrollbars, form controls, and the canvas surface to match the preferred scheme. @light-dark-example demonstrates this approach using custom properties. @light-dark
-
-#figure(
-  align(left,
-    ```css
-    body {
-      color: light-dark(var(--color-text--light),
-                        var(--color-text--dark));
-      background-color: light-dark(var(--color-background--light),
-                                   var(--color-background--dark));
-    }
-    ```
-  ),
-  caption: [Defining text and background colors based on the \ active color theme using custom properties.],
-) <light-dark-example>
-
-=== CSS Custom Functions
-
-Although the growing set of built-in CSS functions covers many use cases, some scenarios, such as calculating ``` rem``` from a pixel value, still require functionality that cannot be expressed with the currently available primitives. In such cases, developers may need to combine multiple functions or implement custom logic. This is where the experimental ``` @function``` at-rule becomes relevant.
-
-This feature is conceptually similar to CSS custom properties, as custom functions also use names that begin with a dashed-ident ``` --```. A function is declared using the ``` @function``` keyword, followed by a custom name and an optional list of parameters. Both the function name and its parameters start with ``` --``` and are followed by case-sensitive identifiers defined by the developer. Inside the function body, the expression assigned to ``` result:``` is evaluated and returned, as shown in @at-function-example. @at-function
-
-#figure(
-  align(left,
-    ```css
-    @function --color-contrast(--color <color>) returns <color> {
-      result: oklch(from var(--color) calc(((l * -1) + 0.5) * infinity) 0 0);
-    }
-    ```
-  ),
-  caption: [A custom function that provides behavior similar to ``` contrast-color()``` \ and was created before that function became widely available.],
-) <at-function-example>
-
-As with CSS custom properties, CSS data types such as ``` <color>```, ``` <number>```, and ``` <string>``` can be specified for both function parameters and the return value.
-
-#pagebreak()
-== Canvas
-
-The HTML ``` <canvas>``` element is used to draw graphics and animations directly within a web page. By default, the element has no visual representation of its own and must be rendered through JavaScript using either the ``` Canvas API``` or the ``` WebGL API```. @canvas-element
-
-The ``` Canvas API``` is primarily designed for two-dimensional graphics and is commonly used for tasks such as game rendering, data visualization, image manipulation, and real-time video processing. The ``` WebGL API``` extends these capabilities by providing hardware-accelerated rendering for both two-dimensional and three-dimensional graphics. @canvas-api
-
-In addition to drawing content, the canvas allows pixel data to be read and analyzed. The ``` ImageData``` interface provides access to the underlying RGBA values of a rendered image. @canvas-rgba-extraction demonstrates how the color values of a selected area can be extracted in JavaScript. This is especially useful when converting colors between different CSS color spaces, where manual conversion can introduce inaccuracies. For example, converting an Oklch color into an RGB value requires mapping between different color spaces, which can result in imprecise values that affect further calculations. Using the ``` canvas``` element allows these inaccurate conversions to be avoided by extracting the actual rendered pixel values directly. @image-data
-
-#figure(
-  align(left,
-    ```js
-    const canvas = document.createElement('canvas');
-    const ctx    = canvas.getContext('2d');
-
-    ctx.fillStyle = 'oklab(0.638 0.176 -0.279)';
-    ctx.fillRect(0, 0, 100, 100);
-
-    const red   = ctx.getImageData(10, 10, 10, 10).data[0];
-    const green = ctx.getImageData(10, 10, 10, 10).data[1];
-    const blue  = ctx.getImageData(10, 10, 10, 10).data[2];
-    const alpha = ctx.getImageData(10, 10, 10, 10).data[3];
-
-    ```
-  ),
-  caption: [Creating a purple 100 × 100 pixel square and extracting the RGBA values from a 10 × 10 pixel region starting at coordinates x = 10 and y = 10.],
-) <canvas-rgba-extraction>
-
-#pagebreak()
-== Contrast Color Function
-
-The previously introduced ``` contrast-color()``` function returns either black or white for a given color, depending on which provides the greater lightness contrast. While this approach is effective, pure black and white can appear visually harsh, especially when used for larger blocks of text.
-
-To address this limitation, an enhanced version of ``` contrast-color()``` was developed during this project and is shown in @custom-color-contrast-function. The custom function accepts a required parameter of type ``` <color>``` and an optional ``` <percentage>``` parameter named ``` --intensity```.
-
-In the first step, the function determines whether black or white provides the better contrast by evaluating the lightness component of the input color in the Oklch color space. This is achieved by multiplying the lightness value with ``` -1``` and adding ``` 0.5``` afterwards, resulting in either a positive or negative value. The result is then multiplied by the constant ``` infinity```. Due to the way ``` oklch()``` handles lightness values, this effectively collapses the result to either 0 or 1, depending on whether the original color is darker or lighter than 50%. If the lightness value is greater than 50%, black is selected. Otherwise, white is used.
-
-In the second step, the selected contrast color is passed to the ``` color-mix()``` function. The optional ``` --intensity``` parameter controls how much of the original color is mixed back into the result. This produces a softer contrast color that retains some of the visual characteristics of the source color.
-
-To further reduce extreme contrast, the lightness of the selected black or white is adjusted using the ``` clamp()``` function. This ensures that light colors do not exceed a lightness of 97.5% and dark colors do not fall below 15%. As a result, the generated contrast color remains readable while appearing less visually aggressive. The selected bounds represent pragmatic perceptual limits intended to preserve strong readability while reducing the visual harshness associated with maximum contrast combinations.
-
-#figure(
-  align(left,
-    ```css
-    @function --color-contrast(
-      --color <color>,
-      --intensity <percentage>: 0%
-    ) returns <color> {
-      --black-or-white: oklch(
-        from var(--color) calc(((l * -1) + 0.5) * infinity) 0 0
-      );
-
-      result: color-mix(
-        in oklch,
-        oklch(from var(--black-or-white) clamp(0.15, l, 0.975) c h),
-        var(--color) var(--intensity)
-      );
-    }
-    ```
-  ),
-  caption: [A custom contrast function that softens pure black and \ white and optionally mixes in a portion of the original color.],
-) <custom-color-contrast-function>
-
-*Note:* The specific thresholds of 15% and 97.5% used in this function serve as a subjective, baseline example to illustrate the concept. These values are not absolute standards and should be modified to align with the specific contrast ratios, aesthetic preferences, and accessibility requirements of the design system in use.
-
-The accompanying example from the project's example collection also calculates the WCAG 2.x contrast ratio for the generated colors, as shown in @custom-contrast-color-example-screenshot.
-
-#figure(
-  box(
-    inset: 0pt,
-    radius: 6pt,
-    clip: true,
-    stroke: 0.5pt + rgb("#cbd5e1"),
-  {
-    image("../ressources/custom-contrast-color-example.png")
-  }),
-  caption: [A screenshot of the configuration interface \ for the custom contrast color function.],
-) <custom-contrast-color-example-screenshot>
-
-To calculate the WCAG 2.x contrast ratio, the RGB values of both colors are required. When colors are defined using functions such as ``` oklch()```, these values are not directly available, as browsers may preserve the original color format in the computed styles.
-
-A practical workaround is to use the HTML ``` <canvas>``` element. The canvas can be filled with any valid CSS color, and the resulting RGBA values can then be extracted using ``` getImageData()```. As shown in @canvas-for-color-extraction, this technique makes it possible to convert any supported CSS color format into numeric RGBA values.
-
-#figure(
-  align(left,
-    ```js
-    const parseColorToRGBA = (colorString) => {
-      const canvas = document.createElement('canvas');
-      const ctx    = canvas.getContext('2d');
-
-      ctx.fillStyle = colorString;
-      ctx.fillRect(0, 0, 1, 1);
-
-      // Returning data array contining RGBA values as follows: r, g, b, a
-      return ctx.getImageData(0, 0, 1, 1).data;
-    };
-    ```
-  ),
-  caption: [Extracting the ``` RGBA``` values of any CSS \ color using the HTML ``` <canvas>``` element.],
-) <canvas-for-color-extraction>
-
-The implementation of the custom contrast color function is available in the project's repository. @p8-contrast-color
-
-#pagebreak()
-== Ishihara
-
-The Ishihara color test, named after the Japanese ophthalmologist Shinobu Ishihara, was developed in 1917 to detect red-green color vision deficiencies. The test consists of a series of circular plates composed of pseudo-isochromatic dots. These dots vary in size and color and are arranged in patterns that appear distinct to individuals with typical color vision, while blending together for people with certain forms of color blindness. @ishihara
-
-An example of such a plate is shown in @ishihara-example01. It uses orange and teal tones and is designed to remain visible regardless of the viewer's color perception. Plates of this kind are commonly used as introductory demonstration images at the beginning of an Ishihara test.
-
-=== Functional Application in Contrast Testing
-
-Although originally developed as a diagnostic tool, the underlying principle of Ishihara plates also provides a useful framework for evaluating color contrast in interface design.
-
-By placing many small dots of different colors next to each other, the method forces the visual system to rely primarily on chromatic contrast to identify a pattern. In a custom accessibility tool, if the foreground and background colors visually blend together within such a plate, this indicates that the chosen color combination may not provide sufficient perceptual contrast.
-
-Custom plates can be generated using a specific brand palette to verify that key colors remain distinguishable not only for users with typical color vision, but also for users with conditions such as ``` protanopia``` or ``` deuteranopia```.
-
-#figure(
-  box(
-    inset: 12pt,
-    radius: 6pt,
-    stroke: 0.5pt + rgb("#cbd5e1"),
-  {
-    image("../ressources/Ishihara-example01.png", width: 40%)
-  }),
-  caption: [A high-contrast demonstration plate designed to \ remain legible across all common vision types.],
-) <ishihara-example01>
-
-== Interactive Ishihara Plate
-
-The interactive Ishihara plate created during this project is not intended to directly enhance a website through integration into a production environment. Instead, it serves as a developer tool for visually evaluating color contrast in situations where shape, placement, or additional visual cues do not influence recognition. The focus lies entirely on the perception of color itself.
-
-The application allows three separate colors to be defined for the background circles and three additional colors for the foreground circles. Through their arrangement, the foreground circles form the number 42. This setup makes it possible to evaluate how different shades of the same color, for example variations in saturation or lightness, interact with one another and whether sufficient visual contrast remains between foreground and background elements. An example configuration using colors from the Kolibri palette is shown in @interactive-ishihara-plate.
-
-#figure(
-  box(
-    inset: 0pt,
-    radius: 6pt,
-    clip: true,
-    stroke: 0.5pt + rgb("#cbd5e1"),
-  {
-    image("../ressources/ishihara-plate-with-controls.png")
-  }),
-  caption: [A screenshot of the interactive Ishihara plate \ configured with colors from the Kolibri palette.],
-) <interactive-ishihara-plate>
-
-In addition to freely configurable colors, the application also includes predefined color combinations designed to simulate scenarios that are difficult or impossible to distinguish for people with specific forms of color vision deficiency such as ``` Protanopia```, ``` Deuteranopia```, and ``` Tritanopia```. These presets make it possible to evaluate whether certain color combinations remain distinguishable under different forms of impaired color perception.
-
-Although these configurations are inspired by the original Ishihara test plates, the application is not intended to serve as a medically accurate diagnostic tool. Instead, it should be considered a visual indicator that may suggest the need for further professional examination.
-
-An example of these comparison modes can be seen in @ishihara-plate-comparisement. The left side displays a plate configured with colors that are difficult to distinguish for users with ``` Deuteranopia```. The right side shows the same plate with a ``` Deuteranopia``` simulation filter applied, illustrating how the color combination may appear to affected users. The simulation filters are based on the bookmarklet filters developed during the previous P7 project.
-
-A more detailed discussion of these bookmarklets is available in the corresponding chapter of the previous P7 project. @p7-debugging
-
-#figure(
-  box(
-    inset: 0pt,
-    radius: 6pt,
-    clip: true,
-    stroke: 0.5pt + rgb("#cbd5e1"),
-  {
-    image("../ressources/ishihara-comparisement.png", width: 80%)
-  }),
-  caption: [A comparison between a plate configured for ``` Deuteranopia``` on the left \ and the same plate viewed through a ``` Deuteranopia``` simulation filter on the right.],
-) <ishihara-plate-comparisement>
-
-The implementation of the interactive Ishihara plate is available in the project's repository. @p8-ishihara
 
 #pagebreak()
 == CSS Media Queries
@@ -698,5 +477,139 @@ When ``` --is-light-theme``` is used as a prefix in another custom property decl
 Multiple fallback values based on different toggle properties can be chained using the CSS ``` var()``` function. @var-function This enables centralized state management, where the custom properties used throughout the entire style sheet are controlled from a single location. @custom-property-theme-switch
 
 An example of this theme toggle is available in the project's repository. @p8-theme-switch
+
+#pagebreak()
+== CSS Functions
+
+CSS provides a wide range of built-in functions that simplify common styling tasks. Some of these functions are particularly useful for accessibility. One notable example is ``` contrast-color()```, which became broadly available during the implementation of this project in April 2026 and is supported by current browser versions. The function returns either black or white, depending on which of the two provides the higher contrast against the color passed as its argument. @contrast-color-example shows this approach in the context of a ``` button``` element. @contrast-color
+
+#figure(
+  align(left,
+    ```css
+    button {
+      background-color: var(--button-color);
+      color: contrast-color(var(--button-color));
+    }
+    ```
+  ),
+  caption: [Setting the text color of a button to black \ or white based on the background color.],
+) <contrast-color-example>
+
+Using either black or white for text is a reliable way to ensure strong contrast. Depending on the background color, however, the result may appear visually harsh and less pleasant to read. Another CSS function is ``` light-dark()```, which accepts two color values or images. The first value is used when a light color scheme is active, while the second value is applied when a dark color scheme is active. The active mode is determined by the ``` color-scheme``` CSS property, which indicates the color system an element should render. User agents use this property to adapt elements such as scrollbars, form controls, and the canvas surface to match the preferred scheme. @light-dark-example demonstrates this approach using custom properties. @light-dark
+
+#figure(
+  align(left,
+    ```css
+    body {
+      color: light-dark(var(--color-text--light),
+                        var(--color-text--dark));
+      background-color: light-dark(var(--color-background--light),
+                                   var(--color-background--dark));
+    }
+    ```
+  ),
+  caption: [Defining text and background colors based on the \ active color theme using custom properties.],
+) <light-dark-example>
+
+#pagebreak()
+=== CSS Custom Functions
+
+Although the growing set of built-in CSS functions covers many use cases, some scenarios, such as calculating ``` rem``` from a pixel value, still require functionality that cannot be expressed with the currently available primitives. In such cases, developers may need to combine multiple functions or implement custom logic. This is where the experimental ``` @function``` at-rule becomes relevant.
+
+This feature is conceptually similar to CSS custom properties, as custom functions also use names that begin with a dashed-ident ``` --```. A function is declared using the ``` @function``` keyword, followed by a custom name and an optional list of parameters. Both the function name and its parameters start with ``` --``` and are followed by case-sensitive identifiers defined by the developer. Inside the function body, the expression assigned to ``` result:``` is evaluated and returned, as shown in @at-function-example. @at-function
+
+#figure(
+  align(left,
+    ```css
+    @function --color-contrast(--color <color>) returns <color> {
+      result: oklch(from var(--color) calc(((l * -1) + 0.5) * infinity) 0 0);
+    }
+    ```
+  ),
+  caption: [A custom function that provides behavior similar to ``` contrast-color()``` \ and was created before that function became widely available.],
+) <at-function-example>
+
+As with CSS custom properties, CSS data types such as ``` <color>```, ``` <number>```, and ``` <string>``` can be specified for both function parameters and the return value.
+
+#pagebreak()
+== Contrast Color Function
+
+The previously introduced ``` contrast-color()``` function returns either black or white for a given color, depending on which provides the greater lightness contrast. While this approach is effective, pure black and white can appear visually harsh, especially when used for larger blocks of text.
+
+To address this limitation, an enhanced version of ``` contrast-color()``` was developed during this project and is shown in @custom-color-contrast-function. The custom function accepts a required parameter of type ``` <color>``` and an optional ``` <percentage>``` parameter named ``` --intensity```.
+
+In the first step, the function determines whether black or white provides the better contrast by evaluating the lightness component of the input color in the Oklch color model. This is achieved by multiplying the lightness value with ``` -1``` and adding ``` 0.5``` afterwards, resulting in either a positive or negative value. The result is then multiplied by the constant ``` infinity```. Due to the way ``` oklch()``` handles lightness values, this effectively collapses the result to either 0 or 1, depending on whether the original color is darker or lighter than 50%. If the lightness value is greater than 50%, black is selected. Otherwise, white is used.
+
+In the second step, the selected contrast color is passed to the ``` color-mix()``` function. The optional ``` --intensity``` parameter controls how much of the original color is mixed back into the result. This produces a softer contrast color that retains some of the visual characteristics of the source color.
+
+To further reduce extreme contrast, the lightness of the selected black or white is adjusted using the ``` clamp()``` function. This ensures that light colors do not exceed a lightness of 97.5% and dark colors do not fall below 15%. As a result, the generated contrast color remains readable while appearing less visually aggressive. The selected bounds represent pragmatic perceptual limits intended to preserve strong readability while reducing the visual harshness associated with maximum contrast combinations.
+
+#figure(
+  align(left,
+    ```css
+    @function --color-contrast(
+      --color <color>,
+      --intensity <percentage>: 0%
+    ) returns <color> {
+      --black-or-white: oklch(
+        from var(--color) calc(((l * -1) + 0.5) * infinity) 0 0
+      );
+
+      result: color-mix(
+        in oklch,
+        oklch(from var(--black-or-white) clamp(0.15, l, 0.975) c h),
+        var(--color) var(--intensity)
+      );
+    }
+    ```
+  ),
+  caption: [A custom contrast function that softens pure black and \ white and optionally mixes in a portion of the original color.],
+) <custom-color-contrast-function>
+
+*Note:* The specific thresholds of 15% and 97.5% used in this function serve as a subjective, baseline example to illustrate the concept. These values are not absolute standards and should be modified to align with the specific contrast ratios, aesthetic preferences, and accessibility requirements of the design system in use.
+
+The accompanying example from the project's example collection also calculates the WCAG 2.x contrast ratio for the generated colors, as shown in @custom-contrast-color-example-screenshot.
+
+#figure(
+  box(
+    inset: 0pt,
+    radius: 6pt,
+    clip: true,
+    stroke: 0.5pt + rgb("#cbd5e1"),
+  {
+    image("../ressources/custom-contrast-color-example.png")
+  }),
+  caption: [A screenshot of the configuration interface \ for the custom contrast color function.],
+) <custom-contrast-color-example-screenshot>
+
+== Getting Oklch colors into the sRGB color space
+
+To calculate the WCAG 2.x contrast ratio, the RGB values of both colors are required. When colors are defined using functions such as ``` oklch()```, these values are not directly available, as browsers may preserve the original color format in the computed styles.
+
+A practical workaround is to use the HTML ``` <canvas>``` element. This element is used to draw graphics and animations directly within a web page. By default, the element has no visual representation of its own and must be rendered through JavaScript using either the ``` Canvas API``` or the ``` WebGL API```. @canvas-element
+
+The ``` Canvas API``` is primarily designed for two-dimensional graphics and is commonly used for tasks such as game rendering, data visualization, image manipulation, and real-time video processing. The ``` WebGL API``` extends these capabilities by providing hardware-accelerated rendering for both two-dimensional and three-dimensional graphics. @canvas-api
+
+In addition to drawing content, the canvas allows pixel data to be read and analyzed. The ``` ImageData``` interface provides access to the underlying RGBA values of a rendered image. @canvas-for-color-extraction demonstrates how the color values of a selected area can be extracted in JavaScript. This is especially useful when converting colors between different CSS color spaces, where manual conversion can introduce inaccuracies. For example, converting an Oklch color into an RGB value requires mapping between different color spaces, which can result in imprecise values that affect further calculations. Using the ``` canvas``` element allows these inaccurate conversions to be avoided by extracting the actual rendered pixel values directly. @image-data
+
+#figure(
+  align(left,
+    ```js
+    const parseColorToRGBA = (colorString) => {
+      const canvas = document.createElement('canvas');
+      const ctx    = canvas.getContext('2d');
+
+      ctx.fillStyle = colorString;
+      ctx.fillRect(0, 0, 1, 1);
+
+      // Returning data array contining RGBA values as follows: r, g, b, a
+      return ctx.getImageData(0, 0, 1, 1).data;
+    };
+    ```
+  ),
+  caption: [Extracting the ``` RGBA``` values of any CSS \ color using the HTML ``` <canvas>``` element.],
+) <canvas-for-color-extraction>
+
+The implementation of the custom contrast color function is available in the project's repository. @p8-contrast-color
 
 #pagebreak()
