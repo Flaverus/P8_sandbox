@@ -1,6 +1,6 @@
 = Empowering Users to Refine Their Experience
 
-Lastly the focus shifts from developers to the users interacting with webapplications. Developers are able to optimize a lot to the individual needs of users based on asumptions made from for example media queries but enabling the user to further refine and personalize his experience allows for even more diversity. This chapter focuses on a more powerful version of the previously introduced Developer Widget giving users the needed tools to customize their experience for each webapplication individually.
+Lastly, the focus shifts from developers to the users interacting with web applications. Developers are able to optimize many aspects of a website based on assumptions about user preferences, for example through media queries. However, enabling users to further refine and personalize their own experience allows for a greater level of individual adaptation. This chapter focuses on a more powerful version of the previously introduced Developer Widget, providing users with the necessary tools to customize their experience for each web application individually.
 
 == View Transition API
 
@@ -44,9 +44,6 @@ An example of a custom page transition is shown in @view-transition-example. In 
   ),
   caption: [A custom page transition that swipes the previous view \ out to the left while moving the new view in from the right.],
 ) <view-transition-example>
-
-#pagebreak()
-
 
 == Validation and Verification
 

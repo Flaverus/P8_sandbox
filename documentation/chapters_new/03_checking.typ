@@ -12,13 +12,21 @@ Testing CSS and JavaScript compatibility directly in practice proved especially 
 
 Many examples initially started as simple or partially hacky drafts before being iteratively improved into more stable and reusable solutions.
 
+== Mathematical Foundation
+
+To understand the current WCAG 2.x contrast standard, this work analyzes the W3C documentation regarding relative luminance and RGB color calculations. This defines the mathematical relationships between RGB values, luminance calculation, and contrast ratios.
+
+This understanding allows the algorithmic approach from the specification to be formalized into a clear mathematical representation. This formulation enables the implementation of the contrast ratio indicator used within the custom contrast color function application.
+
+This analysis also motivated research into the upcoming WCAG 3.0 contrast model. The WCAG 2.x documentation itself acknowledges limitations in its current formula, including simplifications, rounding inaccuracies, and perceptual shortcomings. While the APCA model was identified as a promising future replacement, it was not integrated into the practical implementation of this project because it remains under active development in draft status.
+
+#pagebreak()
 == Contrast Perception
 
 Contrast is essential for distinguishing elements and understanding their relationships. Differences in brightness, size, sharpness, and shape all contribute to visual contrast. On the web, variations in lightness are the primary means of ensuring text readability and clearly separating interface elements.
 
 The following section introduces the contrast requirements defined in WCAG 2.x and provides an overview of the emerging approach proposed for WCAG 3.0.
 
-#pagebreak()
 === Relative Luminance
 
 The contrast requirements in WCAG 2.x are based on the relative luminance of text and its background, independent of hue. This approach assumes that hue and saturation have little influence on reading performance, even for users with color vision deficiencies. Since the inability to distinguish certain colors does not usually affect the perception of light and dark, color itself is not treated as a primary factor in the contrast calculation.

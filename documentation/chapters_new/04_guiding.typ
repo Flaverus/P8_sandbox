@@ -17,7 +17,9 @@
 
 = Guiding Developers During Construction
 
-The following section discusses areas to consider whilst building a webapplication and introduces tools that support developers during construction to make it easier to build an webapplication that considers contrast concerns early, resulting in more accessible websites.
+The following section discusses aspects to consider while building a web application and introduces tools that support developers throughout the development process. These tools make it easier to address contrast concerns early, resulting in more accessible websites.
+
+A custom CSS contrast color function is presented that extends the functionality currently available in CSS. Additionally, an interactive Ishihara plate is introduced to evaluate the color compatibility of a design while also allowing its colors to be inspected under simulated color blindness conditions. The section further covers practical CSS and JavaScript concepts, demonstrating how developers can respond to user preferences and implement adaptive behavior using CSS custom properties.
 
 == Color Models
 
@@ -25,11 +27,14 @@ There are many different models for describing the colors perceptible to the hum
 
 For many years, CSS relied primarily on the RGB color model, which limited how colors could be described and manipulated. To update features faster, the W3C now evolves CSS through independent modules rather than giant versions. Under this system, the CSS Color Module Level 4 specification acts as a direct software update to the three previously released levels, introducing support for additional color models and more advanced color functions to significantly expand the possibilities for working with color in CSS. Development in this area continues, and the W3C is currently working on the CSS Color Module Level 5 specification.
 
+#pagebreak()
 === RGB
 
 The RGB color model represents colors by combining different intensities of the primary colors ``` red```, ``` green```, and ``` blue```. An optional alpha channel can be added to define the opacity of the resulting color. The geometric relationship of these three primary channels is mapped as a three-dimensional cube, as shown in @rgb-model-image.
 
 RGB has been supported in CSS since its early days and can be expressed using the ``` rgb()``` function or hexadecimal notation. For example, the color shown in @rgb-color-example can also be written as ``` #2d1fb180```. @CSS-colors
+
+This color model is widely used because it has been established for a long time and its syntax is relatively intuitive, making it possible to roughly predict the resulting color. A drawback of this model is that adjusting the lightness or darkness of a color without changing its hue is nearly impossible by simply modifying its parameters. This makes it difficult to create different shades of the same color in a predictable and manageable way.
 
 #figure(
   kind: raw,
@@ -55,11 +60,14 @@ RGB has been supported in CSS since its early days and can be expressed using th
   caption: [A visual representation of the RGB model with its \ dimention showcasing how color values are defined. @RGB_model],
 ) <rgb-model-image>
 
+#pagebreak()
 === HSL
 
 CSS Color Module Level 3 introduced the HSL color model to CSS. HSL describes colors using three components: ``` hue```, ``` saturation```, and ``` lightness```, as illustrated in @hsl-color-example and visually mapped onto the cylindrical coordinate system in @hsl-model-image. The hue is represented as an angle on the color wheel, while saturation and lightness define the intensity and brightness of the color. As with RGB, an optional alpha channel can be added to control opacity.
 
-HSL makes it easier to create variations of a color because saturation and lightness can be adjusted directly without recalculating individual RGB values. This is particularly useful when generating lighter or darker shades of a color while preserving the core identity of the base color as much as possible. @CSS-colors
+HSL makes it easier to create variations of a color because saturation and lightness can be adjusted directly without recalculating individual RGB values. This is particularly useful when generating lighter or darker shades while preserving the visual identity of the base color as much as possible. @CSS-colors
+
+Although HSL is not as widely used as RGB, it is still commonly used in practice. It is particularly well suited for creating interactive states such as hover effects, as the lightness or saturation of a color can be adjusted independently while largely preserving its hue. Once the distribution of colors around the hue wheel is understood, the resulting colors are also relatively predictable.
 
 #figure(
   kind: raw,
@@ -85,13 +93,14 @@ HSL makes it easier to create variations of a color because saturation and light
   caption: [A visual representation of the HSL cylindrical model with \ its dimensions showcasing how color values are defined. @HSL_model],
 ) <hsl-model-image>
 
+#pagebreak()
 === CIELAB Colors
 
-Color spaces such as Oklab and Oklch make it possible to define colors in a way that more closely matches human vision. They also provide access to a wider range of colors than those that can be represented in the traditional sRGB color space.
+The Oklab color space and its related Oklch color model make it possible to define colors in a way that more closely matches human vision. They also provide access to a wider range of colors than those that can be represented in the traditional sRGB color space.
 
-The ``` oklab()``` function describes a color using three components: ``` lightness```, the ``` a``` axis representing red-green variation, and the ``` b``` axis representing yellow-blue variation. The related ``` oklch()``` function uses ``` lightness```, ``` chroma```, and ``` hue``` instead. Both functions support an optional alpha channel to control opacity. An exemplary usage of both functions can be observed in @ok-color-example. While Oklab and Oklch utilize optimized math for modern screens, they are based on the perceptual axes shown in @cielab-model-image, where lightness forms the vertical spine while the color components extend orthogonally from it.
+The ``` oklab()``` function describes a color using three components: ``` lightness```, the ``` a``` axis representing red-green variation, and the ``` b``` axis representing yellow-blue variation. The related ``` oklch()``` function uses ``` lightness```, ``` chroma```, and ``` hue``` instead. Both functions support an optional alpha channel to control opacity. An exemplary usage of both functions can be observed in @ok-color-example. While Oklab and Oklch utilize optimized mathematical models for modern screens, they are based on perceptual axes shown in @cielab-model-image, where lightness forms the vertical axis while the color components extend orthogonally from it.
 
-These color models are widely regarded as the current state of the art for working with color in CSS because they produce more perceptually uniform results. In practice, this means that adjusting lightness or chroma leads to a visual change that preserves the original base color as accurately as possible compared to older color models. @CSS-colors
+Although this color model is relatively new and not yet widely used, it is regarded as the current state of the art for working with color in CSS because it produces more perceptually uniform results. In practice, this means that adjusting lightness or chroma leads to visual changes that preserve the original base color as accurately as possible compared to older color models. However, its syntax is less intuitive, making it difficult to roughly predict the resulting color without additional knowledge. @CSS-colors
 
 #figure(
   kind: raw,
@@ -112,14 +121,17 @@ These color models are widely regarded as the current state of the art for worki
     clip: true,
     stroke: 0.5pt + rgb("#cbd5e1"),
   {
-    image("../ressources/CIELAB_model.png", width: 90%)
+    image("../ressources/CIELAB_model.png", width: 75%)
   }),
   caption: [A visual representation of the CIELAB/CIELCH coordinate \ dimensions, mapping perceptual lightness ($L$), chromatic axes ($a, b$), \ chroma ($C$), and hue ($H$). @CIELAB_model_a @CIELAB_model_b],
 ) <cielab-model-image>
 
+#pagebreak()
 === HWB
 
-The ``` hwb()``` color function was introduced alongside the newer CSS color features. It describes colors using three components within the RGB color space: ``` hue```, ``` whiteness```, and ``` blackness```. In practice, it offers an alternative to ``` hsl()``` that many developers find more intuitive when adjusting tints and shades. An example is shown in @hwb-color-example, while @hwb-model-image illustrates how these coordinates are mapped relative to the peripheral hue wheel. @CSS-colors
+The ``` hwb()``` color function was introduced alongside newer CSS color features. It describes colors using three components within the RGB color space: ``` hue```, ``` whiteness```, and ``` blackness```. In practice, it provides an alternative to ``` hsl()``` that can be considered more intuitive when adjusting tints and shades. An example is shown in @hwb-color-example, while @hwb-model-image illustrates how these coordinates are mapped relative to the peripheral hue wheel. @CSS-colors
+
+This color model is not widely used and was designed to provide a simpler and more intuitive approach compared to RGB or HSL. Its simplicity comes from the idea of defining a base color and adding white and/or black to create different shades without changing the underlying hue.
 
 #figure(
   kind: raw,
@@ -145,14 +157,7 @@ The ``` hwb()``` color function was introduced alongside the newer CSS color fea
   caption: [A visual representation of the HWB color space structured as a triangle-wheel picker, showcasing how hue, whiteness, and blackness interact. @HWB_model],
 ) <hwb-model-image>
 
-== Mathematical Foundation
-
-To develop a deeper understanding of the current WCAG 2.x contrast standard, this work analyzed the W3C documentation regarding relative luminance and RGB color calculations. This research helped clarify the mathematical relationship between RGB color values, luminance calculation, and contrast ratios.
-
-The resulting understanding made it possible to formalize the algorithmic approach described in the specification into a clearer mathematical representation. This later enabled the implementation of a contrast ratio indicator that was used within the custom contrast color function example application.
-
-This process also motivated further research into the future WCAG 3.0 contrast model. The WCAG 2.x documentation itself acknowledges known limitations in the current contrast formula, including simplifications, rounding inaccuracies, and shortcomings regarding human visual perception. During this research, the APCA model was identified as a promising future replacement. However, because APCA is still under active development and currently remains in draft status, it was not integrated further into the practical implementations of this project.
-
+#pagebreak()
 == CSS Functions
 
 CSS provides a wide range of built-in functions that simplify common styling tasks. Some of these functions are particularly useful for accessibility. One notable example is ``` contrast-color()```, which became broadly available during the implementation of this project in April 2026 and is supported by current browser versions. The function returns either black or white, depending on which of the two provides the higher contrast against the color passed as its argument. @contrast-color-example shows this approach in the context of a ``` button``` element. @contrast-color
@@ -204,13 +209,14 @@ This feature is conceptually similar to CSS custom properties, as custom functio
 
 As with CSS custom properties, CSS data types such as ``` <color>```, ``` <number>```, and ``` <string>``` can be specified for both function parameters and the return value.
 
+#pagebreak()
 == Canvas
 
 The HTML ``` <canvas>``` element is used to draw graphics and animations directly within a web page. By default, the element has no visual representation of its own and must be rendered through JavaScript using either the ``` Canvas API``` or the ``` WebGL API```. @canvas-element
 
 The ``` Canvas API``` is primarily designed for two-dimensional graphics and is commonly used for tasks such as game rendering, data visualization, image manipulation, and real-time video processing. The ``` WebGL API``` extends these capabilities by providing hardware-accelerated rendering for both two-dimensional and three-dimensional graphics. @canvas-api
 
-In addition to drawing content, the canvas also allows pixel data to be read and analyzed. The ``` ImageData``` interface provides access to the underlying RGBA values of a rendered image. @canvas-rgba-extraction demonstrates how the color values of a selected area can be extracted in JavaScript. @image-data
+In addition to drawing content, the canvas allows pixel data to be read and analyzed. The ``` ImageData``` interface provides access to the underlying RGBA values of a rendered image. @canvas-rgba-extraction demonstrates how the color values of a selected area can be extracted in JavaScript. This is especially useful when converting colors between different CSS color spaces, where manual conversion can introduce inaccuracies. For example, converting an Oklch color into an RGB value requires mapping between different color spaces, which can result in imprecise values that affect further calculations. Using the ``` canvas``` element allows these inaccurate conversions to be avoided by extracting the actual rendered pixel values directly. @image-data
 
 #figure(
   align(left,
@@ -231,13 +237,14 @@ In addition to drawing content, the canvas also allows pixel data to be read and
   caption: [Creating a purple 100 × 100 pixel square and extracting the RGBA values from a 10 × 10 pixel region starting at coordinates x = 10 and y = 10.],
 ) <canvas-rgba-extraction>
 
+#pagebreak()
 == Contrast Color Function
 
-The theory chapter introduced the native ``` contrast-color()``` CSS function and demonstrated how similar behavior can be implemented using CSS custom functions. Given a color, ``` contrast-color()``` returns either black or white, depending on which of the two provides the greater lightness contrast. While this approach is effective, pure black and white can appear visually harsh, especially when used for larger blocks of text.
+The previously introduced ``` contrast-color()``` function returns either black or white for a given color, depending on which provides the greater lightness contrast. While this approach is effective, pure black and white can appear visually harsh, especially when used for larger blocks of text.
 
 To address this limitation, an enhanced version of ``` contrast-color()``` was developed during this project and is shown in @custom-color-contrast-function. The custom function accepts a required parameter of type ``` <color>``` and an optional ``` <percentage>``` parameter named ``` --intensity```.
 
-In the first step, the function determines whether black or white provides the better contrast by evaluating the lightness component of the input color in the Oklch color space. This is achieved by subtracting the lightness value from ``` 0.5```, representing 50% lightness, and multiplying the result by the constant ``` infinity```. Due to the way ``` oklch()``` handles lightness values, this effectively collapses the result to either 0 or 1, depending on whether the original color is darker or lighter than 50%. If the lightness value is greater than or equal to 50%, black is selected. Otherwise, white is used.
+In the first step, the function determines whether black or white provides the better contrast by evaluating the lightness component of the input color in the Oklch color space. This is achieved by multiplying the lightness value with ``` -1``` and adding ``` 0.5``` afterwards, resulting in either a positive or negative value. The result is then multiplied by the constant ``` infinity```. Due to the way ``` oklch()``` handles lightness values, this effectively collapses the result to either 0 or 1, depending on whether the original color is darker or lighter than 50%. If the lightness value is greater than 50%, black is selected. Otherwise, white is used.
 
 In the second step, the selected contrast color is passed to the ``` color-mix()``` function. The optional ``` --intensity``` parameter controls how much of the original color is mixed back into the result. This produces a softer contrast color that retains some of the visual characteristics of the source color.
 
@@ -305,6 +312,7 @@ A practical workaround is to use the HTML ``` <canvas>``` element. The canvas ca
 
 The implementation of the custom contrast color function is available in the project's repository. @p8-contrast-color
 
+#pagebreak()
 == Ishihara
 
 The Ishihara color test, named after the Japanese ophthalmologist Shinobu Ishihara, was developed in 1917 to detect red-green color vision deficiencies. The test consists of a series of circular plates composed of pseudo-isochromatic dots. These dots vary in size and color and are arranged in patterns that appear distinct to individuals with typical color vision, while blending together for people with certain forms of color blindness. @ishihara
@@ -332,7 +340,7 @@ Custom plates can be generated using a specific brand palette to verify that key
 
 == Interactive Ishihara Plate
 
-The interactive Ishihara plate is not intended to directly enhance a website through integration into a production environment. Instead, it serves as a developer tool for visually evaluating color contrast in situations where shape, placement, or additional visual cues do not influence recognition. The focus lies entirely on the perception of color itself.
+The interactive Ishihara plate created during this project is not intended to directly enhance a website through integration into a production environment. Instead, it serves as a developer tool for visually evaluating color contrast in situations where shape, placement, or additional visual cues do not influence recognition. The focus lies entirely on the perception of color itself.
 
 The application allows three separate colors to be defined for the background circles and three additional colors for the foreground circles. Through their arrangement, the foreground circles form the number 42. This setup makes it possible to evaluate how different shades of the same color, for example variations in saturation or lightness, interact with one another and whether sufficient visual contrast remains between foreground and background elements. An example configuration using colors from the Kolibri palette is shown in @interactive-ishihara-plate.
 
@@ -370,6 +378,7 @@ A more detailed discussion of these bookmarklets is available in the correspondi
 
 The implementation of the interactive Ishihara plate is available in the project's repository. @p8-ishihara
 
+#pagebreak()
 == CSS Media Queries
 
 CSS Media Queries allow developers to apply different styles based on the characteristics of the device or environment used to display a web page. This mechanism is commonly used to create responsive layouts that adapt their appearance according to the available screen width.
@@ -492,6 +501,7 @@ Information exposed through media queries can be used to build a browser fingerp
 
 Some browsers also provide settings that further limit this information. For example, Firefox offers the "Resist Fingerprinting" option, which causes many media queries to return standardized values instead of device-specific settings. @at_media
 
+#pagebreak()
 == CSS Custom Properties
 
 CSS custom properties are user-defined values that can be reused throughout a style sheet where the style defining them is applied. This centralized approach makes styles significantly easier to maintain and reduces code duplication.
@@ -571,6 +581,7 @@ Custom properties can also be read in JavaScript using ``` getPropertyValue()```
   caption: [Reading a CSS custom property in JavaScript using ``` getPropertyValue()```.],
 ) <primary-color-custom-property-js-read>
 
+#pagebreak()
 === Global State Management
 
 CSS custom properties are not limited to storing design values such as colors. They can also be used to manage application state. Because custom properties can be read and modified in both CSS and JavaScript, they provide a convenient way to store configuration values that directly influence the user interface.
@@ -624,6 +635,7 @@ It is also possible to override custom properties when a different color theme i
   caption: [Using the ``` @container``` at-rule to switch to a \ dark color theme based on a custom property.],
 ) <at-container-dark-color-theme>
 
+#pagebreak()
 === Custom Property Toggle
 
 In modern CSS, developers often face the challenge of managing repetitive declarations, especially when implementing light and dark themes. Whether the switch is handled through classes or through ``` @media (prefers-color-scheme: dark)```, the same property names typically need to be declared multiple times with different values. A lesser-known detail in the CSS specification makes it possible to implement this kind of state management more elegantly by using custom properties as toggle values.
