@@ -99,9 +99,9 @@
 // --- Chapters ---
 #include "chapters/01_abstract.typ"
 #include "chapters/02_introduction.typ"
-#include "chapters/03_theory.typ"
-#include "chapters/04_methodology.typ"
-#include "chapters/05_results.typ"
+#include "chapters/03_checking.typ"
+#include "chapters/04_guiding.typ"
+#include "chapters/05_refining.typ"
 #include "chapters/06_discussion.typ"
 #include "chapters/07_conclusion.typ"
 
