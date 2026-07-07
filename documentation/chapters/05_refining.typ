@@ -309,7 +309,7 @@ An example of a custom page transition is shown in @view-transition-example. In 
 ) <view-transition-example>
 
 #pagebreak()
-===== Implementation within the Preferences Widget
+==== Implementation within the Preferences Widget
 
 For the Preferences Widget, a clean transition can be achieved by wrapping the property update inside the ``` document.startViewTransition()``` method, as shown in @smooth-view-transition-js. This allows the browser to capture the previous and new state of the page and animate the transition between them in a coordinated manner. The resulting animation can be further refined through CSS. For example, the duration can be increased to create a smoother transition, as demonstrated in @smooth-view-transition-css.
 
