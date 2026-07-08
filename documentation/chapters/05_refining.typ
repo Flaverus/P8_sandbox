@@ -1,8 +1,8 @@
-= Implementation
+= Empowering Users to Refine Their Experience
 
-This chapter presents practical approaches that extend existing browser standards to further improve accessibility. The *preferences widget* enables users to define website-specific settings tailored to their individual needs. The *contrast color function* expands the native ``` contrast-color()``` CSS function by introducing an additional color component. The *interactive Ishihara plate* allows users to evaluate color combinations manually and to test contrast under simulated color vision deficiencies.
+Lastly, the focus shifts from developers to the users interacting with web applications. Developers are able to optimize many aspects of a website based on assumptions about user preferences, for example through media queries. However, enabling users to further refine and personalize their own experience allows for a greater level of individual adaptation. This chapter focuses on a more powerful version of the previously introduced Developer Widget, providing users with the necessary tools to customize their experience for each web application individually.
 
-== Preferences Widget
+== Preferences Widget <preferences-widget-section>
 
 CSS media queries already make it possible to respond to certain user preferences. However, this only works when the user has configured the corresponding settings in the operating system or browser. If no such settings exist, websites have no reliable way to adapt to the user's individual accessibility needs.
 
@@ -33,13 +33,13 @@ Each preference is also written to a CSS custom property on the ``` root``` elem
     ```js
     const setAccessibilityProperty = (property,
                                       value,
-                                      mediaQueryString) => {
+                                      mediaQuery) => {
 
       localStorage.setItem(property, value);
 
-      if(value === 'system' && mediaQueryString !== '') {
-        const systemSetting = window.matchMedia(mediaQueryString).matches;
-        document.documentElement.style.setProperty(property, systemSetting);
+      if(value === 'system' && mediaQuery !== '') {
+        const sysSetting = window.matchMedia(mediaQuery).matches;
+        document.documentElement.style.setProperty(property, sysSetting);
       } else {
         document.documentElement.style.setProperty(property, value);
       }
@@ -134,13 +134,11 @@ Finally, each radio group registers a ``` change``` event listener that updates 
                            '--prefers-colorblind-mode',
                            '');
 
-    const addOptionEventListener = (option, property, mediaQueryString) => {
+    const addOptionEventListener = (option, property, mediaQuery) => {
       option.forEach(radio => {
         radio.addEventListener('change', () => {
           if(radio.checked) {
-            setAccessibilityProperty(
-                property, radio.value, mediaQueryString
-            );
+            setAccessibilityProperty(property, radio.value, mediaQuery);
           }
         });
       });
@@ -150,6 +148,7 @@ Finally, each radio group registers a ``` change``` event listener that updates 
   caption: [Updating the user's preference when the selected radio button changes.],
 ) <on-change-accessibility-option>
 
+#pagebreak()
 === CSS Part
 
 Once the CSS custom properties representing the user's preferences are in place, they can be used to create different visual representations of the website. In @change-css-base-properties-attribute-selector, a set of custom properties defines the default styling. These values are selectively overridden using the CSS ``` @container``` at-rule when the user prefers a dark color scheme.
@@ -225,6 +224,7 @@ In some cases, changing individual custom property values is not sufficient and 
   caption: [Applying additional styles based on custom properties \ using the ``` @container``` rule and a ``` style()``` query.],
 ) <additonal-rules-custom-properties>
 
+#pagebreak()
 === The Paradox of Reduced Motion Transitions
 
 An interesting and somewhat ironic aspect is that enabling reduced motion preferences does not necessarily mean that all transitions and animations should be removed from a webpage. In certain contexts, the opposite can even be beneficial. Different accessibility concerns require different solutions, and some of these measures may appear counterintuitive at first glance.
@@ -267,7 +267,51 @@ To animate CSS custom properties, the ``` @property``` at-rule is required. This
 
 While animating individual properties can be useful, it may result in less coherent transitions when multiple properties change simultaneously. In such situations, individual animations can compete for attention and create a visually noisy effect that is ultimately more distracting than beneficial. To avoid this, it is often preferable to transition the page state as a whole by using the View Transition API.
 
-For the Preferences Widget, this can be achieved by wrapping the property update inside the ``` document.startViewTransition()``` method, as shown in @smooth-view-transition-js. This allows the browser to capture the previous and new state of the page and animate the transition between them in a coordinated manner. The resulting animation can be further refined through CSS. For example, the duration can be increased to create a smoother transition, as demonstrated in @smooth-view-transition-css.
+The View Transition API provides a native mechanism for animating transitions between different states of a web application. It can be used to create smooth visual effects when navigating between pages or when updating views within single-page applications (SPAs).
+
+For transitions that occur within the same document, the state change is wrapped inside the ``` document.startViewTransition()``` method. Cross-document transitions in multi-page applications (MPAs) are triggered automatically during navigation and can be enabled through the ``` @view-transition``` at-rule. Internally, the API captures snapshots of both the previous and the new state and animates between them. By default, this transition consists of a simple fade effect, where the old view gradually decreases its opacity to ``` 0``` while the new view increases its opacity to ``` 1```.
+
+The generated animations can be customized through the ``` ::view-transition-old()``` and ``` ::view-transition-new()``` pseudo-elements, which target the previous and new view respectively. Shared styling can be applied through ``` ::view-transition-group()```. These pseudo-elements accept different targets, including ``` root``` for animating the entire page, ``` *``` for all transition targets, or a custom ``` view-transition-name``` to animate specific elements independently.
+
+An example of a custom page transition is shown in @view-transition-example. In this case, the previous page is animated out of view towards the left while the new page enters from the right, creating a horizontal swipe effect. @view-transition-api
+
+#figure(
+  align(left,
+    ```css
+    @keyframes move-out {
+      from {
+        transform: translateX(0%);
+      }
+      to {
+        transform: translateX(-100%);
+      }
+    }
+
+    @keyframes move-in {
+      from {
+        transform: translateX(100%);
+      }
+      to {
+        transform: translateX(0%);
+      }
+    }
+
+    ::view-transition-old(root) {
+      animation: move-out 0.4s ease-in both;
+    }
+
+    ::view-transition-new(root) {
+      animation: move-in 0.4s ease-in both;
+    }
+    ```
+  ),
+  caption: [A custom page transition that swipes the previous view \ out to the left while moving the new view in from the right.],
+) <view-transition-example>
+
+#pagebreak()
+==== Implementation within the Preferences Widget
+
+For the Preferences Widget, a clean transition can be achieved by wrapping the property update inside the ``` document.startViewTransition()``` method, as shown in @smooth-view-transition-js. This allows the browser to capture the previous and new state of the page and animate the transition between them in a coordinated manner. The resulting animation can be further refined through CSS. For example, the duration can be increased to create a smoother transition, as demonstrated in @smooth-view-transition-css.
 
 #figure(
   align(left,
@@ -294,119 +338,13 @@ For the Preferences Widget, this can be achieved by wrapping the property update
 The implementation of the preference widget, including several example settings that demonstrate how individual and combined preferences affect the website's styling, is available in the project's repository. @p8-widget
 
 #pagebreak()
-== Contrast Color Function
 
-The theory chapter introduced the native ``` contrast-color()``` CSS function and demonstrated how similar behavior can be implemented using CSS custom functions. Given a color, ``` contrast-color()``` returns either black or white, depending on which of the two provides the greater lightness contrast. While this approach is effective, pure black and white can appear visually harsh, especially when used for larger blocks of text.
+== Validation and Verification
 
-To address this limitation, an enhanced version of ``` contrast-color()``` was developed during this project and is shown in @custom-color-contrast-function. The custom function accepts a required parameter of type ``` <color>``` and an optional ``` <percentage>``` parameter named ``` --intensity```.
+The Preferences Widget underwent smaller-scale user testing to gather feedback from real users and refine the interface for future integration into Kolibri. The tests were intentionally kept simple to allow participation from users with different backgrounds and experience levels. The primary focus was usability, keyboard accessibility, intuitiveness, and the overall visual experience.
 
-In the first step, the function determines whether black or white provides the better contrast by evaluating the lightness component of the input color in the Oklch color space. This is achieved by subtracting the lightness value from ``` 0.5```, representing 50% lightness, and multiplying the result by the constant ``` infinity```. Due to the way ``` oklch()``` handles lightness values, this effectively collapses the result to either 0 or 1, depending on whether the original color is darker or lighter than 50%. If the lightness value is greater than or equal to 50%, black is selected. Otherwise, white is used.
+The documentation and results of the conducted user tests are available in the project's repository under the usertests section. @p8-usertests
 
-In the second step, the selected contrast color is passed to the ``` color-mix()``` function. The optional ``` --intensity``` parameter controls how much of the original color is mixed back into the result. This produces a softer contrast color that retains some of the visual characteristics of the source color.
-
-To further reduce extreme contrast, the lightness of the selected black or white is adjusted using the ``` clamp()``` function. This ensures that light colors do not exceed a lightness of 97.5% and dark colors do not fall below 15%. As a result, the generated contrast color remains readable while appearing less visually aggressive. The selected bounds represent pragmatic perceptual limits intended to preserve strong readability while reducing the visual harshness associated with maximum contrast combinations.
-
-#figure(
-  align(left,
-    ```css
-    @function --color-contrast(
-      --color <color>,
-      --intensity <percentage>: 0%
-    ) returns <color> {
-      --black-or-white: oklch(
-        from var(--color) calc(((l * -1) + 0.5) * infinity) 0 0
-      );
-
-      result: color-mix(
-        in oklch,
-        oklch(from var(--black-or-white) clamp(0.15, l, 0.975) c h),
-        var(--color) var(--intensity)
-      );
-    }
-    ```
-  ),
-  caption: [A custom contrast function that softens pure black and \ white and optionally mixes in a portion of the original color.],
-) <custom-color-contrast-function>
-
-*Note:* The specific thresholds of 15% and 97.5% used in this function serve as a subjective, baseline example to illustrate the concept. These values are not absolute standards and should be modified to align with the specific contrast ratios, aesthetic preferences, and accessibility requirements of the design system in use.
-
-The accompanying example from the project's example collection also calculates the WCAG 2.x contrast ratio for the generated colors, as shown in @custom-contrast-color-example-screenshot.
-
-#figure(
-  box(
-    inset: 0pt,
-    radius: 6pt,
-    clip: true,
-    stroke: 0.5pt + rgb("#cbd5e1"),
-  {
-    image("../ressources/custom-contrast-color-example.png")
-  }),
-  caption: [A screenshot of the configuration interface \ for the custom contrast color function.],
-) <custom-contrast-color-example-screenshot>
-
-To calculate the WCAG 2.x contrast ratio, the RGB values of both colors are required. When colors are defined using functions such as ``` oklch()```, these values are not directly available, as browsers may preserve the original color format in the computed styles.
-
-A practical workaround is to use the HTML ``` <canvas>``` element. The canvas can be filled with any valid CSS color, and the resulting RGBA values can then be extracted using ``` getImageData()```. As shown in @canvas-for-color-extraction, this technique makes it possible to convert any supported CSS color format into numeric RGBA values.
-
-#figure(
-  align(left,
-    ```js
-    const parseColorToRGBA = (colorString) => {
-      const canvas = document.createElement('canvas');
-      const ctx    = canvas.getContext('2d');
-
-      ctx.fillStyle = colorString;
-      ctx.fillRect(0, 0, 1, 1);
-
-      // Returning data array contining RGBA values as follows: r, g, b, a
-      return ctx.getImageData(0, 0, 1, 1).data;
-    };
-    ```
-  ),
-  caption: [Extracting the ``` RGBA``` values of any CSS \ color using the HTML ``` <canvas>``` element.],
-) <canvas-for-color-extraction>
-
-The implementation of the custom contrast color function is available in the project's repository. @p8-contrast-color
-
-#pagebreak()
-== Interactive Ishihara Plate
-
-The interactive Ishihara plate is not intended to directly enhance a website through integration into a production environment. Instead, it serves as a developer tool for visually evaluating color contrast in situations where shape, placement, or additional visual cues do not influence recognition. The focus lies entirely on the perception of color itself.
-
-The application allows three separate colors to be defined for the background circles and three additional colors for the foreground circles. Through their arrangement, the foreground circles form the number 42. This setup makes it possible to evaluate how different shades of the same color, for example variations in saturation or lightness, interact with one another and whether sufficient visual contrast remains between foreground and background elements. An example configuration using colors from the Kolibri palette is shown in @interactive-ishihara-plate.
-
-#figure(
-  box(
-    inset: 0pt,
-    radius: 6pt,
-    clip: true,
-    stroke: 0.5pt + rgb("#cbd5e1"),
-  {
-    image("../ressources/ishihara-plate-with-controls.png")
-  }),
-  caption: [A screenshot of the interactive Ishihara plate \ configured with colors from the Kolibri palette.],
-) <interactive-ishihara-plate>
-
-In addition to freely configurable colors, the application also includes predefined color combinations designed to simulate scenarios that are difficult or impossible to distinguish for people with specific forms of color vision deficiency such as ``` Protanopia```, ``` Deuteranopia```, and ``` Tritanopia```. These presets make it possible to evaluate whether certain color combinations remain distinguishable under different forms of impaired color perception.
-
-Although these configurations are inspired by the original Ishihara test plates, the application is not intended to serve as a medically accurate diagnostic tool. Instead, it should be considered a visual indicator that may suggest the need for further professional examination.
-
-An example of these comparison modes can be seen in @ishihara-plate-comparisement. The left side displays a plate configured with colors that are difficult to distinguish for users with ``` Deuteranopia```. The right side shows the same plate with a ``` Deuteranopia``` simulation filter applied, illustrating how the color combination may appear to affected users. The simulation filters are based on the bookmarklet filters developed during the previous P7 project.
-
-A more detailed discussion of these bookmarklets is available in the corresponding chapter of the previous P7 project. @p7-debugging
-
-#figure(
-  box(
-    inset: 0pt,
-    radius: 6pt,
-    clip: true,
-    stroke: 0.5pt + rgb("#cbd5e1"),
-  {
-    image("../ressources/ishihara-comparisement.png", width: 80%)
-  }),
-  caption: [A comparison between a plate configured for ``` Deuteranopia``` on the left \ and the same plate viewed through a ``` Deuteranopia``` simulation filter on the right.],
-) <ishihara-plate-comparisement>
-
-The implementation of the interactive Ishihara plate is available in the project's repository. @p8-ishihara
+The different example applications and prototype pages were additionally validated using automated accessibility testing tools such as the axe DevTools browser extension and Google Lighthouse. These automated checks were supplemented with manual keyboard accessibility testing to verify practical usability beyond purely automated evaluation.
 
 #pagebreak()

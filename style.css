@@ -150,7 +150,7 @@ nav ul {
 div.center {
     display: flex;
     justify-content: center;
-    gap: 8px;
+    gap: 0.5rem;
 }
 
 .visually-hidden {
@@ -181,7 +181,7 @@ fieldset {
 .control {
     display: flex;
     justify-content: space-between;
-    gap: 8px;
+    gap: 0.5rem;
     align-items: center;
     margin-bottom: 0.75rem;
 }
@@ -190,4 +190,8 @@ fieldset {
     display: flex;
     justify-content: center;
     margin: 2rem 0;
+}
+
+button, input, select {
+    font-size: inherit;
 }

@@ -1,7 +1,7 @@
 .kanban {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px;
+    gap: 1rem;
 }
 
 section {
@@ -13,7 +13,7 @@ ol {
     background-color: var(--bg-color);
     border: 1px solid var(--border-color);
     border-radius: 4px;
-    padding: 4px;
+    padding: 0.25rem;
     list-style-type: none;
 }
 
@@ -21,13 +21,13 @@ li {
     background-color: var(--content-bg);
     border: 1px solid var(--border-color);
     border-radius: 4px;
-    margin: 4px;
-    padding: 8px;
+    margin: 0.25rem;
+    padding: 0.8rem;
     cursor: grab;
 }
 
 .tile-header {
     display: grid;
     grid-template-columns: 1fr auto;
-    gap: 8px;
+    gap: 0.5rem;
 }

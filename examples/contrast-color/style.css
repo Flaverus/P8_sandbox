@@ -22,8 +22,8 @@ body {
 }
 
 .contrast-background {
-    width: 100px;
-    height: 100px;
+    width: 6.25rem;
+    height: 6.25rem;
     background-color: var(--selected-color);
     display: flex;
     justify-content: center;
@@ -35,7 +35,7 @@ body {
 }
 
 div.contrast-foreground {
-    width: 60px;
-    height: 60px;
+    width: 3.75rem;
+    height: 3.75rem;
     background-color: var(--contrast-color);
 }

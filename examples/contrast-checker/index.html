@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="This page holds a contrast checker to determine what contrast two colors have according to WCAG 2.x." />
+  <title>Color Contrast Checker</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <nav><a id="navigation" href="../../index.html">← Back to Overview</a></nav>
+  <h1>Color Contrast Checker</h1>
+</header>
+
+<main id="main-content">
+  <section class="card">
+    <h2>Check colors for their WCAG 2.x contrast</h2>
+    <p></p>
+
+    <div class="controls-grid">
+      <fieldset>
+        <legend>Configuration</legend>
+        <div class="control">
+          <label for="background-color">Background color</label>
+          <input id="background-color" type="color" value="#000000">
+        </div>
+        <div class="control">
+          <label for="foreground-color">Foreground color</label>
+          <input id="foreground-color" type="color" value="#ffffff">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Results</legend>
+        <div class="control">
+          <span>Contrast Ratio:</span>
+          <b id="contrast-ratio-text"></b>
+        </div>
+        <div class="control">
+          <span>Selected Background Color:</span>
+          <b id="text-background-color">#000000</b>
+        </div>
+        <div class="control">
+          <span>Selected Foreground Color:</span>
+          <b id="text-foreground-color">#ffffff</b>
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="visualization-container">
+      <div class="contrast-background">
+        <div class="contrast-foreground"></div>
+      </div>
+      <div class="contrast-background">
+        <p class="contrast-foreground">TEXT</p>
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

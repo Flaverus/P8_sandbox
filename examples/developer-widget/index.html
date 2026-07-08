@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="This page holds a preference widget example to be able to fully customize the experience on a website." />
+  <title>Preferences Widget</title>
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="preload">
+
+<aside id="developer-widget" class="floating-box">
+
+  <button id="widget-toggle" class="toggle" aria-expanded="false" aria-controls="widget-content-panel">
+    <div class="widget-heading"><h3>Developer Widget</h3><span class="close" aria-hidden="true">&#x2715;</span></div>
+  </button>
+
+  <div class="widget-content">
+    <details>
+      <summary>Colorblindness</summary>
+      <fieldset>
+        <legend class="visually-hidden">Colorblindness Settings</legend>
+        <div class="option">
+          <input type="radio" name="colorblindness" id="colorblindnessDefault" value="default">
+          <label for="colorblindnessDefault">No Colorblindness</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="colorblindness" id="colorblindnessProtanopia" value="protanopia">
+          <label for="colorblindnessProtanopia">Protanopia</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="colorblindness" id="colorblindnessDeuteranopia" value="deuteranopia">
+          <label for="colorblindnessDeuteranopia">Deuteranopia</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="colorblindness" id="colorblindnessTritanopia" value="tritanopia">
+          <label for="colorblindnessTritanopia">Tritanopia</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="colorblindness" id="colorblindnessGrayscale" value="grayscale">
+          <label for="colorblindnessGrayscale">Grayscale</label>
+        </div>
+      </fieldset>
+    </details>
+
+    <details>
+      <summary>Blurry Vision</summary>
+      <fieldset>
+        <legend class="visually-hidden">Blurry Vision Settings</legend>
+        <div class="option">
+          <input type="radio" name="blurry" id="blurryDefault" value="default">
+          <label for="blurryDefault">No Blurry Vision</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="blurry" id="blurryLight" value="blurry-light">
+          <label for="blurryLight">Light Blurriness</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="blurry" id="blurryIntense" value="blurry-intense">
+          <label for="blurryIntense">Intense Blurriness</label>
+        </div>
+      </fieldset>
+    </details>
+
+  </div>
+</aside>
+
+<header>
+  <nav><a id="navigation" href="../../index.html">← Back to Overview</a></nav>
+  <h1>Developer Widget Showcase</h1>
+</header>
+
+<main id="main-content">
+  <section class="card">
+    <h2>Checking existing Webpages</h2>
+    <p>This page holds some example contents which can be checked with the Developer Widget to see how people with impairments see the contents.
+      The idea is that this widget can be added to existing web-applications and allow developers to visually check their work and used design if the contrast is sufficient.</p>
+
+    <h3>Color Section</h3>
+    <div class="color-showcase">
+      <div class="color-item">
+        <div class="square purple"></div>
+        <p><strong>Deep Purple:</strong> #5F2EEA</p>
+      </div>
+      <div class="color-item">
+        <div class="square pink"></div>
+        <p><strong>Hot Pink:</strong> #FE2EA8</p>
+      </div>
+      <div class="color-item">
+        <div class="square lavender"></div>
+        <p><strong>Bright Lavender:</strong> #BE58FD</p>
+      </div>
+      <div class="color-item">
+        <div class="square blue"></div>
+        <p><strong>Navy Blue:</strong> #2D1FB1</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <h3>Text Section</h3>
+    <p>
+      Lorem ipsum dolor sit amet, <span class="blue">consectetur</span> adipiscing elit. Etiam mollis, diam ut finibus dapibus, libero arcu malesuada ex,
+      a auctor metus est vehicula urna. Praesent semper, elit id consectetur lacinia, eros dolor feugiat neque, et rhoncus
+      neque risus sit amet nisi. <b>Nam gravida feugiat eros at sagittis.</b> Suspendisse sit amet vehicula metus. Sed euismod quis
+      sem nec sollicitudin. Cras tempor accumsan dui, ac convallis velit suscipit ac. Quisque iaculis dignissim leo, at rhoncus
+      ante sagittis placerat. Proin ac semper orci, ac <i>ullamcorper</i> nisl. Sed vulputate urna eget odio accumsan, ut dignissim
+      nibh bibendum. Nulla quis porttitor purus, in ullamcorper est. Integer quis consequat sapien. Integer in tellus in diam
+      pharetra ornare nec eu erat. Sed ornare, augue non luctus egestas, <b class="purple">ipsum massa</b> maximus mi, venenatis mattis diam magna
+      et tellus. <mark>Vestibulum tincidunt tortor id sollicitudin aliquet.</mark>
+    </p>
+    <p>
+      <b>Pellentesque <i>consectetur purus</i> at metus</b> interdum, eget euismod eros ultrices. Vivamus aliquam, magna et tristique tincidunt,
+      purus nibh sodales urna, sed congue ligula sapien nec enim. Praesent turpis nibh, volutpat ut viverra vitae, commodo et justo.
+      Donec placerat iaculis ultrices. Quisque varius blandit nibh, a ullamcorper lectus faucibus vel. Phasellus sapien orci,
+      suscipit eget massa sed, congue efficitur felis. <i class="pink">Sed est lacus, fringilla id nulla ut, dapibus tincidunt neque.</i> Praesent non
+      mollis tortor, varius varius ex. <i>Suspendisse posuere a lacus a accumsan.</i> Pellentesque feugiat, tortor vitae lacinia egestas,
+      metus libero luctus nisi, lacinia fermentum enim leo in arcu. <span class="lavender">Nulla nec erat at eros interdum</span> mollis vitae nec nisl. Proin
+      eget lobortis ante. Maecenas ut arcu non justo sagittis placerat ac eu mi. Suspendisse placerat ex mi, id feugiat nibh posuere
+      eu. <b class="blue">Aenean fringilla</b> scelerisque felis, sit amet maximus urna maximus nec.
+    </p>
+
+    <hr>
+
+    <h3>Graphics Section</h3>
+    <div class="asset-grid">
+      <div class="asset-container">
+        <h4>Image</h4>
+        <img src="../../ressources/kolibri.jpg" alt="An image of a Kolibri bird getting nectar from a flower." class="kolibri-image">
+      </div>
+
+      <div class="asset-container">
+        <h4>Vector Graphic</h4>
+        <svg class="vector-logo" viewBox="0 0 305 342" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M138 194C183.5 214.5 228 221.5 236.5 341.5C229.5 273.5 187 263.5 138 194Z" fill="#5F2EEA"></path>
+          <path d="M117 122C117 46 42.5 17 0 0C81.2 39.2 77.5 79.5 80.5 138C87 216.5 128 235.667 150.5 248C105.7 212 117 157 117 122Z" fill="#FE2EA8"></path>
+          <path d="M80.9999 144.5C81.3468 146.565 81.692 148.581 82.0374 150.552C86.8892 170.965 107.957 211.566 156.5 225.5C210.5 241 236.407 308.5 237.074 342C220.5 279.5 210.346 274.538 156.5 250.5C102.35 226.326 92.1459 208.229 82.0374 150.552C81.492 148.257 81.1515 146.218 80.9999 144.5Z" fill="#BE58FD"></path>
+          <path d="M115 49.5C100.5 39.8333 79 51.0005 54 32C92.5 36.5 109.5 26 129.5 44C149.5 65 128.5 90 148 113.499C123.5 104.499 133 61.5 115 49.5Z" fill="#5F2EEA"></path>
+          <circle cx="100.5" cy="60.5" r="9.5" fill="#2D1FB1"></circle>
+          <path class="wing flatter" opacity="0.5" d="M128 179.114C176.159 220.174 254.92 177.348 279 146C243.884 171.608 187.698 146.442 128 179.114Z" fill="#BD53FE" stroke="#BD53FE"></path>
+          <path class="wing flatter" opacity="0.7" d="M128 158C163.892 67.1818 241.575 130.021 305 47C263.208 149.285 161.925 132.314 128 158Z" fill="#4C2EEC"></path>
+          <path class="wing flatter" opacity="0.7" d="M128 178.895C162.922 103.67 248.073 126.739 305 47C278.211 119.718 247.116 181.904 128 178.895Z" fill="#FF2CA5"></path>
+        </svg>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

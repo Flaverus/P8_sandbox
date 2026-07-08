@@ -1,19 +1,15 @@
 = Abstract
 
-This project explores native CSS and JavaScript features related to accessibility concerns, discusses the theory behind contrast perception in WCAG 2.x, and introduces the new perceptual approach proposed in the current WCAG 3.0 working draft. In addition, it examines patterns and techniques such as global state management with CSS custom properties, CSS attribute selectors, and experimental at-rules that can be used to create more individualized and accessible user experiences.
+This project explores native CSS and JavaScript features to advance digital inclusion. It begins by focusing on Auditing Existing Applications, examining WCAG 2.x relative luminance and the perceptual contrast principles introduced by WCAG 3.0. Building on this foundation, a color contrast checker, a Developer Widget for simulating visual impairments, and an interactive Ishihara plate are introduced to support the evaluation of existing interfaces.
 
-The accompanying repository contains interactive example pages and code snippets for all implementations discussed in this documentation and additional experiments. These examples allow the presented functionality to be explored in a practical and interactive way. The repository also includes this documentation both as Typst source code and as a rendered PDF. @p8
+The focus then shifts to Guiding Developers During Construction by presenting practical CSS and JavaScript concepts alongside a custom contrast color function that dynamically softens harsh color combinations.
 
-The three main tools developed during this project are:
-
-- A user-centric Preferences Widget that enables persistent website-specific accessibility settings beyond native operating system restrictions.
-- A Custom Contrast Color Function based on the Oklch color space that softens harsh contrast through perceptual color mixing.
-- An Interactive Ishihara Plate generator designed as a developer tool for evaluating color combinations and simulating color vision deficiencies such as ``` Protanopia```, ``` Deuteranopia```, and ``` Tritanopia```.
-
-This project demonstrates that modern web standards already provide the foundation for highly personalized and perceptually aware accessibility solutions without requiring large external frameworks or overly complex configurations.
+Finally, the project concludes with Empowering Users to Refine Their Experience, shifting control directly to users through a Preferences Widget that enables persistent, website-specific accessibility configurations.
 
 = Acknowledgement
 
-[TBD]
+I would like to thank *Cedric Altermatt* and *Jesus Ropero* for proofreading this document and providing valuable feedback that contributed to the final version.
+
+Special thanks go to my advisor, *Prof. Dierk König*, for his continuous guidance, constructive input throughout the project, and for reviewing the document before submission. His support played a key role in refining and completing this work.
 
 #pagebreak()

@@ -1,4 +1,3 @@
-// Get references to the DOM elements
 const widget         = document.getElementById('preferences-widget');
 const widgetToggle   = document.getElementById('widget-toggle');
 const motion         = document.querySelectorAll('input[name="motion"]');
