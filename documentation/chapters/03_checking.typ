@@ -1,6 +1,6 @@
 = Auditing Existing Applications
 
-The first part sets its focus on existing web applications. It introduces key concepts of contrast perception, how current standards are defined, and in what direction they are evolving.
+The first part focuses on existing web applications. It introduces key concepts of contrast perception, current standards, and their evolution.
 
 Based on this, tools created during this project are introduced. A color contrast checker is provided, enabling the calculation of WCAG 2.x-based contrast ratios between two colors using relative luminance. A Developer Widget is provided which simulates different vision impairments, allowing websites to be inspected under simulated conditions to evaluate their current accessibility state with respect to contrast and identify potential weaknesses. Additionally, an interactive Ishihara plate is introduced to evaluate the color compatibility of a design while allowing its colors to be inspected under simulated color blindness conditions.
 
@@ -8,7 +8,7 @@ Based on this, tools created during this project are introduced. A color contras
 
 The starting point of this project included the creation of an isolated environment, referred to as the Sandbox project, for rapid prototyping and experimentation. This environment allowed different implementation approaches to be tested incrementally while individual project parts evolved over time.
 
-Testing CSS and JavaScript compatibility directly in practice proved especially important, as documentation alone often did not fully reflect actual browser behavior. Experimentation and exploratory iteration became a central part of the ideation process before more concrete concepts gradually emerged and were refined into the implementations presented throughout this documentation.
+Testing CSS and JavaScript compatibility in practice proved especially important, as documentation alone often did not fully reflect actual browser behavior. Experimentation and exploratory iteration became a central part of the ideation process before more concrete concepts gradually emerged and were refined into the implementations presented throughout this documentation.
 
 Many examples initially started as simple or partially hacky drafts before being iteratively improved into more stable and reusable solutions.
 

@@ -260,9 +260,9 @@ This allows developers to respond to user preferences not only in CSS, but also 
 
 === Changes in the World of Media Queries
 
-CSS media queries continue to evolve, but one important aspect of visual accessibility is still not addressed. Different forms of color blindness and other impairments that affect color perception are not yet covered by an official media feature.
+While CSS media queries evolve, official features do not yet address color blindness and other color perception impairments.
 
-An open issue in the W3C's ``` csswg-drafts``` repository proposes a new media feature called ``` color-vision-adjustment```. Its goal is to improve web accessibility by allowing developers to respond directly to the needs of users with color vision deficiencies.
+An open issue in the W3C's ``` csswg-drafts``` repository proposes a new media feature called ``` color-vision-adjustment```. This aims to improve web accessibility by letting developers respond directly to the needs of users with color vision deficiencies.
 
 The proposal includes support for several specific conditions, including protanopia (red deficiency), deuteranopia (red-green deficiency), tritanopia (blue-yellow deficiency), and achromatopsia (near-total color blindness, resulting in grayscale vision). These impairments were previously investigated in the P7 project through browser bookmarklets designed to simulate the corresponding visual deficiencies.
 
