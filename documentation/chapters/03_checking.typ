@@ -122,7 +122,9 @@ APCA introduces a new metric called lightness contrast, expressed as $L^c$. Inst
 #pagebreak()
 == Color Contrast Checker
 
-The WCAG contrast ratio requirements are precisely defined but cannot be reliably estimated by visually comparing two colors. Therefore, additional tools are required to verify whether these requirements are fulfilled for a given color pair. This is where the Color Contrast Checker, shown in @contrast-checker, comes into play. This tool allows the selection of two colors and calculates the contrast ratio to verify whether a color combination is suitable for use in a web application or if alternative colors are required to ensure sufficient contrast.
+Due to APCA still being under development and WCAG 2.x remaining the current standard, contrast evaluation must currently be based on the relative luminance formula discussed above to satisfy the WCAG success criteria. Although the WCAG contrast ratio requirements are precisely defined, they cannot be reliably estimated by visually comparing two colors. Therefore, additional tools are required to verify whether these requirements are fulfilled for a given color pair.
+
+This is where the Color Contrast Checker, shown in @contrast-checker, comes into play. The tool allows the selection of two colors and calculates their WCAG 2.x contrast ratio to verify whether a color combination is suitable for use in a web application or whether alternative colors are required to ensure sufficient contrast.
 
 #figure(
   box(

@@ -57,7 +57,7 @@ This color model is widely used because it has been established for a long time 
   {
     image("../ressources/RGB_model.png", width: 40%)
   }),
-  caption: [A visual representation of the RGB model with its \ dimention showcasing how color values are defined. @RGB_model],
+  caption: [A visual representation of the RGB color model, \ illustrating how color values are defined. @RGB_model],
 ) <rgb-model-image>
 
 #pagebreak()

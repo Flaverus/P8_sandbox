@@ -337,14 +337,10 @@ For the Preferences Widget, a clean transition can be achieved by wrapping the p
 
 The implementation of the preference widget, including several example settings that demonstrate how individual and combined preferences affect the website's styling, is available in the project's repository. @p8-widget
 
-#pagebreak()
-
 == Validation and Verification
 
 The Preferences Widget underwent smaller-scale user testing to gather feedback from real users and refine the interface for future integration into Kolibri. The tests were intentionally kept simple to allow participation from users with different backgrounds and experience levels. The primary focus was usability, keyboard accessibility, intuitiveness, and the overall visual experience.
 
 The documentation and results of the conducted user tests are available in the project's repository under the usertests section. @p8-usertests
-
-The different example applications and prototype pages were additionally validated using automated accessibility testing tools such as the axe DevTools browser extension and Google Lighthouse. These automated checks were supplemented with manual keyboard accessibility testing to verify practical usability beyond purely automated evaluation.
 
 #pagebreak()
