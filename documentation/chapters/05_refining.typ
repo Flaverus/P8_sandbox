@@ -91,7 +91,7 @@ During page initialization, both functions are used to populate the custom prope
                              '');
     ```
   ),
-  caption: [Initializing the global custom properties with stored values or system defaults.],
+  caption: [Initializing the global custom properties with \ stored values or system defaults.],
 ) <handle-accessibility-property>
 
 The ``` syncWidgetOption()``` function shown in @sync-accessibility-option synchronizes the values stored in the custom properties with the corresponding radio buttons in the widget. By reading the values directly from ``` root```, the custom properties remain the single source of truth for both the user interface and the underlying logic.

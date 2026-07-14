@@ -79,7 +79,7 @@
     [*Author:*], [#text(weight: "bold")[Florian Schnidrig]],
     [*Advisor:*], [Prof. Dierk König],
     [*Profile:*], [Computer Science],
-    [*Date:*], [Summer 2026 (TBD)]
+    [*Date:*], [14. July 2026]
   )
 ]
 #pagebreak()
@@ -174,7 +174,7 @@ I hereby declare that any individual work submitted for assessment is entirely t
   columns: (1fr, 1fr),
   gutter: 2cm,
   [
-    Windisch, #box(width: 60%, line(length: 100%, stroke: 0.5pt + gray)) \
+    Windisch, 14. July 2026 \
     #text(size: 9pt, fill: gray)[Location / Date]
   ],
   [
@@ -191,6 +191,8 @@ I hereby declare that any individual work submitted for assessment is entirely t
   [],
   [
     #line(length: 100%, stroke: 0.5pt + gray)
-    #text(size: 9pt, fill: gray)[Signature]
+    #place(dx: 0pt, dy: 7pt)[
+      #text(size: 9pt, fill: gray)[Signature]
+    ]
   ]
 )
